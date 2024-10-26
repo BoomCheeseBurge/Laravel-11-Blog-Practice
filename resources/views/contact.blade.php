@@ -11,7 +11,7 @@
     {{-- TalwindUI's Default Font for their Components --}}
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
-    <title>Home</title>
+    <title>Contact</title>
 </head>
 <body class="h-full">
     <!--
@@ -129,12 +129,23 @@
 
         <header class="bg-white shadow">
             <div class="mx-auto max-w-7xl px-4 py-6 lg:px-8 sm:px-6">
-                <h1 class="text-3xl font-bold tracking-tight text-gray-900">Home</h1>
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900">Contact</h1>
             </div>
         </header>
         <main>
             <div class="mx-auto max-w-7xl px-4 py-6 lg:px-8 sm:px-6">
                 <!-- Your content -->
+                <ul>
+                    <li>
+                        <a href="#">Instagram</a>
+                    </li>
+                    <li>
+                        <a href="#">Facebook</a>
+                    </li>
+                    <li>
+                        <a href="#">Youtube</a>
+                    </li>
+                </ul>
             </div>
         </main>
     </div>

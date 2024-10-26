@@ -1,4 +1,4 @@
-import defaultTheme from 'tailwindcss/defaultTheme';
+import defaultTheme from 'tailwindcss/defaultTheme'; // TailwindCSS now imports its theme by default
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -12,7 +12,8 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                // sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['InterVariable', ...defaultTheme.fontFamily.sans],
             },
         },
     },

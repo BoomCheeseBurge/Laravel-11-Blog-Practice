@@ -1,0 +1,16 @@
+
+Tailwind CSS is installed into the project.
+
+TailwindUI is utilized for its stacked layout.
+
+Additionally, TailwindUI has its own font that is imported as well (which can be seen at the 'Optional: Add the Inter font family' section of the documentation).
+
+The TailwindUI components usually has a comment above its component code that informs what part of the HTML document needs to be modified.
+
+Since the TailwindUI components require JS to work properly, the documentation suggests AlpineJS as one of the solutions for this problem.
+
+AlpineJS is installed into the project.
+
+AlpineJS requires a bundler to be installed. The video for this can be seen in the video playlist folder.
+
+Added the required AlpineJS attributes indicated by the comments of the TailwindUI component to enable interactivity.
