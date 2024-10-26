@@ -1,7 +1,10 @@
 
-Added Blade components for navbar, navlink, header, and layout.
+Have the active state of navlink as a Blade component property.
 
-Header component was created with only its view.
+Created a list of articles using dummy data.
 
-Fixed the 'active' state of the navbar links utilizing AlpineJS and TailwindCSS.
+Changed the blade file name from 'blog' to 'posts'.
 
+Created a single post view.
+
+Create a slug manually for viewing a single post.

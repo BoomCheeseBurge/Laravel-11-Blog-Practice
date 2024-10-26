@@ -10,7 +10,7 @@
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                         <x-navigations.nav-link href="/" :active="request()->is('/')" class="text-sm">Home</x-navigations.nav-link>
                         <x-navigations.nav-link href="/about" :active="request()->is('about')" class="text-sm">About</x-navigations.nav-link>
-                        <x-navigations.nav-link href="/blog" :active="request()->is('blog')" class="text-sm">Blog</x-navigations.nav-link>
+                        <x-navigations.nav-link href="/posts" :active="request()->is('posts')" class="text-sm">Blog</x-navigations.nav-link>
                         <x-navigations.nav-link href="/contact" :active="request()->is('contact')" class="text-sm">Contact</x-navigations.nav-link>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             <x-navigations.nav-link href="/" :active="request()->is('/')" class="block text-base">Home</x-navigations.nav-link>
             <x-navigations.nav-link href="/about" :active="request()->is('about')" class="block text-base">About</x-navigations.nav-link>
-            <x-navigations.nav-link href="/blog" :active="request()->is('blog')" class="block text-base">Blog</x-navigations.nav-link>
+            <x-navigations.nav-link href="/posts" :active="request()->is('posts')" class="block text-base">Blog</x-navigations.nav-link>
             <x-navigations.nav-link href="/contact" :active="request()->is('contact')" class="block text-base">Contact</x-navigations.nav-link>
         </div>
         <div class="pt-4 pb-3 border-t border-gray-700">
