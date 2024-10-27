@@ -1,10 +1,8 @@
 
-Have the active state of navlink as a Blade component property.
+Created a dummy Model file for posts.
 
-Created a list of articles using dummy data.
+Created a static function to get all the dummy posts.
 
-Changed the blade file name from 'blog' to 'posts'.
+Created a static function to get a specific post based on its slug.
 
-Created a single post view.
-
-Create a slug manually for viewing a single post.
+If no post is found, then abort and display a 404 error page.
