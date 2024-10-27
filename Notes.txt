@@ -1,32 +1,32 @@
 
-Created a proper Laravel Model called 'Post'.
+Learned the basics of factory and faker methods.
 
-With the 'extends Model' keyword, the class will be automatically mapped to a table of the class name but plural.
+These are the commands used in Tinker for generating random users:
 
-Route model binding is used to find a record based on the 'slug' column.
+o 1st Command
 
-Simulate input form data using Tinker through the terminal.
+App\Models\User::factory()->create(); // Create a single random user
 
-These are the commands used in Tinker:
+o 2nd Command
 
-o 1st command
+App\Models\User::factory(3)->create(); // Create three random users
 
-App\Models\Post::create([
-    'slug' => 'post-title-1',
-    'title' => 'Post Title 1',
-    'author' => 'John Doe',
-    'body' => 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam amet, nihil facilis vitae iste id reiciendis, odit voluptatem rerum mollitia excepturi, quod enim dignissimos expedita repellendus ducimus quas? Tenetur, temporibus!',
-]);
+o 3rd Command
 
-o 2nd command
+App\Models\User::factory(3)->unverified->create(); // Create three random users with unverified email status
 
-App\Models\Post::create([
-    'slug' => 'post-title-2',
-    'title' => 'Post Title 2',
-    'author' => 'Tom Dickens',
-    'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium consectetur a qui tenetur doloribus optio saepe omnis aperiam rerum similique ut possimus quod nisi, temporibus explicabo quae sit. Ab, eligendi?',
-]);
+o 4th Command
 
-Default model files do not yet include fillable properties of a model/table. Hence, they must be specified manually in order to avoid 'MassAssignmentException' error.
+App\Models\User::factory()->admin->create(); // Create a random user with admin privilege
 
-Any changes to the model file will require a restart of Tinker.
+o 5th Command
+
+App\Models\Post::factory(50)->create(); // Create fifty random posts
+
+Added a method to assign a user as admin in the user factory file.
+
+Added a 'is_admin' column to the user table migration.
+
+Changed value of 'APP_FAKER_LOCALE' from 'en_US' to 'id_ID'.
+
+Created a factory for 'Posts'.
