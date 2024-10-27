@@ -1,8 +1,8 @@
 
-Created a dummy Model file for posts.
+SQLite is a file based database that does not rely on a database server.
 
-Created a static function to get all the dummy posts.
+If the SQLite database file is accidentally deleted, then just run the migration command again and it will ask to create a new SQLite database file based on the migration files.
 
-Created a static function to get a specific post based on its slug.
+Added migration for a 'posts' table.
 
-If no post is found, then abort and display a 404 error page.
+Added two rows of dummy data to the 'posts' table directly in TablePlus.
