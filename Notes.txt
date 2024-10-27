@@ -1,32 +1,30 @@
 
-Learned the basics of factory and faker methods.
+Created a foreign key constraint between the user and post in the post migration.
 
-These are the commands used in Tinker for generating random users:
+Create a relation between the user and post in the factory by creating fake users while generating the posts (See the post factory).
+
+The command used in Tinker:
 
 o 1st Command
 
-App\Models\User::factory()->create(); // Create a single random user
+App\Models\Post::factory(50)->recycle(App\Models\User::factory(5)->create())->create(); // Create five users where each user will have different portion from a total of a hundred posts
 
-o 2nd Command
+Created a model relationship between user and post.
 
-App\Models\User::factory(3)->create(); // Create three random users
+With this model relationship, the referenced model can be accessed through the model relationship name as follows:
 
-o 3rd Command
+- See a post is written by which author
 
-App\Models\User::factory(3)->unverified->create(); // Create three random users with unverified email status
+    $post = App\Models\Post::first();
 
-o 4th Command
+    $post->author->name;
 
-App\Models\User::factory()->admin->create(); // Create a random user with admin privilege
+- See a user has written which posts
 
-o 5th Command
+    $user = App\Models\User::first();
 
-App\Models\Post::factory(50)->create(); // Create fifty random posts
+    $user->posts;
 
-Added a method to assign a user as admin in the user factory file.
+It is also mentioned or an added parameter is given in the User model relationship that the foreign key in the posts table is 'author_id' instead of 'user_id' by default based on the table's name.
 
-Added a 'is_admin' column to the user table migration.
-
-Changed value of 'APP_FAKER_LOCALE' from 'en_US' to 'id_ID'.
-
-Created a factory for 'Posts'.
+Created a view for displaying a list of posts written by a single user.
