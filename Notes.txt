@@ -1,8 +1,32 @@
 
-SQLite is a file based database that does not rely on a database server.
+Created a proper Laravel Model called 'Post'.
 
-If the SQLite database file is accidentally deleted, then just run the migration command again and it will ask to create a new SQLite database file based on the migration files.
+With the 'extends Model' keyword, the class will be automatically mapped to a table of the class name but plural.
 
-Added migration for a 'posts' table.
+Route model binding is used to find a record based on the 'slug' column.
 
-Added two rows of dummy data to the 'posts' table directly in TablePlus.
+Simulate input form data using Tinker through the terminal.
+
+These are the commands used in Tinker:
+
+o 1st command
+
+App\Models\Post::create([
+    'slug' => 'post-title-1',
+    'title' => 'Post Title 1',
+    'author' => 'John Doe',
+    'body' => 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam amet, nihil facilis vitae iste id reiciendis, odit voluptatem rerum mollitia excepturi, quod enim dignissimos expedita repellendus ducimus quas? Tenetur, temporibus!',
+]);
+
+o 2nd command
+
+App\Models\Post::create([
+    'slug' => 'post-title-2',
+    'title' => 'Post Title 2',
+    'author' => 'Tom Dickens',
+    'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium consectetur a qui tenetur doloribus optio saepe omnis aperiam rerum similique ut possimus quod nisi, temporibus explicabo quae sit. Ab, eligendi?',
+]);
+
+Default model files do not yet include fillable properties of a model/table. Hence, they must be specified manually in order to avoid 'MassAssignmentException' error.
+
+Any changes to the model file will require a restart of Tinker.
