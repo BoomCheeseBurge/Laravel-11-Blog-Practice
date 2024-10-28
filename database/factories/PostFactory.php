@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,10 +19,12 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
+        $title = fake()->sentence();
         return [
-            'slug' => Str::slug(fake()->sentence()),
-            'title' => fake()->sentence(),
-            'author_id' => User::factory(), // This will create a relation to exactly a single single user for every generated post
+            'slug' => Str::slug($title),
+            'title' => $title,
+            'author_id' => User::factory(), // This will create a relation to exactly a single user for every generated post
+            'category_id' => Category::factory(), // This will create a relation to exactly a single category for every generated post
             'body' => fake()->text(),
         ];
     }
