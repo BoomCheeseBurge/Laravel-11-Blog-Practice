@@ -1,39 +1,21 @@
 
-N+1 problem is an issue that arise on relations between models.
+Installed Flowbite into the project.
 
-Say a User model has many posts. When each post is to be displayed on a web page, the associated author/user of the post requires additional query of the users table. This will cause N-query of however many posts there are to be displayed.
+Since the 'taiwindcss', 'postcss', and 'autoprefixer' packages were already installed previously, only the flowbite is needed to be installed.
 
-Lazy loading is the root cause of N+1 problem. With this, the query to the related models will only be done when it is needed.
+npm install -D flowbite
 
-That is why Eager loading is preferred for this case (although there may be tradeoffs in other cases). With this, the query to the related models will be done beforehand.
+Additionally, the vite import was replaced from '@vite('resources/css/app.css')' to '@vite(['resources/css/app.css','resources/js/app.js'])'.
 
-Laravel debugbar was added.
+The 'Default blog card' component from the 'Blog Sections' section is used from the Flowbite, open-source Tailwind component library.
 
-In the case of displaying posts related to a single user, the parent model (i.e., the user/author) has already been loaded. Hence, the solution is to use Lazy Eager loading instead.
+Added a new field called 'color' to the categories table.
 
-Alternatively, the models can be eager loaded by default. However, this will cause all query to the model to be eager loaded which may not be favorable in certain cases.
+Since Tailwind does not recognize variable values when used with utility classes, the utility classes must be specified in the Tailwind configuration file.
+In other words, Tailwind does not recognize dynamic utility classes.
 
-Additionally, lazy loading can be prevented by adding a rule in the 'AppServiceProvider' file.
+To avoid having to write the whole utility class names, a method using safe-list from Tailwind can be used.
 
-___________________________________________________
+The 'Default blog template' component from the 'Blog Template' section is used from Flowbite, open-source Tailwind component library.
 
-A comment from a user:
-
-    I think lazy/eager loading can be useful in certain cases, it's related to performance.
-    It's not always the case that eager loading performs better than lazy, and vice versa.
-    For example, I have a model that contains another model inside. I only need the parent.
-    If eager loading is enabled by default, the child is automatically queried (correct me if I'm wrong); this means there are queries that are wasted and unused: sometimes used, sometimes not.
-
-    example Foo{} .parentVar .expensiveChildModel
-
-    If I only need the parent variables, why query the child model?
-
-___________________________________________________
-
-A comment from a user:
-
-    Thank you, sir, for your knowledge, but I'm curious. Since I rarely use models and prefer using query builders, is the n+1 problem and its solution the same? Feel free, my friends, to discuss this matter.
-
-A reply from a user:
-
-    It seems that the N+1 problem rarely occurs in query builders, because we have full control over the queries to prevent the N+1 problem from happening. The main actor of the N+1 problem is the foreign key (relationship), where it calls data by foreign key repeatedly, which normally a SQL query with a foreign key is a JOIN. Query builders support JOINs.
+The Flowbite typography package is installed.

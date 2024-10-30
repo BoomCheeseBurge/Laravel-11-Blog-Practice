@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     {{-- Vite to dynamically import the processed Tailwind CSS file during the build process --}}
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css','resources/js/app.js'])
 
     {{-- TalwindUI's Default Font for their Components --}}
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
