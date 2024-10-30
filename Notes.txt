@@ -1,21 +1,9 @@
 
-Installed Flowbite into the project.
+Added a search component (taken from the newsletter component) of Flowbite in the posts webpage.
 
-Since the 'taiwindcss', 'postcss', and 'autoprefixer' packages were already installed previously, only the flowbite is needed to be installed.
+Added a search feature in the posts webpage.
 
-npm install -D flowbite
+For the search feature, it can as simple as using the where clause. However, an issue arise when searching posts in a category or an author.
+In that case, the solution is to use Query Scope.
 
-Additionally, the vite import was replaced from '@vite('resources/css/app.css')' to '@vite(['resources/css/app.css','resources/js/app.js'])'.
-
-The 'Default blog card' component from the 'Blog Sections' section is used from the Flowbite, open-source Tailwind component library.
-
-Added a new field called 'color' to the categories table.
-
-Since Tailwind does not recognize variable values when used with utility classes, the utility classes must be specified in the Tailwind configuration file.
-In other words, Tailwind does not recognize dynamic utility classes.
-
-To avoid having to write the whole utility class names, a method using safe-list from Tailwind can be used.
-
-The 'Default blog template' component from the 'Blog Template' section is used from Flowbite, open-source Tailwind component library.
-
-The Flowbite typography package is installed.
+Added a query scope for searching posts within category or author or all.

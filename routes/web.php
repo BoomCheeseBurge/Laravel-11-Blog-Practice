@@ -6,12 +6,14 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+
     return view('home', [
         'title' => 'Home',
     ]);
 });
 
 Route::get('/about', function () {
+
     return view('about', [
         'title' => 'About',
         'fullname' => 'John Doe',
@@ -19,9 +21,10 @@ Route::get('/about', function () {
 });
 
 Route::get('/posts', function () {
+
     return view('posts', [
         'title' => 'Blog',
-        'posts' => Post::with(['author', 'category'])->latest()->get(),
+        'posts' => Post::with(['author', 'category'])->filter(request(['search', 'category', 'author']))->latest()->get(),
     ]);
 });
 
@@ -39,6 +42,7 @@ Route::get('/posts/{post:slug}', function (Post $post) {
 });
 
 Route::get('/authors/{user:username}', function (User $user) {
+
     $posts = $user->posts->load('author', 'category');
 
     return view('posts', [
@@ -48,6 +52,7 @@ Route::get('/authors/{user:username}', function (User $user) {
 });
 
 Route::get('/categories/{category:slug}', function (Category $category) {
+
     $posts = $category->posts->load('author', 'category');
 
     return view('posts', [
@@ -57,6 +62,7 @@ Route::get('/categories/{category:slug}', function (Category $category) {
 });
 
 Route::get('/contact', function () {
+
     return view('contact', [
         'title' => 'Contact',
     ]);

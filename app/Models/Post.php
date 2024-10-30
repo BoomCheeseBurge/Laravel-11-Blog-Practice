@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -32,5 +33,18 @@ class Post extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Scope a query to filter search based on all, author, or category.
+     */
+    public function scopeFilter(Builder $query, array $filters): void // The filter keyword is made nullable if there are no search keywords
+    {
+        // Check if keyword search is not empty or null, else skip to the next confitional statement or fall through
+        $query->when($filters['search'] ?? false, fn($query, $keyword) => $query->where('title', 'like', '%' . $keyword . '%')) // If there is a search keyword input
+
+            ->when($filters['category'] ?? false, fn($query, $category) => $query->whereHas('category', fn($query) => $query->where('slug', $category))) // If there is a category slug input
+
+            ->when($filters['author'] ?? false, fn($query, $author) => $query->whereHas('author', fn($query) => $query->where('username', $author))); // If there is an author input
     }
 }
