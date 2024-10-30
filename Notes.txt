@@ -1,38 +1,18 @@
 
-Added a 'username' field to the 'users' table using migrations.
+Notice how previously, the factories were still executed in Tinker. That was a tedious task to do of going into Tinker and then running the factories.
 
-Added a factory for 'username' in the User factory.
+The solution is to use database seeder to automate this process.
 
-Changed the 'name' field to the 'fullname' field.
+Moreover, the seeding process can be done after migrations.
 
-Link to an author's posts has been changed from ID to their username.
+Seeder can be used alone, or it can be used with factories in which the fake data is created first before being harvested by the seeder.
 
-A 'Category' model along with its migration and factory has been created.
+The following command is used to reset migrations and then run the seeder:
 
-Created the foreign key constraints for category in the post migration table.
+php artisan migrate:fresh --seed
 
-Created the relationship between Post and Category models.
+A separate manually generated user can be included in the generation of other factories by including it in the recycle method.
 
-Created the Category factory.
+A User and Catergory seeders were created.
 
-Migrations are executed in the order of their corresponding file timestamps within the migration folder.
-
-Additionally, say the "categories" migration file was placed after the "posts" migration file in terms of timestamp. This configuration led to an error when running the migrations, as the "posts" table contained a foreign key referencing the "categories" table. However, Laravel's migration system processed the "posts" migration first, resulting in a constraint violation since the referenced "categories" table had not yet been created. It is important to note that this behavior is specific to databases like MySQL, which strictly enforce foreign key constraints. SQLite, on the other hand, is more lenient and might allow the migration to proceed even if the referenced table does not exist at the time of the migration.
-
-Particularly, in MySQL, the migration tables have to be created in order. Otherwise, when migrating in MySQL, it would not be able to find the categories reference key. And so, rearranging the migration files by putting categories before posts, and only then could the migration be performed.
-
-In other words, SQLite will not generate this problem. Meanwhile, using MySQL will output an error. In that case, the migration files must be reordered.
-
-Post and Category factories have been fixed so that their slug corresponds to the title/name.
-
-This is the command used in Tinker:
-
-App\Models\Post::factory(100)->recycle([Category::factory(3)->create(), User::factory(5)->create()])->create()
-
-There is a rare case where the factory creation will not work. In that case, it may be helpful to dump the autoload by using the following commands:
-
-composer dumpautoload
-
-php artisan optimize:clear
-
-Created a route for displaying posts of a category.
+With seeders, the seeders will be called first, and then, the related models of the seeders will be called in the recycle method.
