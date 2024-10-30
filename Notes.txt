@@ -1,18 +1,39 @@
 
-Notice how previously, the factories were still executed in Tinker. That was a tedious task to do of going into Tinker and then running the factories.
+N+1 problem is an issue that arise on relations between models.
 
-The solution is to use database seeder to automate this process.
+Say a User model has many posts. When each post is to be displayed on a web page, the associated author/user of the post requires additional query of the users table. This will cause N-query of however many posts there are to be displayed.
 
-Moreover, the seeding process can be done after migrations.
+Lazy loading is the root cause of N+1 problem. With this, the query to the related models will only be done when it is needed.
 
-Seeder can be used alone, or it can be used with factories in which the fake data is created first before being harvested by the seeder.
+That is why Eager loading is preferred for this case (although there may be tradeoffs in other cases). With this, the query to the related models will be done beforehand.
 
-The following command is used to reset migrations and then run the seeder:
+Laravel debugbar was added.
 
-php artisan migrate:fresh --seed
+In the case of displaying posts related to a single user, the parent model (i.e., the user/author) has already been loaded. Hence, the solution is to use Lazy Eager loading instead.
 
-A separate manually generated user can be included in the generation of other factories by including it in the recycle method.
+Alternatively, the models can be eager loaded by default. However, this will cause all query to the model to be eager loaded which may not be favorable in certain cases.
 
-A User and Catergory seeders were created.
+Additionally, lazy loading can be prevented by adding a rule in the 'AppServiceProvider' file.
 
-With seeders, the seeders will be called first, and then, the related models of the seeders will be called in the recycle method.
+___________________________________________________
+
+A comment from a user:
+
+    I think lazy/eager loading can be useful in certain cases, it's related to performance.
+    It's not always the case that eager loading performs better than lazy, and vice versa.
+    For example, I have a model that contains another model inside. I only need the parent.
+    If eager loading is enabled by default, the child is automatically queried (correct me if I'm wrong); this means there are queries that are wasted and unused: sometimes used, sometimes not.
+
+    example Foo{} .parentVar .expensiveChildModel
+
+    If I only need the parent variables, why query the child model?
+
+___________________________________________________
+
+A comment from a user:
+
+    Thank you, sir, for your knowledge, but I'm curious. Since I rarely use models and prefer using query builders, is the n+1 problem and its solution the same? Feel free, my friends, to discuss this matter.
+
+A reply from a user:
+
+    It seems that the N+1 problem rarely occurs in query builders, because we have full control over the queries to prevent the N+1 problem from happening. The main actor of the N+1 problem is the foreign key (relationship), where it calls data by foreign key repeatedly, which normally a SQL query with a foreign key is a JOIN. Query builders support JOINs.
