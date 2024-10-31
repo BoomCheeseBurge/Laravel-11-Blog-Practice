@@ -1,9 +1,8 @@
 
-Added a search component (taken from the newsletter component) of Flowbite in the posts webpage.
+Followed the pagination setup from the Laravel documentation.
 
-Added a search feature in the posts webpage.
+The pagination directory is published for further customization.
 
-For the search feature, it can as simple as using the where clause. However, an issue arise when searching posts in a category or an author.
-In that case, the solution is to use Query Scope.
+A problem is shown when using the pagination in a search query or with a certain category or author. The URI parameter will not be brought over with the pagination with the default pagination query.
 
-Added a query scope for searching posts within category or author or all.
+In that case, the solution is to include the query parameter in the query.

@@ -31,6 +31,8 @@
         </div>
     </div>
 
+    {{ $posts->links() }}
+
     <section class="mx-auto max-w-screen-xl py-4">
 
         <div class="{{ $posts->isNotEmpty() ? 'grid gap-8 lg:grid-cols-3 md:grid-cols-2' : '' }}">
@@ -80,5 +82,7 @@
             @endforelse
         </div>
     </section>
+
+    {{ $posts->links() }}
 
 </x-layouts.base-layout>
