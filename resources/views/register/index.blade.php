@@ -66,7 +66,7 @@
                             is-invalid
                             @else
                             is-valid
-                            @enderror" placeholder="name@mail.com" value="{{ old('email') }}" required="" autocomplete="off">
+                            @enderror" placeholder="username@domain.com" value="{{ old('email') }}" required="" autocomplete="off">
                             <svg class="w-6 h-6 text-red-600 dark:text-white
                             @error('email')
                             absolute bottom-0 top-10 right-0 mr-3
@@ -88,7 +88,7 @@
                             is-invalid
                             @else
                             is-valid
-                            @enderror" placeholder="••••••••" value="{{ old('password') }}" required="" autocomplete="off">
+                            @enderror" placeholder="••••••••" required="" autocomplete="off">
                             <svg class="w-6 h-6 text-red-600 dark:text-white
                             @error('password')
                             absolute bottom-0 top-10 right-0 mr-3

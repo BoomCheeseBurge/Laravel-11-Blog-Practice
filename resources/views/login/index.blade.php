@@ -13,12 +13,17 @@
             <x-messages.dismissal-success :message="session('success')" class="mb-4"></x-messages.dismissal-success>
             @endif
 
+            {{-- ------------------------------------ Failed Message ------------------------------------ --}}
+            @if (session()->has('failed'))
+            <x-messages.dismissal-error errorID="failed" :message="session('failed')" class="mb-4"></x-messages.dismissal-error>
+            @endif
+
             <div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 dark:border dark:border-gray-700 md:mt-0 sm:max-w-md xl:p-0">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 class="text-xl font-bold tracking-tight leading-tight text-center text-gray-900 dark:text-white md:text-2xl">
                         Sign in to your account
                     </h1>
-                    <form class="space-y-4 md:space-y-6" action="#">
+                    <form class="space-y-4 md:space-y-6" action="{{ route('login.authenticate') }}" method="POST">
                         @csrf
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-Mail</label>

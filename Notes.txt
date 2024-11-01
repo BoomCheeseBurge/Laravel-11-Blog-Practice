@@ -1,14 +1,20 @@
 
-Created a login button link on the navigation bar.
+Create the authentication method in the login controller.
 
-Created a Post and Login controller along with its route.
+Show a general error message regardless of a validation error from email address or password.
 
-Login page was created using the 'Default login page' component from Flowbite.
+Created a dashboard controller.
 
-Created custom validation rules for both username and fullname.
+Created an index view for the dashboard.
 
-Added a password rule default in the 'AppServiceProvider' file.
+Added middlewares to the routes.
 
-Created an anonymous component for input validation error and successful messages for both dismissal and non-dismissal types.
+Modified the 'boostrap/app.php' file to redirect unauthenticated users to the login page.
 
-Created a 'Post' controller for displaying all and single posts.
+Added a 'guest' and 'auth' middleware group to the routes.
+
+Added a logout route and its corresponding method in the login controller.
+
+Fixed to be able to close the user dropdown when clicked away from it.
+
+Applied 'x-cloak' attribute to the user dropdown.
