@@ -18,6 +18,12 @@
             <div class="hidden md:block">
                 <div class="flex items-center ml-4 md:ml-6">
 
+                    <a href="/login" class="relative flex items-center text-base font-medium text-sky-200 group">
+                        <svg class="w-5 h-5 absolute bottom-1 right-14 group-hover:animate-bounce_right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g id="right-arrow-bg" stroke-width="0"></g><g id="right-arrow-tracer" stroke-linecap="round" stroke-linejoin="round"></g><g id="right-arrow-icon"> <path d="M4 12H20M20 12L16 8M20 12L16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="right-bracket-bg" stroke-width="0"></g><g id="right-bracket-tracer" stroke-linecap="round" stroke-linejoin="round"></g><g id="right-bracket-icon"> <path d="M10 21H14L14 3H10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                        Login
+                    </a>
+
                     <!-- Profile dropdown -->
                     <div class="relative ml-3">
                         <div>

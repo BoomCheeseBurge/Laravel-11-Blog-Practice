@@ -1,8 +1,14 @@
 
-Followed the pagination setup from the Laravel documentation.
+Created a login button link on the navigation bar.
 
-The pagination directory is published for further customization.
+Created a Post and Login controller along with its route.
 
-A problem is shown when using the pagination in a search query or with a certain category or author. The URI parameter will not be brought over with the pagination with the default pagination query.
+Login page was created using the 'Default login page' component from Flowbite.
 
-In that case, the solution is to include the query parameter in the query.
+Created custom validation rules for both username and fullname.
+
+Added a password rule default in the 'AppServiceProvider' file.
+
+Created an anonymous component for input validation error and successful messages for both dismissal and non-dismissal types.
+
+Created a 'Post' controller for displaying all and single posts.
