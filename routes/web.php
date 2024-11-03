@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardPostController;
 
 // Route to homepage
 Route::get('/', function () {
@@ -26,7 +26,7 @@ Route::get('/about', function () {
 // Route to display a single post
 Route::get('/posts', [PostController::class, 'index']);
 // Route to display list of posts
-Route::get('/posts/{post:slug}', [PostController::class, 'show']);
+Route::get('/posts/{post}', [PostController::class, 'show']);
 
 // Guest Middleware Group
 Route::middleware('guest')->group(function () {
@@ -43,8 +43,19 @@ Route::middleware('guest')->group(function () {
 
 // Auth Middleware Group
 Route::middleware('auth')->group(function () {
-    // Route to user dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+
+    // Route to dashboard kanban
+    Route::get('/dashboard', function () {
+
+        return view('dashboard.kanban.index', [
+            'title' => 'Dashboard',
+            'subTitle' => 'Dashboard Kanban',
+            'page' => 'kanban',
+        ]);
+    })->name('dashboard.kanban');
+
+    // Route to dashboard posts
+    Route::resource('/dashboard/posts', DashboardPostController::class);
 
     // Route to log out a user in session
     Route::post('/logout', [LoginController::class, 'logout'])->name('login.out'); // POST request is used to avoid the browser prefetching links on a webpage that would inadvertently logout the user's session

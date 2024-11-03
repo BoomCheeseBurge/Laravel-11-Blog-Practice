@@ -1,20 +1,36 @@
 
-Create the authentication method in the login controller.
+Removed the dashboard controller so that the dashboard view is directly returned in the route.
 
-Show a general error message regardless of a validation error from email address or password.
+Created an anonymous component for sidebar and toggle dark mode,.
 
-Created a dashboard controller.
+Created a full component for dashboard layout, dashboard header, and dashboard table.
 
-Created an index view for the dashboard.
+Added a dashboard template from TailwindAdmin.
 
-Added middlewares to the routes.
+Instlalled the AlpineJS 'persist' package and imported it in the 'resources/js/app.js' file.
 
-Modified the 'boostrap/app.php' file to redirect unauthenticated users to the login page.
+Created a resource controller called 'DashboardPostController'.
 
-Added a 'guest' and 'auth' middleware group to the routes.
+Created views for the dashboard kanban and posts.
 
-Added a logout route and its corresponding method in the login controller.
+Added a default user image in the public storage folder.
 
-Fixed to be able to close the user dropdown when clicked away from it.
+Created a full component for table.
 
-Applied 'x-cloak' attribute to the user dropdown.
+The search bar on the dashbaord table page has not yet been implemented.
+
+Created a dynamic attribute option whether to display ID and/or Actions columns.
+
+Implemented a dynamic column span value based on whether id and actions columns are included when there is no data found.
+
+The way it works is that, in PHP, casting a variable to a boolean using (bool) will result in true if the variable is non-zero, and false otherwise. When used in arithmetic operations, true is treated as 1 and false as 0. So, multiplying the optional variables by their boolean equivalents ensures that they are only added to the final result if they are non-zero.
+
+Added a logout option in the dashboard page.
+
+Added logo image for the sidebar.
+
+Created a full component for displaying a single dashboard post page.
+
+Edit and delete buttons' functionality are not implemented yet.
+
+Added default featured images for posts without their own uploaded featured images.
