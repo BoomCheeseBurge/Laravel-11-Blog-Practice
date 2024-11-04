@@ -39,12 +39,12 @@
             <!-- Blog Post Header END -->
 
             <!-- Blog Post Featured Image START -->
-            <img src="{{ asset('IMG/default/'. $post->category->slug .'.jpg') }}" alt="Featured image" class="w-full h-auto mb-8 rounded-md">
+            <img src="{{ asset('IMG/default/'. $post->category->slug .'.jpg') }}" alt="Featured image" class="w-full h-auto mb-8 rounded-md dark:opacity-90">
             <!-- Blog Post Featured Image END -->
 
             <!-- Blog Post Content START -->
             <div class="prose prose-sm mx-auto lg:prose-lg sm:prose xl:prose-xl">
-                <p>{{ $post->body }}</p>
+                <p>{!! $post->body !!}</p>
             </div>
             <!-- Blog Post Content END -->
         </div>

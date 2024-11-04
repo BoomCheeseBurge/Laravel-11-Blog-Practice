@@ -5,7 +5,7 @@
 >
   <!-- SIDEBAR HEADER -->
   <div class="py-5.5 flex justify-between items-center gap-2 px-6 lg:py-6.5">
-    <a class="mx-auto" href="/dashboard">
+    <a class="mx-auto" href="/">
       <img class="h-13 w-16 rounded-lg md:h-19 md:w-24" src="{{ asset('IMG/logo/book-logo-2.jpg') }}" alt="Logo" />
     </a>
 

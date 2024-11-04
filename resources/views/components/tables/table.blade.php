@@ -2,6 +2,7 @@
 <div class="-my-2 overflow-x-auto py-2 pr-10 lg:-mx-8 lg:px-8 sm:-mx-6 sm:px-6">
     <div class="w-full overflow-hidden inline-block px-12 py-6 align-middle bg-white rounded-tl-lg rounded-tr-lg shadow-md dark:bg-slate-600">
         <div class="flex justify-between">
+            {{-- Table Search START --}}
             <div class="w-7/12 h-12 inline-flex px-2 bg-transparent rounded border lg:px-6">
                 <div class="w-full h-full relative flex flex-wrap items-stretch mb-6">
                     <div class="flex">
@@ -15,6 +16,19 @@
                     <input type="text" class="flex-grow flex-shrink w-px relative flex-auto px-3 text-xs font-thin tracking-wide leading-normal text-gray-500 rounded rounded-l-none border border-l-0 border-none dark:placeholder-white dark:bg-slate-600 focus:outline-none lg:text-base" placeholder="Search">
                 </div>
             </div>
+            {{-- Table Search END --}}
+
+            {{-- Table Create Button START --}}
+            <a href="{{ route('posts.create') }}" data-tooltip-target="create-tooltip" class="px-2.5 py-1.5 me-2 mb-2 text-sm font-medium text-white bg-blue-700 rounded-lg cursor-pointer dark:bg-blue-600 dark:focus:ring-blue-800 dark:hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 hover:bg-blue-800">
+                <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
+                </svg>
+            </a>
+            <div id="create-tooltip" role="tooltip" class="tooltip absolute invisible z-10 inline-block px-3 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 dark:bg-primary-700">
+                Create Post
+                <div class="tooltip-arrow" data-popper-arrow></div>
+            </div>
+            {{-- Table Create Button END --}}
         </div>
     </div>
     <div class="min-w-full overflow-y-auto px-8 pt-5 pb-10 align-middle bg-white rounded-br-lg rounded-bl-lg dark:bg-slate-800">
@@ -33,12 +47,12 @@
                 </tr>
             </thead>
             <tbody class="bg-white dark:bg-slate-700">
-                @forelse ($posts as $post)
+                @forelse ($records as $record)
                 <tr>
                     @if ($attributes->has('id'))
                     <td class="px-6 py-4 border-b border-gray-500">
                         <div class="flex items-center">
-                            <div class="text-sm leading-5 text-gray-800 dark:text-white">{{ $loop->iteration }}</div>
+                            <div class="text-sm leading-5 text-gray-800 dark:text-white">{{ $records->firstItem() + $loop->index }}</div>
                         </div>
                     </td>
                     @endif
@@ -46,18 +60,18 @@
                     @foreach ($columns as $name)
                     <td class="px-6 py-4 border-b border-gray-500">
                         @if ($name === 'category')
-                        <span class="px-2.5 py-1 me-2 text-xs font-medium text-blue-800 whitespace-nowrap bg-{{ $post->category->color }}-100 rounded-full">{{ $post->category->name }}</span>
+                        <span class="px-2.5 py-1 me-2 text-xs font-medium text-blue-800 whitespace-nowrap bg-{{ $record->category->color }}-100 rounded-full">{{ $record->category->name }}</span>
                         @elseif ($name === 'created_at')
-                        <span class="text-sm leading-5 text-blue-900 dark:text-white">{{ $post->created_at->format('F j, Y') }}</span>
+                        <span class="text-sm leading-5 text-blue-900 dark:text-white">{{ $record->created_at->format('F j, Y') }}</span>
                         @else
-                        <div class="text-sm leading-5 text-blue-900 dark:text-white">{{ $post[$name] }}</div>
+                        <div class="text-sm leading-5 text-blue-900 dark:text-white">{{ $record[$name] }}</div>
                         @endif
                     </td>
                     @endforeach
 
                     @if ($attributes->has('actions'))
                     <td class="p-4 text-sm text-center whitespace-nowrap border-b border-gray-500">
-                        <a data-tooltip-target="view-tooltip-{{ $loop->iteration }}" href="{{ route($route . '.show', ['post' => $post->slug]) }}" class="group">
+                        <a data-tooltip-target="view-tooltip-{{ $loop->iteration }}" href="{{ route($route . 's.show', [$route => $record->slug]) }}" class="group">
                             <svg class="text-primary-500 z-[-1] w-6 h-6 absolute invisible opacity-0 transition-opacity duration-300 ease-in-out dark:text-white group-hover:static group-hover:visible group-hover:opacity-100 md:w-8 md:h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                 <path fill-rule="evenodd" d="M4.998 7.78C6.729 6.345 9.198 5 12 5c2.802 0 5.27 1.345 7.002 2.78a12.713 12.713 0 0 1 2.096 2.183c.253.344.465.682.618.997.14.286.284.658.284 1.04s-.145.754-.284 1.04a6.6 6.6 0 0 1-.618.997 12.712 12.712 0 0 1-2.096 2.183C17.271 17.655 14.802 19 12 19c-2.802 0-5.27-1.345-7.002-2.78a12.712 12.712 0 0 1-2.096-2.183 6.6 6.6 0 0 1-.618-.997C2.144 12.754 2 12.382 2 12s.145-.754.284-1.04c.153-.315.365-.653.618-.997A12.714 12.714 0 0 1 4.998 7.78ZM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd"/>
                             </svg>
@@ -84,7 +98,7 @@
         </table>
         {{-- Table Pagination START --}}
         <div class="mt-5">
-            {{ $posts->links() }}
+            {{ $records->links() }}
         </div>
         {{-- Table Pagination END --}}
     </div>

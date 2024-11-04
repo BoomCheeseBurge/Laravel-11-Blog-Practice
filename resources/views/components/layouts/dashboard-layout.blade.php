@@ -8,8 +8,17 @@
     {{-- Vite to dynamically import the processed Tailwind CSS file during the build process --}}
     @vite(['resources/css/app.css','resources/js/app.js'])
 
+    {{-- Ziggy's Laravel Route Helper JS --}}
+    @routes
+
     {{-- TalwindUI's Default Font for their Components --}}
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+
+    {{-- Trix Editor Style --}}
+    <link rel="stylesheet" href="{{ asset('CSS/trix.css') }}">
+
+    {{-- Custom CSS Style --}}
+    <link rel="stylesheet" href="{{ asset('CSS/style.css') }}">
 
     <title>
       {{ $title }} | TailAdmin
@@ -49,5 +58,8 @@
 
         {{-- AlpineJS Bundled Script --}}
         <script src="{{ asset('JS/alpine.js') }}"></script>
+
+        {{-- Custom Scripts --}}
+        @stack('scripts')
     </body>
 </html>

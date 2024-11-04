@@ -54,6 +54,8 @@ Route::middleware('auth')->group(function () {
         ]);
     })->name('dashboard.kanban');
 
+    // Route to check post slug
+    Route::get('/dashboard/posts/checkSlug/{slug}', [DashboardPostController::class, 'checkSlug'])->name('posts.slug');
     // Route to dashboard posts
     Route::resource('/dashboard/posts', DashboardPostController::class);
 

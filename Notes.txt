@@ -1,36 +1,30 @@
 
-Removed the dashboard controller so that the dashboard view is directly returned in the route.
+Created a dashboard post create page.
 
-Created an anonymous component for sidebar and toggle dark mode,.
+Installed the Laravel sluggable package by Colin Viebrock from GitHub.
 
-Created a full component for dashboard layout, dashboard header, and dashboard table.
+Added a create post button on the dashboard posts page.
 
-Added a dashboard template from TailwindAdmin.
+Any custom methods outside of the default resource constroller methods must be placed before the resource constroller route.
 
-Instlalled the AlpineJS 'persist' package and imported it in the 'resources/js/app.js' file.
+Installed Ziggy package by Tighten to be able to use route helper in JS script.
 
-Created a resource controller called 'DashboardPostController'.
+Added an automatic slugged post title from the title field to the slug field.
 
-Created views for the dashboard kanban and posts.
+Added a CDN for Trix Editor package for post content input.
 
-Added a default user image in the public storage folder.
+Disabled and hid the file upload on the Trix Editor input toolbar.
 
-Created a full component for table.
+The method to hide the file upload button on the Trix editor's toolbar can be either be done through CSS or JS, but CSS seems to be more effective (try using JS and see why).
 
-The search bar on the dashbaord table page has not yet been implemented.
+The placeholder's color on the Trix Editor input cannot be changed.
 
-Created a dynamic attribute option whether to display ID and/or Actions columns.
+The button icon's color on the Trix Editor toolbar cannot be changed.
 
-Implemented a dynamic column span value based on whether id and actions columns are included when there is no data found.
+The upload link button on Trix editor's toolbar may still be visible on certain page loads for some reason.
 
-The way it works is that, in PHP, casting a variable to a boolean using (bool) will result in true if the variable is non-zero, and false otherwise. When used in arithmetic operations, true is treated as 1 and false as 0. So, multiplying the optional variables by their boolean equivalents ensures that they are only added to the final result if they are non-zero.
+Fixed the single post page where it shows escaped characters for the post body content.
 
-Added a logout option in the dashboard page.
+Fixed the table number to follow through on the next pages.
 
-Added logo image for the sidebar.
-
-Created a full component for displaying a single dashboard post page.
-
-Edit and delete buttons' functionality are not implemented yet.
-
-Added default featured images for posts without their own uploaded featured images.
+Featured image upload in the post form is not yet implemented.

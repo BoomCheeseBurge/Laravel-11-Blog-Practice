@@ -10,7 +10,7 @@
 
             {{-- ------------------------------------ Successful Message ------------------------------------ --}}
             @if (session()->has('success'))
-            <x-messages.dismissal-success :message="session('success')" class="mb-4"></x-messages.dismissal-success>
+            <x-messages.dismissal-success :message="session('success')" class="w-1/2 mb-4"></x-messages.dismissal-success>
             @endif
 
             {{-- ------------------------------------ Failed Message ------------------------------------ --}}

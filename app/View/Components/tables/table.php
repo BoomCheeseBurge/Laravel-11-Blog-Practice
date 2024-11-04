@@ -15,7 +15,7 @@ class table extends Component
     public function __construct(
         public Array $headers,
         public Array $columns,
-        public LengthAwarePaginator $posts,
+        public LengthAwarePaginator $records,
         public string $route,
     ) {}
 
