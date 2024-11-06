@@ -58,6 +58,7 @@ export default {
                 '2xsm': '375px',
                 xsm: '425px',
                 '3xl': '2000px',
+                '1l': '1024px',
                 ...defaultTheme.screens,
             },
             colors: {
@@ -265,6 +266,10 @@ export default {
                 47.5: '11.875rem',
                 75: '18.75rem',
             },
+            width: {
+                '85': '21.25rem',
+                'customWidth1': 'calc(100% - 0.6em)',
+            },
             zIndex: {
                 999999: '999999',
                 99999: '99999',
@@ -317,6 +322,7 @@ export default {
                 'spin-1.5': 'spin 1.5s linear infinite',
                 'spin-2': 'spin 2s linear infinite',
                 'spin-3': 'spin 3s linear infinite',
+                sway: 'sway 1s linear infinite',
             },
             keyframes: {
                 wobble: {
@@ -388,6 +394,14 @@ export default {
                     '0%, 100%': { transform: 'translate3d(0, 0, 0)' },
                     '50%': { transform: 'translate3d(0, -100%, 0)' },
                 },
+                sway:  {
+                    '0%': { transform: 'rotate(8deg)' },
+                    '50%': { transform: 'rotate(-8deg)' },
+                    '100%': { transform: 'rotate(8deg)' },
+                },
+            },
+            aspectRatio: {
+                '16/9': '16 / 9',
             },
         },
     },

@@ -28,4 +28,8 @@
         <x-tables.table id actions :headers="$headers" :columns="$columns" :records="$posts" route="post"></x-tables.table>
     </div>
     <!-- ====== Table Section End -->
+
+    @push('scripts')
+    <script src="{{ asset('JS/dashboard-table.js') }}"></script>
+    @endpush
 </x-layouts.dashboard-layout>

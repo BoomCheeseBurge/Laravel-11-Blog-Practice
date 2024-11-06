@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
@@ -11,15 +12,23 @@ Route::get('/', function () {
 
     return view('home', [
         'title' => 'Home',
+        'categories' => Category::select('slug')->get(),
     ]);
-});
+})->name('home');
 
 // Route to about page
 Route::get('/about', function () {
 
     return view('about', [
         'title' => 'About',
-        'fullname' => 'John Doe',
+    ]);
+});
+
+// Route to contact page
+Route::get('/contact', function () {
+
+    return view('contact', [
+        'title' => 'Contact',
     ]);
 });
 
@@ -61,12 +70,4 @@ Route::middleware('auth')->group(function () {
 
     // Route to log out a user in session
     Route::post('/logout', [LoginController::class, 'logout'])->name('login.out'); // POST request is used to avoid the browser prefetching links on a webpage that would inadvertently logout the user's session
-});
-
-// Route to contact page
-Route::get('/contact', function () {
-
-    return view('contact', [
-        'title' => 'Contact',
-    ]);
 });

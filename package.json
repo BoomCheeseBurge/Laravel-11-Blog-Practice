@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "@alpinejs/persist": "^3.14.3",
-        "alpinejs": "^3.14.3"
+        "alpinejs": "^3.14.3",
+        "swiper": "^11.1.14"
     }
 }

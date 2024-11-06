@@ -3,7 +3,7 @@
 // config/ziggy.php
 
 return [
-    'only' => ['posts.slug'],
+    'only' => ['posts.slug', 'posts.destroy'],
 ];
 
 ?>

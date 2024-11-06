@@ -34,24 +34,24 @@
   >
         <!-- ===== Page Wrapper Start ===== -->
         <div class="h-screen overflow-hidden flex">
-        <!-- ===== Sidebar Start ===== -->
-            <x-navigations.side-bar></x-navigations.side-bar>
-        <!-- ===== Sidebar End ===== -->
+            <!-- ===== Sidebar Start ===== -->
+                <x-navigations.side-bar></x-navigations.side-bar>
+            <!-- ===== Sidebar End ===== -->
 
-        <!-- ===== Content Area Start ===== -->
-        <div class="overflow-y-auto overflow-x-hidden relative flex flex-col flex-1">
-            <!-- ===== Header Start ===== -->
-            <x-headers.dashboard-header></x-headers.dashboard-header>
-            <!-- ===== Header End ===== -->
+            <!-- ===== Content Area Start ===== -->
+            <div class="overflow-y-auto overflow-x-hidden relative flex flex-col flex-1">
+                <!-- ===== Header Start ===== -->
+                <x-headers.dashboard-header></x-headers.dashboard-header>
+                <!-- ===== Header End ===== -->
 
-            <!-- ===== Main Content Start ===== -->
-            <main>
-                <div class="mx-auto max-w-screen-2xl p-4 2xl:p-10 md:p-6">
-                    {{ $slot }}
-                </div>
-            </main>
-            <!-- ===== Main Content End ===== -->
-        </div>
+                <!-- ===== Main Content Start ===== -->
+                <main>
+                    <div class="mx-auto max-w-screen-2xl p-4 2xl:p-10 md:p-6">
+                        {{ $slot }}
+                    </div>
+                </main>
+                <!-- ===== Main Content End ===== -->
+            </div>
         <!-- ===== Content Area End ===== -->
         </div>
         <!-- ===== Page Wrapper End ===== -->

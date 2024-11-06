@@ -1,4 +1,4 @@
-<x-layouts.base-layout>
+<x-layouts.base-layout :title="$title">
     <x-slot:title>{{ $title }}</x-slot:title>
 
     <div class="mx-auto max-w-screen-xl px-4 py-4 lg:px-6 lg:py-8">
@@ -46,23 +46,23 @@
                                 {{ $post->category->name }}
                             </span>
                         </a>
-                        <span class="text-sm">{{ $post->created_at->diffForHumans() }}</span>
+                        <span class="text-sm dark:text-slate-200">{{ $post->created_at->diffForHumans() }}</span>
                     </div>
 
                     {{-- Blog Post Title --}}
                     <a href="/posts/{{ $post->slug }}" class="hover:underline">
-                        <h2 class="mb-2 text-2xl font-semibold tracking-tight text-gray-800 dark:text-white">{{ $post['title'] }}</h2>
+                        <h2 class="mb-4 text-2xl font-semibold tracking-tight text-gray-800 dark:text-white">{{ $post['title'] }}</h2>
                     </a>
 
                     {{-- Blog Post Excerpt --}}
-                    <p class="mb-5 font-light text-gray-500 dark:text-gray-400">{{ Str::limit($post['body'], 100) }}</p>
+                    <p class="mb-5 text-gray-500 dark:font-light dark:text-slate-200">{{ Str::limit(strip_tags($post['body']), 100) }}</p>
                 </div>
 
                 {{-- Blog Post Author --}}
                 <div class="flex justify-between items-center">
                     <a href="/posts?author={{ $post->author->username }}">
                         <div class="flex items-center space-x-3">
-                            <img class="w-7 h-7 rounded-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" alt="Jese Leos avatar" />
+                            <img class="w-7 h-7 rounded-full" src="{{ asset('IMG/default/default-user.png') }}" alt="Default Profile Image" />
                             <span class="text-sm font-medium dark:text-white">
                                 {{ $post->author->username }}
                             </span>

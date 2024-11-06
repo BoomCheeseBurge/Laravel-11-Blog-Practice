@@ -1,13 +1,13 @@
 <x-layouts.dashboard-layout :page="$page" :title="$title">
     {{-- Utility Options START --}}
-    <div class="px-4 space-x-4 lg:px-8 sm:px-6">
+    <div class="flex items-center px-4 space-x-4 lg:px-8 sm:px-6">
         <a href="{{ route('posts.index') }}" class="text-primary-500 dark:text-white hover:underline">&laquo; Back to Posts</a>
         {{-- Edit Utility START --}}
-        <button data-tooltip-target="edit-tooltip" type="button" class="px-3.5 py-2.5 text-sm font-semibold text-white bg-amber-500 rounded-lg dark:bg-amber-400 dark:focus:ring-amber-900 focus:outline-none focus:ring-4 focus:ring-amber-300 hover:bg-amber-500 md:text-base">
+        <a href="{{ route('posts.edit', ['post' => $post]) }}" data-tooltip-target="edit-tooltip" class="block px-3.5 py-2.5 text-sm font-semibold text-white bg-amber-500 rounded-lg dark:bg-amber-400 dark:focus:ring-amber-900 focus:outline-none focus:ring-4 focus:ring-amber-300 hover:bg-amber-500 md:text-base">
             <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
             </svg>
-        </button>
+        </a>
         <div id="edit-tooltip" role="tooltip" class="tooltip z-9999 absolute invisible inline-block px-3 py-2 text-sm font-semibold text-amber-500 bg-slate-50 rounded-lg border border-slate-200 shadow-sm opacity-0 transition-opacity duration-300 dark:bg-gray-700">
             Edit
             <div class="tooltip-arrow" data-popper-arrow></div>

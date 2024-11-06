@@ -12,7 +12,7 @@
         <li>
             <div class="font-medium">{{ $title }} /</div>
         </li>
-        <li class="text-primary-500 font-medium">Create</li>
+        <li class="text-primary-500 font-medium">Edit</li>
         </ol>
     </nav>
     </div>
@@ -20,7 +20,8 @@
 
     <!-- Create Post START -->
     <div class="bg-white/75 font-[sans-serif] shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-md dark:bg-slate-800">
-        <form action="{{ route('posts.store') }}" method="POST">
+        <form action="{{ route('posts.update', ['post' => $post]) }}" method="POST">
+            @method('put')
             @csrf
             <div class="flex flex-col items-center gap-10 py-10 md:py-15">
                 <div class="w-full flex flex-col px-6 space-y-5 text-slate-900 md:flex-row md:justify-center md:space-x-5 md:space-y-0">
@@ -33,7 +34,7 @@
                         is-invalid
                         @else
                         is-valid
-                        @enderror" placeholder="Ente title here" value="{{ old('title') }}" autocomplete="off" autofocus required>
+                        @enderror" placeholder="Ente title here" value="{{ old('title', $post->title) }}" autocomplete="off" autofocus required>
                         <svg class="w-6 h-6 text-red-600 dark:text-white
                         @error('title')
                         absolute bottom-0 top-10 right-0 mr-3
@@ -53,7 +54,7 @@
                         <label for="slug" class="text-boxdark-2 font-sans font-semibold dark:text-slate-200">Slug</label>
                         <div class="rounded-md border border-slate-300 dark:border-slate-500">
                             <input id="slug" name="slug" type='text' placeholder='Auto-generated'
-                            class="w-full px-4 py-3.5 text-sm rounded-md border-none cursor-default dark:placeholder-slate-200 dark:text-slate-200 dark:bg-slate-600 focus:outline-none focus:ring-0" value="{{ old('slug') }}" readonly required/>
+                            class="w-full px-4 py-3.5 text-sm rounded-md border-none cursor-default dark:placeholder-slate-200 dark:text-slate-200 dark:bg-slate-600 focus:outline-none focus:ring-0" value="{{ old('slug', $post->slug) }}" readonly required/>
                             @error('slug')
                             <div class="ps-2 text-sm text-red-800 dark:text-red-400" role="alert">
                                 {{ $message }}
@@ -70,7 +71,7 @@
                     <select id="category_id" name="category_id" class="w-full block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 dark:placeholder-gray-400 dark:text-white dark:bg-gray-700 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500 focus:border-blue-500 focus:ring-blue-500" required>
                         <option disabled>Choose a category</option>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : ' ' }}>{{ $category->name }}</option>
+                            <option value="{{ $category->id }}" {{ old('category_id', $post->category_id) == $category->id ? 'selected' : ' ' }}>{{ $category->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -108,14 +109,14 @@
                 <x-messages.error :message="$message"></x-messages.error>
                 @enderror
                 <trix-toolbar id="post_toolbar" class="[&>div>span>button]:dark:bg-primary-600 mt-2"></trix-toolbar>
-                <input id="body" name="body" class="w-0 float-left opacity-0" value="{{ old('body') }}" required>
+                <input id="body" name="body" class="w-0 float-left opacity-0" value="{{ old('body', $post->body) }}" required>
                 <trix-editor toolbar="post_toolbar" input="body" class="dark:text-slate-800 dark:bg-slate-300" placeholder="Convey your writing here!"></trix-editor>
                 {{-- Post Content Input END --}}
 
                 {{-- Post Create Submit START --}}
                 <div class="flex justify-center mt-10">
                     <button type='submit'
-                    class="bg-primary-600 w-full px-4 py-2.5 text-sm font-semibold text-white rounded-md hover:bg-primary-700 md:w-2/3 md:text-lg">Create</button>
+                    class="bg-primary-600 w-full px-4 py-2.5 text-sm font-semibold text-white rounded-md hover:bg-primary-700 md:w-2/3 md:text-lg">Update</button>
                 </div>
                 {{-- Post Create Submit END --}}
             </div>

@@ -71,9 +71,10 @@ class="flex-grow shadow-2 flex justify-between items-center px-4 py-4 2xl:px-11 
             </span>
 
             <span class="w-10 h-10 rounded-full md:w-12 md:h-12">
-                <img src="{{ asset('IMG/default/default-user.png') }}" alt="{{ auth()->user()->fullname }}'s Profile Image" />
+                <img src="{{ asset('IMG/default/default-user.png') }}" alt="Default Profile Image" />
             </span>
 
+            {{-- Arrow to Open Profile Dropdown --}}
             <svg
                 :class="dropdownOpen && 'rotate-180'"
                 class="hidden fill-current sm:block"
@@ -95,10 +96,22 @@ class="flex-grow shadow-2 flex justify-between items-center px-4 py-4 2xl:px-11 
             <!-- Dropdown Start -->
             <div x-transition.delay.50ms
             x-show="dropdownOpen"
-            class="border-stroke shadow-default w-62.5 absolute right-0 flex flex-col mt-4 bg-white rounded-sm border dark:border-strokedark dark:bg-boxdark">
+            class="border-stroke shadow-default w-62.5 absolute right-0 flex flex-col mt-4 bg-white rounded-md border dark:border-strokedark dark:bg-boxdark">
+                <div class="border-stroke p-5 border-b dark:border-strokedark sm:hidden">
+                    <span class="block text-sm font-medium text-black dark:text-white md:text-base"
+                    >Welcome back, {{ auth()->user()->username }}!</span
+                    >
+                    <span class="text-primary-500/80 block text-xs font-bold dark:font-normal dark:text-slate-200 md:text-sm">
+                        @if (auth()->user()->is_admin)
+                        Admin
+                        @else
+                        User
+                        @endif
+                    </span>
+                </div>
                 <ul
-                    class="border-stroke py-7.5 flex flex-col gap-5 px-6 border-b dark:border-strokedark">
-                    <li>
+                    class="border-stroke flex flex-col gap-5 p-5 border-b dark:border-strokedark">
+                    <li class="pt-2 sm:pt-0">
                         <a
                             href="profile.html"
                             class="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary-500 lg:text-base">

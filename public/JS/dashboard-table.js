@@ -1,52 +1,51 @@
 
-// ================================ Sluggable Input ================================
-const title = document.getElementById('title');
-const slug = document.getElementById('slug');
+// ================================ Pass Data to Modal ================================
 
-title.addEventListener('change', () => fetch(route('posts.slug', title.value)).then((response) => response.json()).then((data) => slug.value = data.slug));
+        // attach click event listener to parent element
+        document.getElementById("container").addEventListener("click", function (event) {
+            // check if target element is an img with the upload_image class
+            if (event.target && event.target.matches("img.upload_image")) {
+                imageSelect(event);
+            }
+        });
 
-// ================================ Featured Image Upload ================================
-function imageData() {
-    return {
-      previewUrl: "",
-      updatePreview() {
-        var reader,
-          files = document.getElementById("featured_image").files;
+function insertIdentifier(identifier, type, action)
+{
+    const currentModalName = action + 'Modal';
 
-        reader = new FileReader();
+    const modal = FlowbiteInstances.getInstance('Modal', currentModalName);
 
-        reader.onload = e => {
-          this.previewUrl = e.target.result;
-        };
+    modal.updateOnShow(() => {
 
-        reader.readAsDataURL(files[0]);
-      },
-      clearPreview() {
-        document.getElementById("featured_image").value = null;
-        this.previewUrl = "";
-      }
-    };
-  }
+        // --------- Passing the data from the element's attribute doesn't work for some reason
+        // Every button clicked for every row will have the slug of the first row of the table
+        // const deleteModalBtn = document.getElementById('deleteButton');
+        // Extract info from data-bs-* attributes
+        // const slug = deleteModalBtn.getAttribute('data-bs-slug');
 
-// ================================ Disable Link Attachment from Trix Editor ================================
-document.addEventListener('trix-file-accept', (e) => { e.preventDefault() });
+        if (action == "delete") {
 
-// ================================ Hide Link Attachment from Trix Editor ================================
-// Guarantees that the script executes only after the DOM is ready
-// document.addEventListener('DOMContentLoaded', () => {
-//     const uploadButton = document.querySelector('[data-trix-action="attachFiles"]');
-//     if (uploadButton) {
-//         uploadButton.style.display = 'none';
-//     }
-//     const fileTools = document.querySelector('[data-trix-button-group="file-tools"]');
-//     if (fileTools) {
-//         fileTools.style.display = 'none';
-//     }
+            // console.log(route(type + '.destroy', identifier));
 
-//     // const elements = document.querySelectorAll('.trix-button');
-//     // elements.forEach(element => {
-//     //     if (element.classList.contains('trix-button')) {
-//     //       element.classList.add('dark:bg-white');
-//     //     }
-//     //   });
-// });
+            // Update the modal's form action
+            document.getElementById('deletionModalForm').action = route(type + '.destroy', identifier);
+
+        } else if (action == "restore") {
+
+            // console.log(route(type + '.destroy', identifier));
+
+            // Update the modal's form action
+            document.getElementById('restorationModalForm').action = route(type + '.restore', identifier);
+
+            // console.log(document.getElementById('restoration-form').action);
+
+        } else if (action == "permaDelete") {
+
+            // console.log(route(type + '.destroy', identifier));
+
+            // Update the modal's form action
+            document.getElementById('permaDeletionModalForm').action = route(type + '.erase', identifier);
+        }
+
+    });
+}

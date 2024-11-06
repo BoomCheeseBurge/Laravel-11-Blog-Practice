@@ -6,6 +6,8 @@ use App\Models\Post;
 use App\Rules\Title;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Http\RedirectResponse;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class DashboardPostController extends Controller
@@ -41,7 +43,7 @@ class DashboardPostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validatedData = $request->validate([
             'title' => ['required', 'max:255', new Title],
@@ -54,7 +56,7 @@ class DashboardPostController extends Controller
 
         Post::create($validatedData);
 
-        return redirect()->route('posts.index')->with('success', 'Post successfully created!');
+        return to_route('posts.index')->with('success', 'Post successfully created!');
     }
 
     /**
@@ -62,6 +64,10 @@ class DashboardPostController extends Controller
      */
     public function show(Post $post)
     {
+        if($post->author->id !== auth()->user()->id) {
+            abort(403);
+        }
+
         return view('dashboard.posts.show', [
             'title' => 'Single Post',
             'page' => 'singlePost',
@@ -74,7 +80,17 @@ class DashboardPostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        if($post->author->id !== auth()->user()->id) {
+            abort(403);
+       }
+
+        return view('dashboard.posts.edit', [
+            'title' => 'Dashboard',
+            'subTitle' => 'Edit Post',
+            'page' => 'editPost',
+            'post' => $post,
+            'categories' => Category::select('name', 'id')->get(),
+        ]);
     }
 
     /**
@@ -82,15 +98,44 @@ class DashboardPostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        if($post->author->id !== auth()->user()->id) {
+            abort(403);
+        }
+
+       $request->validate([
+            'title' => ['required', 'max:255', new Title],
+            'slug' => ['required', Rule::unique('posts')->ignore($post->id)],
+            'category_id' => 'required',
+            'body' => 'required',
+        ]);
+
+        $post->title = $request->input('title');
+        $post->slug = $request->input('slug');
+        $post->category_id = $request->input('category_id');
+        $post->body = $request->input('body');
+
+        $post->save();
+
+        if(!$post->wasChanged())
+        {
+            return to_route('posts.index');
+        }
+
+        return to_route('posts.index')->with('success', 'Post successfully updated!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post): RedirectResponse
     {
-        //
+        if($post->author->id !== auth()->user()->id) {
+            abort(403);
+        }
+
+        $post->delete();
+
+        return to_route('posts.index')->with('success', 'Post successfully deleted!');
     }
 
     /**

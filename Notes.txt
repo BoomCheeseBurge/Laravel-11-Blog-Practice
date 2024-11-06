@@ -1,30 +1,24 @@
 
-Created a dashboard post create page.
+Added a delete modal for the dashboard posts table.
 
-Installed the Laravel sluggable package by Colin Viebrock from GitHub.
+Added the JS script for it.
 
-Added a create post button on the dashboard posts page.
+Allowed the 'posts.destroy' route to the 'ziggy.php' file.
 
-Any custom methods outside of the default resource constroller methods must be placed before the resource constroller route.
+Added a form request for the dashboard posts.
 
-Installed Ziggy package by Tighten to be able to use route helper in JS script.
+Added a post policy.
 
-Added an automatic slugged post title from the title field to the slug field.
+Addd a dark mode toggle to the base navbar.
 
-Added a CDN for Trix Editor package for post content input.
+Escaped the characters for the excerpt of the posts in the posts page.
 
-Disabled and hid the file upload on the Trix Editor input toolbar.
+Added a simple UI for the home, about, and contact pages to not be empty.
 
-The method to hide the file upload button on the Trix editor's toolbar can be either be done through CSS or JS, but CSS seems to be more effective (try using JS and see why).
+Modified the dashboard posts table to have an edit button.
 
-The placeholder's color on the Trix Editor input cannot be changed.
+Created an edit form page for the dashboard posts.
 
-The button icon's color on the Trix Editor toolbar cannot be changed.
+Created a delete modal for the dashboard posts table.
 
-The upload link button on Trix editor's toolbar may still be visible on certain page loads for some reason.
-
-Fixed the single post page where it shows escaped characters for the post body content.
-
-Fixed the table number to follow through on the next pages.
-
-Featured image upload in the post form is not yet implemented.
+Installed Swiper package for interactive carousel in the homepage.

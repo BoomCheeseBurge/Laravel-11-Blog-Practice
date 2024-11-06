@@ -1,4 +1,4 @@
-<x-layouts.base-layout>
+<x-layouts.base-layout :title="$title">
     <x-slot:title>{{ $title }}</x-slot:title>
 
     {{-- <article class="max-w-screen-md py-8">

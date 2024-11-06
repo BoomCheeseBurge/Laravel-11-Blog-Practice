@@ -12,11 +12,35 @@
     .dashboard-body {
       @apply relative z-1 bg-whiten font-satoshi text-base font-normal text-body;
     }
+
     .is-valid {
       @apply border border-gray-300 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500 focus:ring-primary-600 focus:border-primary-600;
     }
     .is-invalid {
       @apply border border-red-600 focus:ring-red-600 focus:border-red-600;
+    }
+
+    .gradient-light {
+        background: linear-gradient(90deg, #93c5fd 0%, #3b82f6 100%);
+    }
+    .gradient-dark {
+        background: linear-gradient(90deg, #1e40af 0%, #1d4ed8 200%);
+    }
+
+    .card-list .card-item .card-link {
+        @apply w-70 sm:w-100 block bg-slate-100 dark:bg-primary-600 p-4.5 rounded-xl shadow-md hover:border-2 hover:border-slate-300 dark:hover:border-primary-500
+    }
+    .card-list .card-link .card-image {
+        @apply w-full aspect-[16/9] rounded-md
+    }
+    .card-wrapper .swiper-pagination-bullet {
+        @apply h-3 w-3 md:h-5 md:w-5 opacity-75 dark:bg-primary-700 bg-slate-200
+    }
+    .card-wrapper .swiper-pagination-bullet-active {
+        @apply h-3 w-3 md:h-5 md:w-5 opacity-100 dark:bg-primary-800 bg-slate-400
+    }
+    .card-wrapper .swiper-slide-button {
+        @apply dark:text-primary-600 text-slate-200 hover:scale-125 transition-transform ease-linear hidden sm:block
     }
     /* ... */
 }
