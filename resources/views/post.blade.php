@@ -25,15 +25,15 @@ URL: https://flowbite.com/docs/components/typography/
     <div class="mx-auto max-w-screen-xl flex justify-between px-4">
         <article class="format format-blue format-sm mx-auto w-full max-w-2xl dark:format-invert lg:format-lg lg:max-w-4xl sm:format-base">
             <header class="not-format mb-4 lg:mb-6">
-                <a href="/posts" class="text-base font-medium text-blue-600 hover:underline">Back to Posts</a>
+                <a href="/posts" class="text-base font-medium text-blue-600 dark:text-teal-300 hover:underline">Back to Posts</a>
                 <address class="flex items-center my-10 not-italic">
                     <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-                        <img class="w-16 h-16 mr-4 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="{{ $post->author->fullname }}">
+                        <img class="w-12 h-12 mr-4 rounded-full lg:w-16 lg:h-16 md:w-14 md:h-14" src="{{ asset('IMG/default/default-user.png') }}" alt="{{ $post->author->fullname }}">
                         <div>
                             <a href="/posts?author={{ $post->author->username }}" rel="author" class="text-xl font-bold text-gray-900 dark:text-white">{{ $post->author->fullname }}</a>
                             <p class="mb-1 text-base text-gray-500 dark:text-gray-400"><time pubdate datetime="{{ $post->created_at }}" title="{{ $post->created_at->format('F j, Y') }}">{{ $post->created_at->format('F j, Y') }}</time></p>
                             <a href="/posts?category={{ $post->category->slug }}">
-                                <span class="bg-{{ $post->category->color }}-100 text-primary-800 inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded dark:bg-primary-200 dark:text-primary-800">
+                                <span class="bg-{{ $post->category->color }}-100 text-primary-800 inline-flex items-center px-2.5 py-0.5 text-xs lg:text-sm font-medium rounded dark:bg-primary-200 dark:text-primary-800">
                                     {{ $post->category->name }}
                                 </span>
                             </a>
@@ -41,9 +41,16 @@ URL: https://flowbite.com/docs/components/typography/
                     </div>
                 </address>
                 <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 dark:text-white lg:mb-6 lg:text-4xl">{{ $post['title'] }}</h1>
+
+                {{-- Post Featured Image --}}
+                @if ($post->featured_image)
+                <img src="{{ asset($post->featured_image) }}" alt="Post Featured Image" class="aspect-16/9">
+                @else
+                <img src="{{ asset('IMG/default/'. $post->category->slug .'.jpg') }}" alt="Default Featured Image" class="w-full h-3/5">
+                @endif
             </header>
 
-            <p>{!! $post->body !!}</p>
+            <p class="dark:text-slate-300">{!! $post->body !!}</p>
 
             <hr>
 

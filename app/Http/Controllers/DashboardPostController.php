@@ -50,7 +50,13 @@ class DashboardPostController extends Controller
             'slug' => 'required | unique:posts',
             'category_id' => 'required',
             'body' => 'required',
+            'featured_image' => 'image | file | max:1024',
         ]);
+
+        if ($request->hasFile('featured_image'))
+        {
+            $validatedData['featured_image'] = $request->file('featured_image')->store('IMG/featured-images');
+        }
 
         $validatedData['author_id'] = auth()->user()->id;
 

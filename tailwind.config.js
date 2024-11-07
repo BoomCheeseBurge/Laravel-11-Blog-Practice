@@ -402,6 +402,7 @@ export default {
             },
             aspectRatio: {
                 '16/9': '16 / 9',
+                '4/3': '4 / 3',
             },
         },
     },

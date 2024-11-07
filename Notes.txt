@@ -1,24 +1,30 @@
 
-Added a delete modal for the dashboard posts table.
+You can go to a method directly in a controller file by entering the name of the controller method with a prefix of '@' in the 'Ctrl + P' command.
 
-Added the JS script for it.
+________________________________________________________________
 
-Allowed the 'posts.destroy' route to the 'ziggy.php' file.
+Added a 'featured_image' field to the posts table and remigrate.
 
-Added a form request for the dashboard posts.
+________________________________________________________________
 
-Added a post policy.
+When you return a view in Laravel, you're implicitly returning an HTTP response. The view() function handles the rendering of the view and sends the generated HTML to the browser.
 
-Addd a dark mode toggle to the base navbar.
+So, you don't need to explicitly specify a return type like RedirectResponse in this case. The view() function itself is sufficient to handle the response.
 
-Escaped the characters for the excerpt of the posts in the posts page.
+________________________________________________________________
 
-Added a simple UI for the home, about, and contact pages to not be empty.
+Changed the filesystem driver to 'public' in the '.env' file.
 
-Modified the dashboard posts table to have an edit button.
+However, the uploaded image file was stored in the private folder instead of the public folder.
 
-Created an edit form page for the dashboard posts.
+The filesystem driver remain unchanged.
 
-Created a delete modal for the dashboard posts table.
+________________________________________________________________
 
-Installed Swiper package for interactive carousel in the homepage.
+Added an image input validation for post creation and edit.
+
+Added 'featured_image' field to the fillable array of the Post model.
+
+________________________________________________________________
+
+Display post's featured image in the dashboard show post, post, and posts pages else show default featured image.

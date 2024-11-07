@@ -22,6 +22,7 @@ return new class extends Migration
                 table: 'categories', indexName: 'posts_category_id'
             );
             $table->text('body');
+            $table->string('featured_image')->nullable();
             $table->timestamps();
         });
     }

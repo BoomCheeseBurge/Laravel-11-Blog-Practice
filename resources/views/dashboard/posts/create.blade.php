@@ -20,7 +20,7 @@
 
     <!-- Create Post START -->
     <div class="bg-white/75 font-[sans-serif] shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-md dark:bg-slate-800">
-        <form action="{{ route('posts.store') }}" method="POST">
+        <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="flex flex-col items-center gap-10 py-10 md:py-15">
                 <div class="w-full flex flex-col px-6 space-y-5 text-slate-900 md:flex-row md:justify-center md:space-x-5 md:space-y-0">
@@ -80,6 +80,9 @@
             <div class="mx-auto max-w-3xl px-5 pb-10">
                 {{-- Featured Image Input START --}}
                 <h3 class="mb-2 font-mono text-2xl font-bold text-gray-900 dark:text-slate-100">Featured Image</h3>
+                @error('featured_image')
+                <x-messages.error :message="$message"></x-messages.error>
+                @enderror
                 <div x-data="imageData()" class="mb-15 items-center p-6 text-center text-gray-900 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:text-gray-400 dark:bg-gray-800 dark:border-gray-400">
                     <div x-show="previewUrl == ''">
                         <label for="featured_image" class="cursor-pointer">
@@ -91,7 +94,7 @@
                             <p class="text-sm font-normal md:px-6">and should be in <b class="text-slate-800 dark:text-gray-300">JPG, PNG, or GIF</b> format.</p>
                             <span id="filename" class="z-50 text-gray-500 bg-gray-200"></span>
                         </label>
-                        <input id="featured_image" type="file" class="hidden" accept="image/*" @change="updatePreview()" />
+                        <input id="featured_image" name="featured_image" type="file" accept="image/*" class="hidden" @change="updatePreview()" />
                     </div>
                     <div class="w-full space-y-5" x-show="previewUrl !== ''">
                         <img :src="previewUrl" alt="" class="h-[24rem] w-[40rem] mx-auto">

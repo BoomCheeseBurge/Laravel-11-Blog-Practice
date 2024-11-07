@@ -42,7 +42,7 @@
                     {{-- Blog Post Category --}}
                     <div class="flex justify-between items-center mb-5 text-gray-500">
                         <a href="/posts?category={{ $post->category->slug }}" class="transition hover:scale-105">
-                            <span class="bg-{{ $post->category->color }}-100 text-primary-800 inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded dark:bg-primary-200 dark:text-primary-800">
+                            <span class="bg-{{ $post->category->color }}-100 text-primary-800 inline-flex items-center px-2.5 py-0.5 lg:text-sm text-xs font-medium rounded dark:bg-primary-200 dark:text-primary-800">
                                 {{ $post->category->name }}
                             </span>
                         </a>
@@ -51,15 +51,22 @@
 
                     {{-- Blog Post Title --}}
                     <a href="/posts/{{ $post->slug }}" class="hover:underline">
-                        <h2 class="mb-4 text-2xl font-semibold tracking-tight text-gray-800 dark:text-white">{{ $post['title'] }}</h2>
+                        <h2 class="mb-2 text-xl font-semibold tracking-tight text-gray-800 dark:text-white">{{ $post['title'] }}</h2>
                     </a>
 
+                    {{-- Post Featured Image --}}
+                    @if ($post->featured_image)
+                    <img src="{{ asset($post->featured_image) }}" alt="Post Featured Image" class="w-full h-1/2">
+                    @else
+                    <img src="{{ asset('IMG/default/'. $post->category->slug .'.jpg') }}" alt="Default Featured Image" class="w-full h-1/2">
+                    @endif
+
                     {{-- Blog Post Excerpt --}}
-                    <p class="mb-5 text-gray-500 dark:font-light dark:text-slate-200">{{ Str::limit(strip_tags($post['body']), 100) }}</p>
+                    <p class="mt-2 mb-5 text-gray-600 dark:font-light dark:text-slate-200">{{ Str::limit(strip_tags($post['body']), 100) }}</p>
                 </div>
 
                 {{-- Blog Post Author --}}
-                <div class="flex justify-between items-center">
+                <div class="flex justify-between items-center mt-5">
                     <a href="/posts?author={{ $post->author->username }}">
                         <div class="flex items-center space-x-3">
                             <img class="w-7 h-7 rounded-full" src="{{ asset('IMG/default/default-user.png') }}" alt="Default Profile Image" />

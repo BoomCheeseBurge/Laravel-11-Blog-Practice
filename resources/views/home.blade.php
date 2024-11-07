@@ -23,7 +23,7 @@
                 </div>
                 <!--Right Col-->
                 <div class="w-full py-10 md:py-6 text-center md:w-3/5">
-                    <img class="w-full z-50 md:w-4/5" src="{{ asset('IMG/app/hero.png') }}" alt="Hero Image" />
+                    <img class="w-full z-50 md:w-4/5" src="{{ asset('IMG/core-img/hero.png') }}" alt="Hero Image" />
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
                         <p class="mb-8 text-gray-600 dark:text-gray-200">
                         Create an account and share your knowledge with us! Showcase your best writing and untold story.
 
-                        <img src="{{ asset('IMG/app/woman-studying-svgrepo-com.svg') }}" alt="woman writing a post icon" class="h-12 w-12 md:h-20 md:w-20 lg:h-25 lg:w-25 mt-5 md:mb-6 lg:mb-8">
+                        <img src="{{ asset('IMG/core-img/woman-studying-svgrepo-com.svg') }}" alt="woman writing a post icon" class="h-12 w-12 md:h-20 md:w-20 lg:h-25 lg:w-25 mt-5 md:mb-6 lg:mb-8">
 
                         <br />
 
@@ -360,7 +360,7 @@
                             <p class="mb-8 text-gray-600 dark:text-gray-200">
                                 You can browse our collection of blog posts. We have blog posts from all around the world!
 
-                                <img src="{{ asset('IMG/app/a-person-who-was-inspired-by-reading-a-book-svgrepo-com.svg') }}" alt="a person who was inspired by reading a book icon" class="h-12 w-12 md:h-20 md:w-20 lg:h-25 lg:w-25 mt-5 mb-3 sm:mb-6 lg:mb-12">
+                                <img src="{{ asset('IMG/core-img/a-person-who-was-inspired-by-reading-a-book-svgrepo-com.svg') }}" alt="a person who was inspired by reading a book icon" class="h-12 w-12 md:h-20 md:w-20 lg:h-25 lg:w-25 mt-5 mb-3 sm:mb-6 lg:mb-12">
 
                                 Images from:
 
@@ -441,7 +441,7 @@
                 <div class="flex flex-col items-center justify-center md:flex-row md:my-4">
                     <div class="px-10 md:p-10 sm:w-1/2">
                         <div class="image object-center text-center">
-                            <img src="{{ asset('IMG/app/about-cover.png') }}" alt="about cover image" class="w-4/5">
+                            <img src="{{ asset('IMG/core-img/about-cover.png') }}" alt="about cover image" class="w-4/5">
                         </div>
                     </div>
                     <div class="p-5 sm:w-1/2">
@@ -454,7 +454,7 @@
                                 <br><br>
                                 Our mission is to inspire, inform, and entertain our readers with insightful articles, thought-provoking analyses, and engaging features. Join us on a journey of discovery as we delve into the depths of various topics, from technology and science to culture and current events.
 
-                                <img src="{{ asset('IMG/app/men-in-suits-to-guide-svgrepo-com.svg') }}" alt="men in suit explaining icon" class="h-25 w-25 mt-5">
+                                <img src="{{ asset('IMG/core-img/men-in-suits-to-guide-svgrepo-com.svg') }}" alt="men in suit explaining icon" class="h-25 w-25 mt-5">
                             </p>
                         </div>
                     </div>
@@ -496,7 +496,7 @@
             <h3 class="dark:text-boxdark my-4 font-mono text-xl md:text-3xl leading-tight text-slate-200">
                 Ready to start writing?
 
-                <img src="{{ asset('IMG/app/woman-with-notebook-svgrepo-com.svg') }}" alt="woman with notebook icon" class="h-12 w-12 md:h-18 md:w-18 inline">
+                <img src="{{ asset('IMG/core-img/woman-with-notebook-svgrepo-com.svg') }}" alt="woman with notebook icon" class="h-12 w-12 md:h-18 md:w-18 inline">
             </h3>
             <a href="/register" class="dark:bg-primary-800 transform mx-auto inline-block px-8 py-4 my-6 font-bold dark:text-slate-200 rounded-full shadow-lg transition duration-300 ease-in-out text-gray-800 bg-white focus:shadow-outline focus:outline-none hover:underline hover:scale-105 lg:mx-0">
                 Sign Up!
