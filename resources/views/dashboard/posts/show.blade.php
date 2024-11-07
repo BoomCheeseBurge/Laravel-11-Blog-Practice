@@ -39,7 +39,11 @@
             <!-- Blog Post Header END -->
 
             <!-- Blog Post Featured Image START -->
+            @if ($post->featured_image)
+            <img src="{{ asset($post->featured_image) }}" alt="Featured image" class="w-full h-auto mb-8 rounded-md dark:opacity-90">
+            @else
             <img src="{{ asset('IMG/default/'. $post->category->slug .'.jpg') }}" alt="Featured image" class="w-full h-auto mb-8 rounded-md dark:opacity-90">
+            @endif
             <!-- Blog Post Featured Image END -->
 
             <!-- Blog Post Content START -->

@@ -20,7 +20,7 @@
 
     <!-- Create Post START -->
     <div class="bg-white/75 font-[sans-serif] shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-md dark:bg-slate-800">
-        <form action="{{ route('posts.update', ['post' => $post]) }}" method="POST">
+        <form action="{{ route('posts.update', ['post' => $post]) }}" method="POST" enctype="multipart/form-data">
             @method('put')
             @csrf
             <div class="flex flex-col items-center gap-10 py-10 md:py-15">
@@ -78,10 +78,10 @@
                 {{-- Post Category Input END --}}
             </div>
 
-            <div class="mx-auto max-w-3xl px-5 pb-10">
+            <div x-data="{ fileExist: '{{ $post->featured_image ? asset($post->featured_image) : '' }}' }" class="mx-auto max-w-3xl px-5 pb-10">
                 {{-- Featured Image Input START --}}
                 <h3 class="mb-2 font-mono text-2xl font-bold text-gray-900 dark:text-slate-100">Featured Image</h3>
-                <div x-data="imageData()" class="mb-15 items-center p-6 text-center text-gray-900 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:text-gray-400 dark:bg-gray-800 dark:border-gray-400">
+                <div x-data="imageData(fileExist)" class="mb-15 items-center p-6 text-center text-gray-900 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:text-gray-400 dark:bg-gray-800 dark:border-gray-400">
                     <div x-show="previewUrl == ''">
                         <label for="featured_image" class="cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mx-auto w-8 h-8 mb-4">
@@ -92,10 +92,14 @@
                             <p class="text-sm font-normal md:px-6">and should be in <b class="text-slate-800 dark:text-gray-300">JPG, PNG, or GIF</b> format.</p>
                             <span id="filename" class="z-50 text-gray-500 bg-gray-200"></span>
                         </label>
-                        <input id="featured_image" type="file" class="hidden" accept="image/*" @change="updatePreview()" />
+                        <input id="featured_image" name="featured_image" type="file" class="hidden" @change="updatePreview()" />
                     </div>
                     <div class="w-full space-y-5" x-show="previewUrl !== ''">
-                        <img :src="previewUrl" alt="" class="h-[24rem] w-[40rem] mx-auto">
+                        @if ($post->featured_image)
+                        <img :src="previewUrl" alt="current featured image" class="h-[24rem] w-[40rem] mx-auto">
+                        @else
+                        <img :src="previewUrl" alt="uploaded featured image" class="h-[24rem] w-[40rem] mx-auto">
+                        @endif
                         <div class="">
                             <button type="button" @click="clearPreview()" class="px-5 py-2.5 me-2 mb-2 text-sm font-medium text-center text-white bg-teal-600 rounded-full dark:font-semibold dark:text-teal-800 dark:bg-teal-400 dark:focus:ring-teal-500 dark:hover:bg-teal-600 focus:outline-none focus:ring-4 focus:ring-teal-500 hover:bg-teal-800">Choose Another</button>
                         </div>

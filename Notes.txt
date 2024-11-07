@@ -3,28 +3,10 @@ You can go to a method directly in a controller file by entering the name of the
 
 ________________________________________________________________
 
-Added a 'featured_image' field to the posts table and remigrate.
+Preview existing featured image on post edit, else display the file input.
+
+Delete old featured image of a post on post edit.
+
+Delete featured image of a post on post deletion.
 
 ________________________________________________________________
-
-When you return a view in Laravel, you're implicitly returning an HTTP response. The view() function handles the rendering of the view and sends the generated HTML to the browser.
-
-So, you don't need to explicitly specify a return type like RedirectResponse in this case. The view() function itself is sufficient to handle the response.
-
-________________________________________________________________
-
-Changed the filesystem driver to 'public' in the '.env' file.
-
-However, the uploaded image file was stored in the private folder instead of the public folder.
-
-The filesystem driver remain unchanged.
-
-________________________________________________________________
-
-Added an image input validation for post creation and edit.
-
-Added 'featured_image' field to the fillable array of the Post model.
-
-________________________________________________________________
-
-Display post's featured image in the dashboard show post, post, and posts pages else show default featured image.

@@ -6,9 +6,10 @@ const slug = document.getElementById('slug');
 title.addEventListener('change', () => fetch(route('posts.slug', title.value)).then((response) => response.json()).then((data) => slug.value = data.slug));
 
 // ================================ Featured Image Upload ================================
-function imageData() {
+function imageData(image = '') {
+
     return {
-      previewUrl: "",
+      previewUrl: image,
       updatePreview() {
         var reader,
           files = document.getElementById("featured_image").files;

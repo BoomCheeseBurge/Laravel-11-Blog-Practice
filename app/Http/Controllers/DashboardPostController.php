@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class DashboardPostController extends Controller
@@ -108,17 +109,33 @@ class DashboardPostController extends Controller
             abort(403);
         }
 
-       $request->validate([
+       $validatedData = $request->validate([
             'title' => ['required', 'max:255', new Title],
             'slug' => ['required', Rule::unique('posts')->ignore($post->id)],
             'category_id' => 'required',
             'body' => 'required',
+            'featured_image' => 'image',
         ]);
 
-        $post->title = $request->input('title');
-        $post->slug = $request->input('slug');
-        $post->category_id = $request->input('category_id');
-        $post->body = $request->input('body');
+        if ($request->hasFile('featured_image'))
+        {
+            // Check if the current post has an existing featured image
+            if ($post->featured_image)
+            {
+                // Delete the old featured image file
+                Storage::delete($post->featured_image);
+            }
+
+            $validatedData['featured_image'] = $request->file('featured_image')->store('IMG/featured-images');
+        } else {
+            $validatedData['featured_image'] = $post->featured_image;
+        }
+
+        $post->title = $validatedData['title'];
+        $post->slug = $validatedData['slug'];
+        $post->category_id = $validatedData['category_id'];
+        $post->body = $validatedData['body'];
+        $post->featured_image = $validatedData['featured_image'];
 
         $post->save();
 
@@ -137,6 +154,13 @@ class DashboardPostController extends Controller
     {
         if($post->author->id !== auth()->user()->id) {
             abort(403);
+        }
+
+        // Check if the current post has an existing featured image
+        if ($post->featured_image)
+        {
+            // Delete the featured image file
+            Storage::delete($post->featured_image);
         }
 
         $post->delete();
