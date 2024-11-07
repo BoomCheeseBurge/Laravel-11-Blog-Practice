@@ -25,7 +25,7 @@ function insertIdentifier(identifier, type, action)
 
         if (action == "delete") {
 
-            // console.log(route(type + '.destroy', identifier));
+            console.log(route(type + '.destroy', identifier));
 
             // Update the modal's form action
             document.getElementById('deletionModalForm').action = route(type + '.destroy', identifier);

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -32,6 +34,10 @@ class AppServiceProvider extends ServiceProvider
                     ->numbers()
                     ->symbols()
                     ->uncompromised();
+        });
+
+        Gate::define('admin', function (User $user) {
+            return $user->is_admin;
         });
     }
 }

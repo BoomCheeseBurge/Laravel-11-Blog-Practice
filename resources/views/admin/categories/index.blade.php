@@ -23,9 +23,14 @@
     <x-messages.dismissal-success :message="session('success')" class="mb-4"></x-messages.dismissal-success>
     @endif
 
+    {{-- ------------------------------------ Failed Message ------------------------------------ --}}
+    @if (session()->has('fail'))
+    <x-messages.dismissal-error errorID="1" :message="session('fail')" class="mb-4"></x-messages.dismissal-error>
+    @endif
+
     <!-- ====== Table Section Start -->
     <div class="flex flex-col gap-10">
-        <x-tables.table id actions :headers="$headers" :columns="$columns" :records="$posts" route="posts" model="post"></x-tables.table>
+        <x-tables.table id actions :headers="$headers" :columns="$columns" :records="$categories" route="categories" model="category"></x-tables.table>
     </div>
     <!-- ====== Table Section End -->
 

@@ -129,7 +129,7 @@
     <!-- Create Post END -->
 
     @push('scripts')
-    <script src="{{ asset('JS/dashboard-create.js') }}"></script>
+    <script src="{{ asset('JS/dashboard-form.js') }}"></script>
     <script src="{{ asset('JS/trix.js') }}"></script>
     @endpush
 </x-layouts.dashboard-layout>

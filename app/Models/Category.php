@@ -18,4 +18,12 @@ class Category extends Model
     {
         return $this->hasMany(Post::class, 'category_id');
     }
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 }

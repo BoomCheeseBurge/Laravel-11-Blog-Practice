@@ -122,6 +122,7 @@
             </li>
             <!-- Menu Item Dashboard -->
 
+            @can('admin')
             <!-- Menu Item Admin -->
             <li>
                 <a
@@ -130,60 +131,60 @@
                 @click.prevent="selected = (selected === 'Admin' ? '':'Admin')"
                 :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Admin') || (page === 'allPosts' || page === 'categories' || page === 'users') }"
                 >
-                <svg class="w-6 h-6 fill-current" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                    <path fill-rule="evenodd" d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z" clip-rule="evenodd"/>
-                </svg>
+                    <svg class="w-6 h-6 fill-current" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z" clip-rule="evenodd"/>
+                    </svg>
 
-                Admin
+                    Admin
 
-                <svg
-                    class="-translate-y-1/2 absolute right-4 top-1/2 transition ease-in fill-current"
-                    :class="{ 'rotate-180': (selected === 'Admin') }"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
-                    fill=""
-                    />
-                </svg>
+                    <svg
+                        class="-translate-y-1/2 absolute right-4 top-1/2 transition ease-in fill-current"
+                        :class="{ 'rotate-180': (selected === 'Admin') }"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+                        fill=""
+                        />
+                    </svg>
                 </a>
 
                 <!-- Dropdown Menu Start -->
                 <div
                 class="transform translate overflow-hidden transition ease-linear delay-75"
-                :class="(selected === 'Admin') ? 'opacity-100 visible static' :'opacity-0 invisible absolute z-[-1]'"
-                >
-                <ul class="mb-5.5 flex flex-col gap-3.5 pl-6 mt-4 mr-2">
-                    <li>
-                        <a
-                            class="text-bodydark2 relative flex items-center gap-2.5 px-4 py-2 font-medium rounded-md duration-300 ease-in-out group hover:text-white"
-                            href="form-elements.html"
-                            :class="page === 'allPosts' ? '!text-white' : 'border-l-4 border-indigo-500'"
-                            >All Posts</a>
-                    </li>
-                    <li>
-                    <a
-                        class="text-bodydark2 relative flex items-center gap-2.5 px-4 py-2 font-medium rounded-md duration-300 ease-in-out group hover:text-white"
-                        href="form-layout.html"
-                        :class="page === 'categories' ? '!text-white' : 'border-l-4 border-indigo-500'"
-                        >Categories</a>
-                    </li>
-                    <a
-                        class="text-bodydark2 relative flex items-center gap-2.5 px-4 py-2 font-medium rounded-md duration-300 ease-in-out group hover:text-white"
-                        href="form-layout.html"
-                        :class="page === 'users' ? '!text-white' : 'border-l-4 border-indigo-500'"
-                        >Users</a>
-                    </li>
-                </ul>
+                :class="(selected === 'Admin') ? 'opacity-100 visible static' :'opacity-0 invisible absolute z-[-1]'">
+                    <ul class="mb-5.5 flex flex-col gap-3.5 pl-6 mt-4 mr-2">
+                        <li>
+                            <a
+                                class="text-bodydark2 relative flex items-center gap-2.5 px-4 py-2 font-medium rounded-md duration-300 ease-in-out group hover:text-white"
+                                href="#"
+                                :class="page === 'allPosts' ? '!text-white !bg-primary-500/80 dark:!bg-slate-100 dark:!bg-opacity-90 dark:!text-slate-800' : 'border-l-4 border-indigo-500'"
+                                >All Posts</a>
+                        </li>
+                        <li>
+                            <a
+                                class="text-bodydark2 relative flex items-center gap-2.5 px-4 py-2 font-medium rounded-md duration-300 ease-in-out group hover:text-white"
+                                href="{{ route('categories.index') }}"
+                                :class="page === 'categories' ? '!text-white !bg-primary-500/80 dark:!bg-slate-100 dark:!bg-opacity-90 dark:!text-slate-800' : 'border-l-4 border-indigo-500'"
+                                >Categories</a>
+                        </li>
+                            <a
+                                class="text-bodydark2 relative flex items-center gap-2.5 px-4 py-2 font-medium rounded-md duration-300 ease-in-out group hover:text-white"
+                                href="#"
+                                :class="page === 'users' ? '!text-white !bg-primary-500/80 dark:!bg-slate-100 dark:!bg-opacity-90 dark:!text-slate-800' : 'border-l-4 border-indigo-500'"
+                                >Users</a>
+                        </li>
+                    </ul>
                 </div>
                 <!-- Dropdown Menu End -->
             </li>
             <!-- Menu Item Admin -->
+            @endcan
 
             <!-- Menu Item Profile -->
             <li>

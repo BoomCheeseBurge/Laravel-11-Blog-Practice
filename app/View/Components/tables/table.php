@@ -17,6 +17,7 @@ class table extends Component
         public Array $columns,
         public LengthAwarePaginator $records,
         public string $route,
+        public string $model,
     ) {}
 
     /**
