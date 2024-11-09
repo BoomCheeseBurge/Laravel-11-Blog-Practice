@@ -6,3 +6,12 @@ Installed Livewire into the project.
 ________________________________________________________________
 
 Added 'x-cloak' to dropdowns to hide them upon initial page load.
+
+________________________________________________________________
+
+Reworked the blade table component.
+
+________________________________________________________________
+
+Created a fully functional CRUD categories page for admin.
+
