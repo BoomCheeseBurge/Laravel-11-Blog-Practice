@@ -17,7 +17,7 @@
         <title>{{ $title }}</title>
     </head>
 
-    <body class="h-full"
+    <body x-cloak class="h-full"
             x-data="{ isOpen: false , 'loaded': true, 'darkMode': true }"
             x-init="
                 darkMode = JSON.parse(localStorage.getItem('darkMode'));

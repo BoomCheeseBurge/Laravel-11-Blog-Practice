@@ -1,28 +1,8 @@
 
-Created an 'AdminCategoryController' controller.
+Uninstalled AlpineJS since Livewire already includes AlpineJS.
+
+Installed Livewire into the project.
 
 ________________________________________________________________
 
-Created a 'IsAdmin' middleware.
-
-Applied the middleware to the 'AdminCategoryController' controller.
-
-________________________________________________________________
-
-Since admin access is a single action to check, a Gate for it is created instead of a policy.
-
-Registering the middleware using an alias helps to use it for separate routes instead of all.
-
-________________________________________________________________
-
-Only admin can see the admin sidepanel in the dashboard page.
-
-________________________________________________________________
-
-Added a '$model' parameter to the table blade component.
-
-________________________________________________________________
-
-Set 'slug' field as the default resource controller searched model instance in the Category model file.
-
-Added category resource controller named routes to the 'config/ziggy.php' file.
+Added 'x-cloak' to dropdowns to hide them upon initial page load.

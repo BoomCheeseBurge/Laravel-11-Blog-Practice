@@ -1,41 +1,41 @@
-<div
+<div x-cloak
 class="flex-grow shadow-2 flex justify-between items-center px-4 py-4 2xl:px-11 lg:justify-end md:px-6">
     <div class="flex items-center gap-2 lg:hidden sm:gap-4">
-    <!-- Hamburger Toggle BTN -->
-    <button
-        class="border-stroke z-99999 block p-1.5 bg-white rounded-sm border shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
-        @click.stop="sidebarToggle = !sidebarToggle">
-        <span class="h-5.5 w-5.5 relative block cursor-pointer">
-        <span class="du-block w-full h-full absolute right-0">
-            <span
-            class="delay-[0] w-0 h-0.5 relative top-0 left-0 block my-1 bg-black rounded-sm duration-200 ease-in-out dark:bg-white"
-            :class="{ '!w-full delay-300': !sidebarToggle }"
-            ></span>
-            <span
-            class="w-0 h-0.5 relative top-0 left-0 block my-1 bg-black rounded-sm duration-200 ease-in-out delay-150 dark:bg-white"
-            :class="{ '!w-full delay-400': !sidebarToggle }"
-            ></span>
-            <span
-            class="w-0 h-0.5 relative top-0 left-0 block my-1 bg-black rounded-sm duration-200 ease-in-out delay-200 dark:bg-white"
-            :class="{ '!w-full delay-500': !sidebarToggle }"
-            ></span>
-        </span>
-        <span class="du-block w-full h-full absolute right-0 rotate-45">
-            <span
-            class="w-0.5 h-full absolute top-0 left-2.5 block bg-black rounded-sm duration-200 ease-in-out delay-300 dark:bg-white"
-            :class="{ '!h-0 delay-[0]': !sidebarToggle }"
-            ></span>
-            <span
-            class="delay-400 w-full h-0.5 absolute left-0 top-2.5 block bg-black rounded-sm duration-200 ease-in-out dark:bg-white"
-            :class="{ '!h-0 dealy-200': !sidebarToggle }"
-            ></span>
-        </span>
-        </span>
-    </button>
-    <!-- Hamburger Toggle BTN -->
-    <a class="flex-shrink-0 block lg:hidden" href="/">
-        <img src="./images/logo/logo-icon.svg" alt="Logo" />
-    </a>
+        <!-- Hamburger Toggle BTN -->
+        <button
+            class="border-stroke z-99999 block p-1.5 bg-white rounded-sm border shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
+            @click.stop="sidebarToggle = !sidebarToggle">
+            <span class="h-5.5 w-5.5 relative block cursor-pointer">
+            <span class="du-block w-full h-full absolute right-0">
+                <span
+                class="delay-[0] w-0 h-0.5 relative top-0 left-0 block my-1 bg-black rounded-sm duration-200 ease-in-out dark:bg-white"
+                :class="{ '!w-full delay-300': !sidebarToggle }"
+                ></span>
+                <span
+                class="w-0 h-0.5 relative top-0 left-0 block my-1 bg-black rounded-sm duration-200 ease-in-out delay-150 dark:bg-white"
+                :class="{ '!w-full delay-400': !sidebarToggle }"
+                ></span>
+                <span
+                class="w-0 h-0.5 relative top-0 left-0 block my-1 bg-black rounded-sm duration-200 ease-in-out delay-200 dark:bg-white"
+                :class="{ '!w-full delay-500': !sidebarToggle }"
+                ></span>
+            </span>
+            <span class="du-block w-full h-full absolute right-0 rotate-45">
+                <span
+                class="w-0.5 h-full absolute top-0 left-2.5 block bg-black rounded-sm duration-200 ease-in-out delay-300 dark:bg-white"
+                :class="{ '!h-0 delay-[0]': !sidebarToggle }"
+                ></span>
+                <span
+                class="delay-400 w-full h-0.5 absolute left-0 top-2.5 block bg-black rounded-sm duration-200 ease-in-out dark:bg-white"
+                :class="{ '!h-0 dealy-200': !sidebarToggle }"
+                ></span>
+            </span>
+            </span>
+        </button>
+        <!-- Hamburger Toggle BTN -->
+        <a class="flex-shrink-0 block lg:hidden" href="/">
+            <img class="w-12 h-9 rounded-lg md:h-13 md:w-18" src="{{ asset('IMG/logo/book-logo-2.jpg') }}" alt="Logo" />
+        </a>
     </div>
 
     <div class="flex justify-end items-center gap-3 2xsm:gap-7">

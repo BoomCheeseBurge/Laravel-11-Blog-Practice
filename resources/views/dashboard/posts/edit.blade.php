@@ -21,7 +21,7 @@
     <!-- Create Post START -->
     <div class="bg-white/75 font-[sans-serif] shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-md dark:bg-slate-800">
         <form action="{{ route('posts.update', ['post' => $post]) }}" method="POST" enctype="multipart/form-data">
-            @method('put')
+            @method('PUT')
             @csrf
             <div class="flex flex-col items-center gap-10 py-10 md:py-15">
                 <div class="w-full flex flex-col px-6 space-y-5 text-slate-900 md:flex-row md:justify-center md:space-x-5 md:space-y-0">

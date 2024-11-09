@@ -9,6 +9,7 @@
         "cviebrock/eloquent-sluggable": "^11.0",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "livewire/livewire": "^3.5",
         "tightenco/ziggy": "^2.3"
     },
     "require-dev": {

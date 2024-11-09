@@ -2,7 +2,6 @@ import './bootstrap';
 
 import 'flowbite';
 
-import Alpine from 'alpinejs'
 import persist from '@alpinejs/persist'
 
 // core version + navigation, pagination modules:
@@ -67,6 +66,11 @@ new Swiper('.card-wrapper', {
             spaceBetween: 100,
         },
         1280: {
+            slidesPerView: 3,
+            // Space between Cards
+            spaceBetween: 50,
+        },
+        1536: {
             slidesPerView: 3,
             // Space between Cards
             spaceBetween: 100,

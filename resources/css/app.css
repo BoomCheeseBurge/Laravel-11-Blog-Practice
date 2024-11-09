@@ -28,7 +28,7 @@
     }
 
     .card-list .card-item .card-link {
-        @apply w-70 sm:w-100 block bg-slate-100 dark:bg-primary-600 p-4.5 rounded-xl shadow-md hover:border-2 hover:border-slate-300 dark:hover:border-primary-500
+        @apply w-70 sm:w-100 xl:max-2xl:w-90 block bg-slate-100 dark:bg-primary-600 p-4.5 rounded-xl shadow-md hover:border-2 hover:border-slate-300 dark:hover:border-primary-500
     }
     .card-list .card-link .card-image {
         @apply w-full aspect-[16/9] rounded-md

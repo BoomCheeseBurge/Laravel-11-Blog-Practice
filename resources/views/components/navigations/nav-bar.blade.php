@@ -1,4 +1,4 @@
-<nav class="bg-slate-200 dark:bg-slate-800 py-3">
+<nav class="py-3 bg-slate-200 dark:bg-slate-800">
     <div class="mx-auto max-w-7xl px-4 lg:px-8 sm:px-6">
         <div class="h-16 flex justify-between items-center">
             <div class="flex items-center">
@@ -25,7 +25,7 @@
                         @auth
                         <!-- ------------------------------------------------------ Profile dropdown ------------------------------------------------------ -->
                         <div class="flex items-center">
-                            <span class="mr-3 text-base font-medium tracking-wider text-boxdark-2 dark:text-white">{{ auth()->user()->username }}</span>
+                            <span class="text-boxdark-2 mr-3 text-base font-medium tracking-wider dark:text-white">{{ auth()->user()->username }}</span>
                             <button type="button" x-on:click="isOpen = !isOpen" x-on:click.outside="isOpen = false"
                             class="max-w-xs relative flex items-center text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                 <span class="-inset-1.5 absolute"></span>
@@ -44,7 +44,7 @@
                             From: "transform opacity-100 scale-100"
                             To: "transform opacity-0 scale-95"
                         -->
-                        <div x-cloak x-show="isOpen"
+                        <div x-show="isOpen"
                         x-transition:enter="transition ease-out duration-100 transform"
                         x-transition:enter-start="opacity-0 scale-95"
                         x-transition:enter-end="opacity-100 scale-100"
@@ -84,8 +84,8 @@
                         </div>
                         @else
                         <!-- ------------------------------------------------------ Login Link ------------------------------------------------------ -->
-                        <a href="/login" class="relative flex items-center text-base font-medium dark:text-sky-200 text-teal-500 tracking-wider group">
-                            <svg class="w-5 h-5 absolute bottom-1 right-15 group-hover:animate-bounce_right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g id="right-arrow-bg" stroke-width="0"></g><g id="right-arrow-tracer" stroke-linecap="round" stroke-linejoin="round"></g><g id="right-arrow-icon"> <path d="M4 12H20M20 12L16 8M20 12L16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                        <a href="/login" class="relative flex items-center text-base font-medium tracking-wider text-teal-500 group dark:text-sky-200">
+                            <svg class="right-15 w-5 h-5 absolute bottom-1 group-hover:animate-bounce_right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g id="right-arrow-bg" stroke-width="0"></g><g id="right-arrow-tracer" stroke-linecap="round" stroke-linejoin="round"></g><g id="right-arrow-icon"> <path d="M4 12H20M20 12L16 8M20 12L16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="right-bracket-bg" stroke-width="0"></g><g id="right-bracket-tracer" stroke-linecap="round" stroke-linejoin="round"></g><g id="right-bracket-icon"> <path d="M10 21H14L14 3H10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                             Login
                         </a>
@@ -96,7 +96,7 @@
             <div class="-mr-2 flex md:hidden">
                 <!-- Mobile menu button -->
                 <button type="button" x-on:click="isOpen = !isOpen"
-                class="relative inline-flex justify-center items-center p-2 dark:text-boxdark-2 dark:bg-slate-200 text-gray-200 bg-indigo-800 rounded-md focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-800 dark:focus:ring-offset-slate-300" aria-controls="mobile-menu" aria-expanded="false">
+                class="relative inline-flex justify-center items-center p-2 text-gray-200 bg-indigo-800 rounded-md dark:text-boxdark-2 dark:bg-slate-200 dark:focus:ring-offset-slate-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-800" aria-controls="mobile-menu" aria-expanded="false">
                     <span class="-inset-0.5 absolute"></span>
                     <span class="sr-only">Open main menu</span>
                     <!-- Menu open: "hidden", Menu closed: "block" -->
@@ -126,11 +126,11 @@
             <div class="flex justify-between pr-8">
                 <div class="flex items-center px-5">
                     <div class="flex-shrink-0">
-                        <img class="w-15 h-15 rounded-full" src="{{ asset('IMG/default/default-user.png') }}" alt="Default Profile Image">
+                        <img class="h-15 w-15 rounded-full" src="{{ asset('IMG/default/default-user.png') }}" alt="Default Profile Image">
                     </div>
                     <div class="ml-3 space-y-1">
-                        <div class="text-base font-medium tracking-widest leading-none text-boxdark-2 dark:text-white">{{ auth()->user()->username }}</div>
-                        <div class="text-primary-500 tracking-wider block text-sm font-bold dark:font-normal dark:text-slate-200">
+                        <div class="text-boxdark-2 text-base font-medium tracking-widest leading-none dark:text-white">{{ auth()->user()->username }}</div>
+                        <div class="text-primary-500 block text-sm font-bold tracking-wider dark:font-normal dark:text-slate-200">
                             @if (auth()->user()->is_admin)
                             Admin
                             @else
@@ -144,13 +144,13 @@
                 <!-- Dark Mode Toggler -->
             </div>
             <div class="px-2 mt-3 space-y-3">
-                <a href="#" class="block px-3 py-2 text-base font-medium text-primary-600 hover:bg-slate-300 hover:text-primary-800 dark:text-slate-200 rounded-md dark:hover:bg-gray-600">Your Profile</a>
-                <a href="#" class="block px-3 py-2 text-base font-medium text-primary-600 hover:bg-slate-300 hover:text-primary-800 dark:text-slate-200 rounded-md dark:hover:bg-gray-600">Settings</a>
+                <a href="#" class="text-primary-600 block px-3 py-2 text-base font-medium rounded-md dark:text-slate-200 dark:hover:bg-gray-600 hover:text-primary-800 hover:bg-slate-300">Your Profile</a>
+                <a href="#" class="text-primary-600 block px-3 py-2 text-base font-medium rounded-md dark:text-slate-200 dark:hover:bg-gray-600 hover:text-primary-800 hover:bg-slate-300">Settings</a>
                 <form action="{{ route('login.out') }}" method="POST">
                     @csrf
-                    <button type="submit" class="w-full block px-3 py-2 text-base font-medium text-slate-600 dark:text-slate-300 rounded-md group dark:hover:bg-slate-600 dark:hover:text-slate-100 hover:text-boxdark-2 hover:bg-gray-300" role="menuitem" tabindex="-1" id="user-menu-item-3">
+                    <button type="submit" class="w-full block px-3 py-2 text-base font-medium text-slate-600 rounded-md group dark:text-slate-300 dark:hover:text-slate-100 dark:hover:bg-slate-600 hover:text-boxdark-2 hover:bg-gray-300" role="menuitem" tabindex="-1" id="user-menu-item-3">
                         Sign out
-                        <svg class="w-6 h-6 inline text-gray-500 dark:text-white group-hover:text-gray-600 dark:group-hover:text-whiter" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 inline text-gray-500 dark:text-white dark:group-hover:text-whiter group-hover:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2"/>
                         </svg>
                     </button>
@@ -163,7 +163,7 @@
                 <!-- Dark Mode Toggler -->
             </div>
             <div class="px-2 mt-6 space-y-1 group">
-                <a href="/login" class="flex tracking-wider justify-center items-center px-3 py-2 text-base font-medium text-gray-500 rounded-md hover:text-white hover:bg-gray-600">
+                <a href="/login" class="flex justify-center items-center px-3 py-2 text-base font-medium tracking-wider text-gray-500 rounded-md hover:text-white hover:bg-gray-600">
                     <svg class="-mr-1.5 -mt-1 w-5 h-5 group-hover:animate-bounce_right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g id="right-arrow-bg" stroke-width="0"></g><g id="right-arrow-tracer" stroke-linecap="round" stroke-linejoin="round"></g><g id="right-arrow-icon"> <path d="M4 12H20M20 12L16 8M20 12L16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="right-bracket-bg" stroke-width="0"></g><g id="right-bracket-tracer" stroke-linecap="round" stroke-linejoin="round"></g><g id="right-bracket-icon"> <path d="M10 21H14L14 3H10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                     Login

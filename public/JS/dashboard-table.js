@@ -1,13 +1,8 @@
 
-// ================================ Pass Data to Modal ================================
-
-        // attach click event listener to parent element
-        document.getElementById("container").addEventListener("click", function (event) {
-            // check if target element is an img with the upload_image class
-            if (event.target && event.target.matches("img.upload_image")) {
-                imageSelect(event);
-            }
-        });
+// ================================ Delete and Restore Modal ================================
+document.addEventListener("DOMContentLoaded", function(event) {
+    document.getElementById('deleteButton').click();
+});
 
 function insertIdentifier(identifier, type, action)
 {

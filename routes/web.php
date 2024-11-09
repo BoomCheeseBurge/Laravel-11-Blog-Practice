@@ -75,6 +75,6 @@ Route::middleware('auth')->group(function () {
     Route::middleware('admin')->group(function () {
 
         // Route to admin dashboard categories
-        Route::resource('/dashboard/admin/categories', AdminCategoryController::class);
+        Route::resource('/dashboard/admin/categories', AdminCategoryController::class)->except(['create', 'edit']);
     });
 });
