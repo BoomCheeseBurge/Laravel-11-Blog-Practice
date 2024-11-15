@@ -1,9 +1,5 @@
 
 // ================================ Delete and Restore Modal ================================
-document.addEventListener("DOMContentLoaded", function(event) {
-    document.getElementById('deleteButton').click();
-});
-
 function insertIdentifier(identifier, type, action)
 {
     const currentModalName = action + 'Modal';
@@ -20,7 +16,7 @@ function insertIdentifier(identifier, type, action)
 
         if (action == "delete") {
 
-            console.log(route(type + '.destroy', identifier));
+            // console.log(route(type + '.destroy', identifier));
 
             // Update the modal's form action
             document.getElementById('deletionModalForm').action = route(type + '.destroy', identifier);

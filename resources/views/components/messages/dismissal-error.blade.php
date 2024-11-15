@@ -1,15 +1,17 @@
-<div id="alert-{{ $errorID }}" {{ $attributes->merge(['class' => 'flex items-center p-4 my-1 text-red-800 bg-red-50 rounded-lg dark:text-red-400 dark:bg-gray-800']) }} role="alert">
-    <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-      <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-    </svg>
-    <span class="sr-only">Info</span>
-    <div class="ms-3 text-sm font-medium">
-        {{ $message }}
+<div x-data="{ alertIsVisible: true }" x-show="alertIsVisible" {{ $attributes->merge(['class' => 'overflow-hidden relative text-neutral-600 bg-white rounded-md border border-red-500 dark:text-neutral-300 dark:bg-neutral-950']) }} role="alert" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-90">
+    <div class="bg-red-500/10 w-full flex items-center gap-2 p-4">
+        <div class="bg-red-500/15 p-1 text-red-500 rounded-full" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-6" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z" clip-rule="evenodd" />
+            </svg>
+        </div>
+        <div class="ml-2">
+            <h3 class="text-sm font-semibold text-red-500">{{ $message }}</h3>
+        </div>
+        <button type="button" @click="alertIsVisible = false" class="ml-auto" aria-label="dismiss alert">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" fill="none" stroke-width="2.5" class="w-4 h-4 shrink-0">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
     </div>
-    <button type="button" class="-mx-1.5 -my-1.5 ms-auto w-8 h-8 inline-flex justify-center items-center p-1.5 text-red-500 bg-red-50 rounded-lg dark:text-red-400 dark:bg-gray-800 dark:hover:bg-gray-700 focus:ring-2 focus:ring-red-400 hover:bg-red-200" data-dismiss-target="#alert-{{ $errorID }}" aria-label="Close">
-      <span class="sr-only">Close</span>
-      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-      </svg>
-    </button>
 </div>

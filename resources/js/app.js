@@ -2,7 +2,10 @@ import './bootstrap';
 
 import 'flowbite';
 
+import Alpine from 'alpinejs'
 import persist from '@alpinejs/persist'
+
+Alpine.plugin(persist)
 
 // core version + navigation, pagination modules:
 import Swiper from 'swiper';
@@ -12,11 +15,6 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-Alpine.plugin(persist);
-
-window.Alpine = Alpine
-
-Alpine.start()
 
 new Swiper('.card-wrapper', {
 

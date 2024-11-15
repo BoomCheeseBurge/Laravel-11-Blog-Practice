@@ -162,7 +162,7 @@
                         <li>
                             <a
                                 class="text-bodydark2 relative flex items-center gap-2.5 px-4 py-2 font-medium rounded-md duration-300 ease-in-out group hover:text-white"
-                                href="#"
+                                href="{{ route('admin.posts.index') }}" wire:navigate
                                 :class="page === 'allPosts' ? '!text-white !bg-primary-500/80 dark:!bg-slate-100 dark:!bg-opacity-90 dark:!text-slate-800' : 'border-l-4 border-indigo-500'"
                                 >All Posts</a>
                         </li>
@@ -175,7 +175,7 @@
                         </li>
                             <a
                                 class="text-bodydark2 relative flex items-center gap-2.5 px-4 py-2 font-medium rounded-md duration-300 ease-in-out group hover:text-white"
-                                href="#"
+                                href="users"
                                 :class="page === 'users' ? '!text-white !bg-primary-500/80 dark:!bg-slate-100 dark:!bg-opacity-90 dark:!text-slate-800' : 'border-l-4 border-indigo-500'"
                                 >Users</a>
                         </li>

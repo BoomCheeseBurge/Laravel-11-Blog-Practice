@@ -25,7 +25,7 @@
 
     {{-- ------------------------------------ Fail Message ------------------------------------ --}}
     @if (session()->has('fail'))
-    <x-messages.dismissal-error errorID="1" :message="session('fail')" class="mb-4"></x-messages.dismissal-error>
+    <x-messages.dismissal-error :message="session('fail')" class="mb-4"></x-messages.dismissal-error>
     @endif
 
     <!-- ====== Table Section Start -->
@@ -79,9 +79,7 @@
                         {{-- Data Columns START --}}
                         @foreach ($columns as $name)
                         <td class="px-6 py-4 border-b border-gray-500">
-                            @if ($name === 'category')
-                            <span class="px-2.5 py-1 me-2 text-xs font-medium text-blue-800 whitespace-nowrap bg-{{ $category->category->color }}-100 rounded-full">{{ $category->category->name }}</span>
-                            @elseif ($name === 'created_at')
+                            @if ($name === 'created_at')
                             <span class="text-sm leading-5 text-blue-900 dark:text-white">{{ $category->created_at->format('F j, Y') }}</span>
                             @elseif ($name === 'color')
                             <span class="flex flex-col items-center">

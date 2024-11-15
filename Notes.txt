@@ -1,8 +1,53 @@
 
-Uninstalled AlpineJS since Livewire already includes AlpineJS.
+Added a full-page Livewire component for admin posts page.
 
-Installed Livewire into the project.
+Modified the default Livewire layout to match the layout used for the dashboard page.
+
+The table is in the full-page component without being a Livewire component itself (due to Livewire's limitations).
 
 ________________________________________________________________
 
-Added 'x-cloak' to dropdowns to hide them upon initial page load.
+Created a header Blade component for more modularity and reusability.
+
+________________________________________________________________
+
+Added a intelephense helper file to support the detection of certain methods in Livewire.
+
+Ex: layout() livewire method.
+
+________________________________________________________________
+
+Added a Livewire search table functionality.
+
+Added a Livewire show records per page functionality.
+
+Added a Livewire sortable column functionality.
+
+Added a Livewire bulk delete functionality.
+
+Added a show/hide column functionality with AlpineJS.
+
+Added Livewire single record delete functionality.
+
+________________________________________________________________
+
+The search table functionality is currently based on title.
+
+________________________________________________________________
+
+Bulk delete is possible even in search mode.
+
+________________________________________________________________
+
+On a bulk select of the current page, when switched to another option of per page table view, the selected checkboxes will not be changed to correspond to the new current page option.
+
+________________________________________________________________
+
+The checkbox on the header for the current page bulk selected is not yet able to handle where if the bulk is selected for the current page, the next page the bulk checkbox is still ticked.
+
+Perhaps it would be better to have the bulk checkbox on the header to be its own unique checkbox for each page.
+And so, if the checkbox is selected in one page and the untick checkbox in the next page is selected, then that will add the ids of that next page to the ids of the previous page.
+
+________________________________________________________________
+
+Fixed the single dashboard post page to be able to delete the post directly from there.

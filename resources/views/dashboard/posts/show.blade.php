@@ -15,7 +15,7 @@
         {{-- Edit Utility END --}}
 
         {{-- Delete Utility START --}}
-        <button data-tooltip-target="delete-tooltip" type="button" class="px-3.5 py-2.5 text-sm font-medium text-white bg-red-700 rounded-lg dark:bg-red-600 dark:focus:ring-red-900 dark:hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 hover:bg-red-800">
+        <button x-on:click="$dispatch('show-modal', { name: 'deleteModal' })" type="button" data-tooltip-target="delete-tooltip" type="button" class="px-3.5 py-2.5 text-sm font-medium text-white bg-red-700 rounded-lg dark:bg-red-600 dark:focus:ring-red-900 dark:hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 hover:bg-red-800">
             <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
             </svg>
@@ -24,6 +24,20 @@
             Delete
             <div class="tooltip-arrow" data-popper-arrow></div>
         </div>
+
+        <x-modals.modal name="deleteModal" height="max-h-40" width="max-w-xs">
+            @slot('body')
+            Are you sure?
+            @endslot
+            @slot('footer')
+            <form action="{{ route('posts.destroy', ['post' => $post->slug]) }}" method="post" class="inline">
+                @method('DELETE')
+                @csrf
+                <button type="submit" class="px-5 py-2.5 me-2 text-sm font-medium text-white bg-red-700 rounded-lg dark:bg-red-600 dark:focus:ring-red-900 dark:hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 hover:bg-red-800">Confirm</button>
+            </form>
+            <button x-on:click="show = false" type="button" class="px-5 py-2.5 text-sm font-medium text-white bg-slate-800 rounded-lg border border-slate-600 dark:text-slate-900 dark:bg-white dark:border-slate-300 dark:focus:outline-none dark:focus:ring-slate-100 dark:hover:bg-slate-100 dark:hover:border-slate-600 focus:ring-4 focus:ring-slate-700 hover:bg-slate-700">Cancel</button>
+            @endslot
+        </x-modals.modal>
         {{-- Delete Utility END --}}
     </div>
     {{-- Utility Options END --}}

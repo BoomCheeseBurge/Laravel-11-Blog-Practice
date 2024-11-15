@@ -56,8 +56,8 @@
         </div>
         <!-- ===== Page Wrapper End ===== -->
 
-        {{-- AlpineJS Bundled Script --}}
-        <script src="{{ asset('JS/alpine.js') }}"></script>
+        {{-- LiveWire Script with AlpineJS included--}}
+        @livewireScripts
 
         {{-- Custom Scripts --}}
         @stack('scripts')

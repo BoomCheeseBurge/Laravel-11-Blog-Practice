@@ -15,7 +15,7 @@
 
             {{-- ------------------------------------ Failed Message ------------------------------------ --}}
             @if (session()->has('failed'))
-            <x-messages.dismissal-error errorID="failed" :message="session('failed')" class="mb-4"></x-messages.dismissal-error>
+            <x-messages.dismissal-error :message="session('failed')" class="mb-4"></x-messages.dismissal-error>
             @endif
 
             <div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 dark:border dark:border-gray-700 md:mt-0 sm:max-w-md xl:p-0">

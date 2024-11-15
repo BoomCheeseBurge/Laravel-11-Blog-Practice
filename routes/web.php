@@ -7,6 +7,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\DashboardPostController;
+use App\Livewire\Admin\AllPostsIndex;
+
 
 // Route to homepage
 Route::get('/', function () {
@@ -48,7 +50,7 @@ Route::middleware('guest')->group(function () {
     // Route to register page
     Route::get('/register', [RegisterController::class, 'index']);
     // Route to register a new user
-    Route::post('/register', [RegisterController::class, 'store'])->name('register.create');
+    Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 });
 
 // Auth Middleware Group
@@ -75,6 +77,31 @@ Route::middleware('auth')->group(function () {
     Route::middleware('admin')->group(function () {
 
         // Route to admin dashboard categories
+        Route::get('/dashboard/admin/posts', AllPostsIndex::class)->name('admin.posts.index');
+
+        // Switched to a full-page live component above
+        // Route::resource('/dashboard/admin/posts', AdminPostController::class)->names([
+        //     // These routes are named to avoid conflict with the user posts resource routes
+        //     'index' => 'admin.posts.index',
+        //     'create' => 'admin.posts.create',
+        //     'store' => 'admin.posts.store',
+        //     'show' => 'admin.posts.show',
+        //     'edit' => 'admin.posts.edit',
+        //     'update' => 'admin.posts.update',
+        //     'destroy' => 'admin.posts.destroy',
+        // ]);
+
+        // Route to admin dashboard categories
         Route::resource('/dashboard/admin/categories', AdminCategoryController::class)->except(['create', 'edit']);
+
+        // Route to admin dashboard users
+        Route::get('/dashboard/admin/users', function () {
+
+            return view('users', [
+                'title' => 'Admin',
+                'subTitle' => 'Admin Users',
+                'page' => 'users',
+            ]);
+        });
     });
 });

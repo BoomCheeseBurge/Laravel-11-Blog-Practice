@@ -12,7 +12,7 @@
                     <h1 class="text-xl font-bold tracking-tight leading-tight text-center text-gray-900 dark:text-white md:text-2xl">
                         Sign up a new account!
                     </h1>
-                    <form class="space-y-6" action="{{ route('register.create') }}" method="POST">
+                    <form class="space-y-6" action="{{ route('register.store') }}" method="POST">
                         @csrf
                         {{-- ------------------------------------------------- USERNAME INPUT ------------------------------------------------- --}}
                         <div class="relative">

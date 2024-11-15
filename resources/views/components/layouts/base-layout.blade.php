@@ -14,15 +14,19 @@
         {{-- TalwindUI's Default Font for their Components --}}
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
+        {{-- Custom CSS Style --}}
+        <link rel="stylesheet" href="{{ asset('CSS/style.css') }}">
+
         <title>{{ $title }}</title>
     </head>
 
-    <body x-cloak class="h-full"
-            x-data="{ isOpen: false , 'loaded': true, 'darkMode': true }"
+    <body  class="h-full"
             x-init="
                 darkMode = JSON.parse(localStorage.getItem('darkMode'));
                 $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
-            :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
+            :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
+            x-data="{ isOpen: false , 'loaded': true, 'darkMode': true }"
+            x-cloak>
         <!--
         This example requires updating your template:
 
@@ -31,6 +35,7 @@
         <body class="h-full">
         ```
         -->
+
         <div class="min-h-full bg-gray-100 dark:bg-gray-800">
             <x-navigations.nav-bar></x-navigations.nav-bar>
 
@@ -46,7 +51,7 @@
             </main>
         </div>
 
-        {{-- AlpineJS Bundled Script --}}
-        <script src="{{ asset('JS/alpine.js') }}"></script>
+        {{-- LiveWire Script with AlpineJS included --}}
+        @livewireScripts
     </body>
 </html>

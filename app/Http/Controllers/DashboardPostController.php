@@ -71,8 +71,12 @@ class DashboardPostController extends Controller
      */
     public function show(Post $post)
     {
-        if($post->author->id !== auth()->user()->id) {
-            abort(403);
+        if(!auth()->user()->is_admin)
+        {
+            if(($post->author->id !== auth()->user()->id))
+            {
+                abort(403);
+            }
         }
 
         return view('dashboard.posts.show', [
@@ -87,9 +91,13 @@ class DashboardPostController extends Controller
      */
     public function edit(Post $post)
     {
-        if($post->author->id !== auth()->user()->id) {
-            abort(403);
-       }
+        if(!auth()->user()->is_admin)
+        {
+            if(($post->author->id !== auth()->user()->id))
+            {
+                abort(403);
+            }
+        }
 
         return view('dashboard.posts.edit', [
             'title' => 'Dashboard',
@@ -105,8 +113,12 @@ class DashboardPostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        if($post->author->id !== auth()->user()->id) {
-            abort(403);
+        if(!auth()->user()->is_admin)
+        {
+            if(($post->author->id !== auth()->user()->id))
+            {
+                abort(403);
+            }
         }
 
        $validatedData = $request->validate([
@@ -152,8 +164,12 @@ class DashboardPostController extends Controller
      */
     public function destroy(Post $post): RedirectResponse
     {
-        if($post->author->id !== auth()->user()->id) {
-            abort(403);
+        if(!auth()->user()->is_admin)
+        {
+            if(($post->author->id !== auth()->user()->id))
+            {
+                abort(403);
+            }
         }
 
         // Check if the current post has an existing featured image
