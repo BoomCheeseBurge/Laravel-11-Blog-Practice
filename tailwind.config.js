@@ -323,6 +323,8 @@ export default {
                 'spin-2': 'spin 2s linear infinite',
                 'spin-3': 'spin 3s linear infinite',
                 sway: 'sway 1s linear infinite',
+                spin: 'spin 1.5s linear infinite',
+                gentle_tilt: 'tilt_shaking 0.5s infinite',
             },
             keyframes: {
                 wobble: {
@@ -398,6 +400,17 @@ export default {
                     '0%': { transform: 'rotate(8deg)' },
                     '50%': { transform: 'rotate(-8deg)' },
                     '100%': { transform: 'rotate(8deg)' },
+                },
+                spin: {
+                    '0%': { transform: 'rotate(0deg)' },
+                    '100%': { transform: 'rotate(360deg)' },
+                },
+                tilt_shaking: {
+                    '0%': { transform: 'rotate(0deg)' },
+                    '25%': { transform: 'rotate(5deg)' },
+                    '50%': { transform: 'rotate(0eg)' },
+                    '75%': { transform: 'rotate(-5deg)' },
+                    '100%': { transform: 'rotate(0deg)' },
                 },
             },
             aspectRatio: {

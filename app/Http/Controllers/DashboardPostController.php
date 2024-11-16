@@ -7,6 +7,7 @@ use App\Rules\Title;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Cviebrock\EloquentSluggable\Services\SlugService;
@@ -22,7 +23,7 @@ class DashboardPostController extends Controller
             'title' => 'Dashboard',
             'subTitle' => 'Dashboard Posts',
             'page' => 'posts',
-            'posts' => Post::where('author_id', auth()->user()->id)->latest()->paginate(5),
+            'posts' => Auth::user()->posts()->latest()->paginate(5), // Get the posts belonging to the authenticated user
             'headers' => ['Title', 'Slug', 'Category', 'DateCreated'],
             'columns' => ['title', 'slug', 'category', 'created_at'],
         ]);

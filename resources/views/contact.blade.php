@@ -25,7 +25,7 @@
                 <div>
                     <label for="first-name" class="text-sm/6 block font-semibold">First name</label>
                     <div class="mt-2.5">
-                        <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="w-full block px-3.5 py-2 rounded-md border-0 ring-1 ring-inset ring-gray-300 shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-600 placeholder:text-gray-400 sm:text-sm/6">
+                        <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="w-full block px-3.5 py-2 rounded-md border-0 ring-1 ring-inset ring-gray-300 shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-600 placeholder:text-gray-400 sm:text-sm/6" autofocus>
                     </div>
                 </div>
                 <div>

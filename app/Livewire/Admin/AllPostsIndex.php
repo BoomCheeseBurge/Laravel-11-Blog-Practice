@@ -57,6 +57,13 @@ class AllPostsIndex extends Component
     public Post $selectedPost;
 
     /**
+     * Trashed Table
+     */
+    public bool $archive = false; // Determines whether to switch to archive records
+
+    // ---------------------------------------------------------------- || ----------------------------------------------------------------
+
+    /**
      * Data passed into components is received through the mount() lifecycle hook as method parameters
      */
     public function mount()
@@ -71,6 +78,7 @@ class AllPostsIndex extends Component
     public function loadData() // Retrieve the table records
     {
         return Post::join('categories', 'posts.category_id', '=', 'categories.id')
+                ->when($this->archive, fn($query) => $query->onlyTrashed()) // Switch to archived posts
                 ->select('posts.*', 'posts.created_at as Date Created', 'categories.name as category_name', 'categories.color as category_color')
                 ->when($this->search, fn ($query) => $query->where('title', 'like', '%' . $this->search . '%')) // Search query
                 ->when($this->sortHeader === 'category', function ($query) {
@@ -103,11 +111,11 @@ class AllPostsIndex extends Component
     }
 
     /**
-     * Bulk delete selected records
+     * Bulk remove selected records
      */
-    public function deleteSelected()
+    public function removeSelected()
     {
-        Post::whereIn('id', $this->checked)->delete(); // Delete the selected posts
+        Post::whereIn('id', $this->checked)->delete(); // Remove the selected posts
 
         /**
          * Reset all variables
@@ -116,7 +124,7 @@ class AllPostsIndex extends Component
         $this->selectAll = false;
         $this->checked = [];
 
-        request()->session()->flash('success', 'Posts successfully deleted!');
+        request()->session()->flash('success', 'Posts successfully removed to archive!');
 
         $this->dispatch('hide-bulk'); // Hide the bulk dropdown
     }
@@ -161,6 +169,46 @@ class AllPostsIndex extends Component
     }
 
     /**
+     * Bulk permanent delete selected records
+     */
+    public function deleteSelected()
+    {
+        Post::whereIn('id', $this->checked)->forceDelete(); // Delete the selected posts
+
+        /**
+         * Reset all variables
+         */
+        $this->selectCurrentPage = false;
+        $this->selectAll = false;
+        $this->checked = [];
+
+        request()->session()->flash('success', 'Posts permanently deleted!');
+
+        $this->dispatch('hide-bulk'); // Hide the bulk dropdown
+    }
+
+    /**
+     * Bulk restore selected records
+     */
+    public function restoreSelected()
+    {
+        Post::whereIn('id', $this->checked)->restore(); // Restore the selected posts
+
+        /**
+         * Reset all variables
+         */
+        $this->selectCurrentPage = false;
+        $this->selectAll = false;
+        $this->checked = [];
+
+        $this->archive = false;
+
+        request()->session()->flash('success', 'Posts successfully restored!');
+
+        $this->dispatch('hide-bulk'); // Hide the bulk dropdown
+    }
+
+    /**
      * Select all records
      */
     public function getAllRecords() { return Post::pluck('id')->toArray(); }
@@ -182,11 +230,41 @@ class AllPostsIndex extends Component
     }
 
     /**
-     * Send slug to modal
+     * Retrieve modal based on slug
      */
-    public function sendSlugToModal(Post $post)
+    public function getPostSlug(Post $post)
     {
         $this->selectedPost = $post;
+    }
+
+    /**
+     * Find trashed post
+     */
+    public function getTrashedPost(string $slug)
+    {
+        $this->selectedPost = Post::onlyTrashed()->where('slug', $slug)->firstOrFail();
+    }
+
+    /**
+     * Remove single post
+     */
+    public function removeSinglePost()
+    {
+        $this->selectedPost->delete();
+
+        request()->session()->flash('success', 'Post successfully removed! Check archived posts.');
+    }
+
+    /**
+     * Restore single post
+     */
+    public function restoreSinglePost()
+    {
+        $this->selectedPost->restore();
+
+        $this->archive = false;
+
+        request()->session()->flash('success', 'Post successfully restored!');
     }
 
     /**
@@ -194,13 +272,23 @@ class AllPostsIndex extends Component
      */
     public function deleteSinglePost()
     {
-        $this->selectedPost->delete();
+        $this->selectedPost->forceDelete();
 
-        request()->session()->flash('success', 'Post successfully deleted!');
+        request()->session()->flash('success', 'Post permanently deleted!');
+    }
+
+    /**
+     * Runs after the page is updated for this component
+     */
+    public function updatedPaginators($page, $pageName)
+    {
+        $this->dispatch('resetResizeColumn');
     }
 
     public function render()
     {
+        $this->dispatch('reinitTooltips');
+
         return view('livewire.admin.all-posts-index', [
                         'columns' => $this->columns,
                         'records' => $this->loadData(),

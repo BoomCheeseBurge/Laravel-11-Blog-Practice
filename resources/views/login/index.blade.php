@@ -27,11 +27,11 @@
                         @csrf
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-Mail</label>
-                            <input type="email" name="email" id="email" class="w-full block p-2.5 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 dark:placeholder-gray-400 dark:text-white dark:bg-gray-700 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500 focus:ring-primary-600 focus:border-primary-600" placeholder="name@company.com" required="" autofocus>
+                            <input type="email" name="email" id="email" class="w-full block p-2.5 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 dark:placeholder-gray-400 dark:text-white dark:bg-gray-700 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500 focus:ring-primary-600 focus:border-primary-600" placeholder="name@domain.com" required>
                         </div>
                         <div>
                             <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                            <input type="password" name="password" id="password" placeholder="••••••••" class="w-full block p-2.5 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 dark:placeholder-gray-400 dark:text-white dark:bg-gray-700 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500 focus:ring-primary-600 focus:border-primary-600" required="">
+                            <input type="password" name="password" id="password" placeholder="••••••••" class="w-full block p-2.5 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 dark:placeholder-gray-400 dark:text-white dark:bg-gray-700 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500 focus:ring-primary-600 focus:border-primary-600" required>
                         </div>
                         <div class="flex justify-between items-center">
                             <a href="#" class="text-primary-600 text-sm font-medium dark:text-primary-500 hover:underline">Forgot password?</a>
@@ -45,5 +45,13 @@
             </div>
         </div>
     </section>
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", (event) => {
+            setTimeout(function() {
+                    document.getElementById("email").autofocus;
+            }, 500);
+        });
+     </script>
 
 </x-layouts.base-layout>
