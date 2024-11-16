@@ -12,3 +12,9 @@ Autofocus does not work in the login and contact page.
 Autofocus only works if the page is reloaded on the all posts admin dashboard page.
 
 ________________________________________________________________
+
+Added a switch between archived and active posts for the admin user.
+
+________________________________________________________________
+
+Added resizable table columns albeit won't work for subsequent livewire paginations.
