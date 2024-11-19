@@ -15,14 +15,13 @@ function createCat()
     // Change the color display depending on the selected color from the dropdown list
     catColor.addEventListener('change', function() {
         if (modal.isVisible()) {
-            // console.log('Color change: ', colorChange);
+
             if (colorChange) {
                 colorDisplay2.classList.remove(colorChange);
             }
             selColor = "bg-"+this.value+"-400";
             colorDisplay2.classList.add(selColor);
             colorChange = selColor;
-            // console.log('Color change: ', selColor);
         }
     });
 
@@ -37,6 +36,13 @@ function createCat()
 }
 
 // ================================ Edit Modal Button ================================
+/**
+ *
+ *
+ * @param {string} slug
+ * @param {string} name
+ * @param {string} color
+ */
 function insertEdit(slug, name, color)
 {
     let selColor = "bg-"+color+"-400";
@@ -65,8 +71,6 @@ function insertEdit(slug, name, color)
         // Assign the current category's color value to the select input
         document.getElementById('catColor').value = color;
 
-        // console.log(document.getElementById('catColor').value);
-
         // Update the modal's form action
         document.getElementById('edit-form').action = route('categories.update', slug);
     });
@@ -78,7 +82,6 @@ function insertEdit(slug, name, color)
         colorDisplay.classList.remove(selColor);
         selColor = "bg-"+this.value+"-400";
         colorDisplay.classList.add(selColor);
-        // console.log('You selected: ', this.value);
     });
 
     modal.updateOnHide(() => {
@@ -91,6 +94,13 @@ function insertEdit(slug, name, color)
 
 
 // ================================ Delete Modal Button ================================
+/**
+ *
+ *
+ * @param {string} identifier
+ * @param {string} type
+ * @param {string} action
+ */
 function insertIdentifier(identifier, type, action)
 {
     const currentModalName = action + 'Modal';
@@ -107,23 +117,15 @@ function insertIdentifier(identifier, type, action)
 
         if (action == "delete") {
 
-            // console.log(route(type + '.destroy', identifier));
-
             // Update the modal's form action
             document.getElementById('deletionModalForm').action = route(type + '.destroy', identifier);
 
         } else if (action == "restore") {
 
-            // console.log(route(type + '.destroy', identifier));
-
             // Update the modal's form action
             document.getElementById('restorationModalForm').action = route(type + '.restore', identifier);
 
-            // console.log(document.getElementById('restoration-form').action);
-
         } else if (action == "permaDelete") {
-
-            // console.log(route(type + '.destroy', identifier));
 
             // Update the modal's form action
             document.getElementById('permaDeletionModalForm').action = route(type + '.erase', identifier);
@@ -131,3 +133,6 @@ function insertIdentifier(identifier, type, action)
 
     });
 }
+
+// --------------------------------------------------------------------------------------------------------------------------------
+

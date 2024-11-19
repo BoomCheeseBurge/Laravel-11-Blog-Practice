@@ -1,7 +1,6 @@
 
 window.addEventListener('reinitTooltips', event => {
     // anything you want to initialize
-    console.log('HELLO WORLD!');
 
     // let tooltips = FlowbiteInstances.getInstances('Tooltip');
 
@@ -13,8 +12,6 @@ window.addEventListener('reinitTooltips', event => {
     //         console.log(key, tooltips[key]);
     //     }
     // }
-
-    // console.log(tooltips.deleteTooltip1);
 
     // re-initialize tooltip object
     // tooltip.init();
@@ -87,4 +84,16 @@ new Resize();
 window.addEventListener('resetResizeColumn', event => {
 
     new Resize();
+});
+
+// --------------
+
+document.addEventListener('alpine:init', () => {
+    Alpine.data('myComponent', () => ({
+        checked: [],
+
+        isSelected(id) {
+            return this.checked.includes(id);
+        },
+    }));
 });

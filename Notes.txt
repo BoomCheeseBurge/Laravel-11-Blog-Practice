@@ -1,14 +1,40 @@
 
-Added a SoftDelete trait to the Post model.
+Added show/hide column, display per page, and column resize functionalities.
 
-Created a migration file for 'deleted_at' field creation to the posts table.
+Added sort column functionality to dashboard posts and admin category tables.
 
-The migration command is 'php artisan make:migration add_deleted_at_field_to_posts_table'
+Added search functionality to dashboard posts and admin category tables.
+
+________________________________________________________________
+
+Modified search query to be more flexible without basing off a single column for dashboard posts, admin posts, and admin categories.
 
 ________________________________________________________________
 
-Autofocus does not work in the login and contact page.
-
-Autofocus only works if the page is reloaded on the all posts admin dashboard page.
+Included author column based on username for the admin posts.
 
 ________________________________________________________________
+
+Added a custom validation rule for search keywords.
+
+However, Eloquent methods already ensures that any variables passed in the parameters are escaped through the use of PDO parameter binding.
+
+________________________________________________________________
+
+An issue with the 'search' custom validation rule used in the Livewire component.
+
+The error message shown is 'Call to a member function with() on null'.
+
+Based on forum answers, the error message is due to the custom validation rule causing a conflict with Livewire.
+
+The reason is because the custom validation rule will return an error message (if any) using the session's 'with()' method which does not exist in Livewire.
+
+This has been verified in the project here as well.
+
+Hence, the validation rule is performed directly on the Livewire component without using Laravels validation method nor the separate validation rule.
+
+________________________________________________________________
+
+Fixed search functionality where GET request does not need CSRF protection since no data is posted.
+
+The consequence of including this will cause the CSRF token to be included in the URL parameter.

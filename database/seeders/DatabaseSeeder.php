@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         // Call the seeders
         $this->call([CategorySeeder::class, UserSeeder::class]);
 
-        Post::factory(50)->recycle([
+        Post::factory(150)->recycle([
             // Call the related models of the seeders
             Category::all(),
             User::all(),

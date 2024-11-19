@@ -43,10 +43,12 @@
     {{-- Table Section START --}}
     <div x-init="
             $watch('selectCurrentPage', value => selectCurrentPageUpdated(value));
-            $watch
+            $watch('checked', checked => checkBulk(checked));
         "
         x-data="{
             checked:  $wire.entangle('checked').live,
+            indeterminate: false,
+            bulk: true,
             selectAll:  $wire.entangle('selectAll').live,
             selectCurrentPage:  $wire.entangle('selectCurrentPage').live,
             dropdownOpen: false,
@@ -58,7 +60,6 @@
                 if(value)
                 {
                     this.checked = await @this.getCurrentPageRecords();
-
                 } else {
                     this.checked = [];
                     this.selectAll = false;
@@ -72,6 +73,23 @@
                 if (this.checked.length + 1 == $wire.perPage) {
                     this.selectCurrentPage = true;
                 }
+            },
+            async checkBulk(checked) {
+
+                const records = await @this.getAllRecords();
+                if(checked.length > 0 && checked.length < records.length && this.selectCurrentPage === false)
+                {
+                    this.indeterminate = true;
+                    this.bulk = false;
+                } else {
+                    this.indeterminate = false;
+                    this.bulk = true;
+                }
+            },
+            resetChecked() {
+                this.indeterminate = false;
+                this.bulk = true;
+                this.checked = [];
             },
             toggleColumn(column) {
                 let result = this.displayedColumns.find(e => e.toLowerCase() === column.toLowerCase());
@@ -225,7 +243,7 @@
                                         </svg>
                                     </span>
                                 </div>
-                                <input wire:model.live="search" type="text" class="flex-grow flex-shrink w-px relative flex-auto px-3 text-xs font-thin tracking-wide leading-normal text-gray-500 rounded rounded-l-none border border-l-0 border-none dark:placeholder-emerald-300 dark:text-slate-100 dark:bg-slate-600 dark:focus:ring-teal-400 focus:outline-none lg:text-base" placeholder="Search" autofocus autocomplete="off">
+                                <input wire:model.live="search" type="search" class="flex-grow flex-shrink w-px relative flex-auto px-3 text-xs font-thin tracking-wide leading-normal text-gray-500 rounded rounded-l-none border border-l-0 border-none dark:placeholder-emerald-300 dark:text-slate-100 dark:bg-slate-600 dark:focus:ring-teal-400 focus:outline-none lg:text-base" placeholder="Search" autofocus autocomplete="off">
                             </div>
                         </div>
                         {{-- Table Search END --}}
@@ -311,19 +329,19 @@
                     {{-- Table Header END --}}
 
                     {{-- Table Body START --}}
-                    <tbody class="bg-white dark:bg-slate-700">
+                    <tbody class="bg-white dark:bg-slate-800">
                         @if ($records->isNotEmpty())
                             @foreach ($records as $record)
-                            <tr>
+                            <tr x-data wire:key="{{ $record->id }}" class="">
                                 {{-- Checkbox Column START --}}
-                                <td x-show="toggleColumn('Bulk')" class="px-6 py-4 border-b border-gray-500">
-                                    <input type="checkbox" wire:key="{{ $record->id }}" x-model="checked" x-on:click="checkSelected" value="{{ $record->id }}">
+                                <td x-show="toggleColumn('Bulk')" class="px-6 py-12 border-b border-gray-500">
+                                    <input type="checkbox" x-model="checked" x-on:click="checkSelected" class="selectRow" value="{{ $record->id }}">
                                 </td>
                                 {{-- Checkbox Column END --}}
 
                                 {{-- Number Column START --}}
-                                <td x-show="toggleColumn('Number')" class="px-6 py-4 border-b border-gray-500">
-                                    <div class="flex items-center">
+                                <td x-show="toggleColumn('Number')" class="border-b border-gray-500">
+                                    <div class="flex justify-center">
                                         <div class="text-sm leading-5 text-gray-800 dark:text-white">{{ $records->firstItem() + $loop->index }}</div>
                                     </div>
                                 </td>
@@ -333,11 +351,13 @@
                                 @foreach (array_filter($columns, function (string $value) {
                                             return ($value != 'Bulk') && ($value != 'Number') && ($value != 'Action');
                                         }) as $column)
-                                <td x-show="toggleColumn('{{ $column }}')" class="m-auto px-6 py-4 text-center border-b border-gray-500">
+                                <td x-show="toggleColumn('{{ $column }}')" class="m-auto text-center border-b border-gray-500">
                                     @if ($column === 'Category')
                                     <span class="px-2.5 py-1 text-xs font-medium text-blue-800 whitespace-nowrap bg-{{ $record->category_color }}-100 rounded-full">{{ $record->category_name }}</span>
                                     @elseif ($column === 'Date Created')
                                     <span class="text-sm leading-5 text-blue-900 whitespace-nowrap dark:text-white">{{ $record->created_at->format('F j, Y') }}</span>
+                                    @elseif ($column === 'Author')
+                                    <span class="text-sm leading-5 text-blue-900 whitespace-nowrap dark:text-white">{{ $record->username }}</span>
                                     @else
                                     <div class="text-sm leading-5 text-blue-900 dark:text-white">{{ $record[strtolower($column)] }}</div>
                                     @endif

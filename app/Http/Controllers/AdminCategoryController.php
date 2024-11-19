@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Closure;
 use App\Models\Post;
+use App\Rules\Search;
 use App\Rules\Fullname;
 use App\Models\Category;
 use App\Actions\CheckSlug;
@@ -31,15 +32,32 @@ class AdminCategoryController extends Controller
         // Convert the collection to an associative array
         $catColors = Category::all()->pluck('color')->toArray();
 
+        $adminCats = Category::latest(); // Base Eloquent query
+
+        // Check for a search keyword input
+        if(request()->has('search'))
+        {
+            // Validate the search input
+            $keyword = request()->validate([
+                'search' => ['max:50', new Search],
+            ])['search'];
+
+            // Search by keyword input or empty string by default
+            $adminCats = $adminCats->whereAny(['name', 'color'], 'like', '%'. $keyword .'%');
+        }
+
+        $perPage = request()->perPage ?? 10; // Get the pagination number or a default
+
         return view('admin.categories.index', [
             'title' => 'Admin',
             'subTitle' => 'Admin Categories',
             'page' => 'categories',
-            'categories' => Category::latest()->paginate(5),
-            'headers' => ['Name', 'Slug', 'Color', 'DateCreated'],
+            'categories' => $adminCats->paginate(5),
+            'headers' => ['No', 'Name', 'Slug', 'Color', 'Date Created', 'Action'],
             'columns' => ['name', 'slug', 'color', 'created_at'],
             'colors' => $colors,
             'catColors' => $catColors,
+            'perPage' => $perPage,
         ]);
     }
 

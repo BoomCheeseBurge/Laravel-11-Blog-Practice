@@ -1,16 +1,20 @@
-<thead class="bg-gray-2 dark:bg-slate-700">
+<thead class="bg-slate-700 dark:bg-indigo-100">
     <tr>
-        {{-- Bulk Action Checkbox START --}}
-        <th x-show="toggleColumn('Bulk')" class="text-primary-600 px-6 py-5 text-sm tracking-wider leading-4 text-left border-b-2 border-gray-300 group dark:text-white dark:border-slate-600 md:text-base">
-            <div class="flex items-center pt-2">
+        {{-- Bulk Action & Indeterminate Checkbox START --}}
+        <th x-show="toggleColumn('Bulk')" class="px-6 py-5 text-sm tracking-wider leading-4 text-left text-white border-b-2 border-slate-600 group dark:text-primary-600 dark:border-gray-300 md:text-base">
+            <div x-show="bulk" class="flex items-center pt-2">
                 <input type="checkbox" wire:key="{{ $currentPage }}" x-model="selectCurrentPage">
             </div>
+            <div x-show="indeterminate">
+                <input x-model="indeterminate" x-on:click="resetChecked" name="cssCheckbox" id="indeterminate" type="checkbox" class="css-checkbox">
+                <label for="indeterminate"></label>
+            </div>
         </th>
-        {{-- Bulk Action Checkbox END --}}
+        {{-- Bulk Action & Indeterminate Checkbox END --}}
 
         {{-- Header ID/No. START --}}
         @if ($attributes->has('id'))
-        <th x-show="toggleColumn('Number')" class="text-primary-600 px-6 py-5 text-sm tracking-wider leading-4 text-left border-b-2 border-gray-300 group dark:text-white dark:border-slate-600 md:text-base">
+        <th x-show="toggleColumn('Number')" class="border-x-[2px] border-x-primary-600/40 px-6 py-5 text-sm tracking-wider leading-4 text-left text-white border-b-2 border-b-slate-600 group dark:text-primary-600 dark:border-b-gray-300 md:text-base">
             <div class="flex items-center pt-2">
                 <div>
                     No
@@ -35,7 +39,7 @@
         @foreach (array_filter($headers, function (string $value) {
                     return ($value != 'Bulk') && ($value != 'Number') && ($value != 'Action');
                 }) as $header)
-            <th x-show="toggleColumn('{{ $header }}')" class="text-primary-600 px-6 py-5 text-sm tracking-wider leading-4 text-left border-b-2 border-gray-300 dark:text-white dark:border-slate-600 md:text-base">
+            <th x-show="toggleColumn('{{ $header }}')" class="border-x-[2px] border-x-primary-600/40 px-6 py-5 text-sm tracking-wider leading-4 text-left text-white border-b-2 border-b-slate-600 dark:text-primary-600 dark:border-b-gray-300 md:text-base">
                 <div class="flex justify-between items-center pt-2">
                     <div>
                         {{ $header }}
@@ -55,7 +59,7 @@
 
         {{-- Header Actions START --}}
         @if ($attributes->has('actions'))
-        <th x-show="toggleColumn('Action')" class="px-6 py-5 border-b-2 border-gray-300 dark:text-white dark:border-slate-600"></th>
+        <th x-show="toggleColumn('Action')" class="px-6 py-5 text-white border-b-2 border-slate-600 dark:border-gray-300"></th>
         @endif
         {{-- Header Actions END --}}
     </tr>

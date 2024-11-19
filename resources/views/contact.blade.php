@@ -25,25 +25,25 @@
                 <div>
                     <label for="first-name" class="text-sm/6 block font-semibold">First name</label>
                     <div class="mt-2.5">
-                        <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="w-full block px-3.5 py-2 rounded-md border-0 ring-1 ring-inset ring-gray-300 shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-600 placeholder:text-gray-400 sm:text-sm/6" autofocus>
+                        <input type="text" name="first-name" id="first-name" class="w-full block px-3.5 py-2 rounded-md border-0 ring-1 ring-inset ring-gray-300 shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-600 placeholder:text-gray-400 sm:text-sm/6" autofocus autocomplete="off">
                     </div>
                 </div>
                 <div>
                     <label for="last-name" class="text-sm/6 block font-semibold">Last name</label>
                     <div class="mt-2.5">
-                        <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="w-full block px-3.5 py-2 rounded-md border-0 ring-1 ring-inset ring-gray-300 shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-600 placeholder:text-gray-400 sm:text-sm/6">
+                        <input type="text" name="last-name" id="last-name" class="w-full block px-3.5 py-2 rounded-md border-0 ring-1 ring-inset ring-gray-300 shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-600 placeholder:text-gray-400 sm:text-sm/6" autocomplete="off">
                     </div>
                 </div>
                 <div class="sm:col-span-2">
                     <label for="company" class="text-sm/6 block font-semibold">Company</label>
                     <div class="mt-2.5">
-                        <input type="text" name="company" id="company" autocomplete="organization" class="w-full block px-3.5 py-2 rounded-md border-0 ring-1 ring-inset ring-gray-300 shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-600 placeholder:text-gray-400 sm:text-sm/6">
+                        <input type="text" name="company" id="company" class="w-full block px-3.5 py-2 rounded-md border-0 ring-1 ring-inset ring-gray-300 shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-600 placeholder:text-gray-400 sm:text-sm/6" autocomplete="off">
                     </div>
                 </div>
                 <div class="sm:col-span-2">
                     <label for="email" class="text-sm/6 block font-semibold">Email</label>
                     <div class="mt-2.5">
-                        <input type="email" name="email" id="email" autocomplete="email" class="w-full block px-3.5 py-2 rounded-md border-0 ring-1 ring-inset ring-gray-300 shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-600 placeholder:text-gray-400 sm:text-sm/6">
+                        <input type="email" name="email" id="email" class="w-full block px-3.5 py-2 rounded-md border-0 ring-1 ring-inset ring-gray-300 shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-600 placeholder:text-gray-400 sm:text-sm/6" autocomplete="off">
                     </div>
                 </div>
                 <div class="sm:col-span-2">
@@ -60,7 +60,7 @@
                             <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
                         </svg>
                         </div>
-                        <input type="tel" name="phone-number" id="phone-number" autocomplete="tel" class="w-full block px-3.5 py-2 pl-20 text-gray-900 rounded-md border-0 ring-1 ring-inset ring-gray-300 shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-600 placeholder:text-gray-400 sm:text-sm/6">
+                        <input type="tel" name="phone-number" id="phone-number" class="w-full block px-3.5 py-2 pl-20 text-gray-900 rounded-md border-0 ring-1 ring-inset ring-gray-300 shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-600 placeholder:text-gray-400 sm:text-sm/6" autocomplete="off">
                     </div>
                 </div>
                 <div class="sm:col-span-2">

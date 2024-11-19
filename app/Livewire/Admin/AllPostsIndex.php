@@ -3,11 +3,14 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Post;
+use App\Rules\Search;
 use Livewire\Component;
 use App\Models\Category;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Computed;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class AllPostsIndex extends Component
@@ -22,7 +25,9 @@ class AllPostsIndex extends Component
 
     public int $perPage = 10; // Display records per page
 
+    #[Locked]
     public string $sortHeader = 'updated_at'; // Store the current sorted by column
+    #[Locked]
     public string $sortDirection = 'desc'; // Store the current sort direction
     protected $queryString = [ // Add a query string to the URL to indicate which column and direction is currently sorted by
         'sortHeader'  => ['keep' => true], // Include the query string even on first page load
@@ -39,11 +44,15 @@ class AllPostsIndex extends Component
     /**
      * Table Info
      */
+    #[Locked]
     public string $title = 'Admin';
+    #[Locked]
     public string $subTitle = 'Admin Posts';
+    #[Locked]
     public array $columns = [
                                 'Bulk',
                                 'Number',
+                                'Author',
                                 'Title',
                                 'Slug',
                                 'Category',
@@ -77,10 +86,24 @@ class AllPostsIndex extends Component
     #[Computed()]
     public function loadData() // Retrieve the table records
     {
+        if(!empty($this->search)) // Validate search keyword if exist
+        {
+            if ((!preg_match_all('/^[\p{L}\p{M}\p{P}\d]+(?:\s[\p{L}\p{M}\p{P}\d]+)*$/', $this->search)) && (strlen($this->search) <= 100)) {
+                $this->search = '';
+            }
+        }
+
         return Post::join('categories', 'posts.category_id', '=', 'categories.id')
+                ->join('users', 'posts.author_id', '=', 'users.id')
                 ->when($this->archive, fn($query) => $query->onlyTrashed()) // Switch to archived posts
-                ->select('posts.*', 'posts.created_at as Date Created', 'categories.name as category_name', 'categories.color as category_color')
-                ->when($this->search, fn ($query) => $query->where('title', 'like', '%' . $this->search . '%')) // Search query
+                ->select('posts.*', 'users.username', 'posts.created_at as Date Created', 'categories.name as category_name', 'categories.color as category_color')
+                ->when($this->search, fn ($query) => $query->where('title', 'like', '%' . $this->search . '%')
+                                                            ->orWhereHas('category', function (Builder $query) {
+                                                                $query->where('name', 'like', "%$this->search%");
+                                                            })->orWhereHas('author', function (Builder $query) {
+                                                                $query->where('username', 'like', "%$this->search%");
+                                                            })
+                ) // Search query
                 ->when($this->sortHeader === 'category', function ($query) {
                     return $query->orderBy('categories.name', $this->sortDirection); // Order by category name
                 }, function ($query) {

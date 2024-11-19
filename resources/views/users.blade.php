@@ -33,7 +33,7 @@
     <div class="container mx-auto px-4 py-6" x-data="datatables" x-cloak>
 		<h1 class="py-4 mb-10 text-3xl border-b">Datatable</h1>
 
-        <div x-data="{ dropdownOpen: false, printOut() { console.log('HELLO WORLD!'); } }" class="relative inline-block text-left">
+        <div x-data="{ dropdownOpen: false } }" class="relative inline-block text-left">
             <div>
               <button x-on:click="dropdownOpen = !dropdownOpen" type="button" class="w-full inline-flex justify-center gap-x-1.5 px-3 py-2 text-sm font-semibold text-gray-900 bg-white rounded-md ring-1 ring-inset ring-gray-300 shadow-sm hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
                 Options

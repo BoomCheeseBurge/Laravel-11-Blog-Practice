@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Rules\Title;
+use App\Rules\Search;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class DashboardPostController extends Controller
@@ -19,13 +21,33 @@ class DashboardPostController extends Controller
      */
     public function index()
     {
+        $userPosts = Auth::user()->posts(); // Base Eloquent query
+
+        // Check for a search keyword input
+        if(request()->has('search'))
+        {
+            // Validate the search input
+            $keyword = request()->validate([
+                'search' => ['max:50', new Search],
+            ])['search'];
+
+            // Search by keyword input or empty string by default
+            $userPosts = $userPosts->where('title', 'like', '%'. $keyword .'%')
+                                    ->orWhereHas('category', function (Builder $query) use($keyword) {
+                                        $query->where('name', 'like', "%$keyword%");
+                                    });
+        }
+
+        $perPage = request()->perPage ?? 10; // Get the pagination number or a default
+
         return view('dashboard.posts.index', [
             'title' => 'Dashboard',
             'subTitle' => 'Dashboard Posts',
             'page' => 'posts',
-            'posts' => Auth::user()->posts()->latest()->paginate(5), // Get the posts belonging to the authenticated user
-            'headers' => ['Title', 'Slug', 'Category', 'DateCreated'],
+            'posts' => $userPosts->latest()->paginate($perPage), // Get the posts belonging to the authenticated user
+            'headers' => ['No', 'Title', 'Slug', 'Category', 'Date Created', 'Action'],
             'columns' => ['title', 'slug', 'category', 'created_at'],
+            'perPage' => $perPage,
         ]);
     }
 
@@ -48,7 +70,7 @@ class DashboardPostController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validatedData = $request->validate([
-            'title' => ['required', 'max:255', new Title],
+            'title' => ['required', 'max:100', new Title],
             'slug' => 'required | unique:posts',
             'category_id' => 'required',
             'body' => 'required',
@@ -180,7 +202,7 @@ class DashboardPostController extends Controller
             Storage::delete($post->featured_image);
         }
 
-        $post->delete();
+        $post->forceDelete();
 
         return to_route('posts.index')->with('success', 'Post successfully deleted!');
     }

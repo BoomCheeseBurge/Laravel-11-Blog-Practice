@@ -16,23 +16,15 @@ function insertIdentifier(identifier, type, action)
 
         if (action == "delete") {
 
-            // console.log(route(type + '.destroy', identifier));
-
             // Update the modal's form action
             document.getElementById('deletionModalForm').action = route(type + '.destroy', identifier);
 
         } else if (action == "restore") {
 
-            // console.log(route(type + '.destroy', identifier));
-
             // Update the modal's form action
             document.getElementById('restorationModalForm').action = route(type + '.restore', identifier);
 
-            // console.log(document.getElementById('restoration-form').action);
-
         } else if (action == "permaDelete") {
-
-            // console.log(route(type + '.destroy', identifier));
 
             // Update the modal's form action
             document.getElementById('permaDeletionModalForm').action = route(type + '.erase', identifier);
@@ -40,3 +32,5 @@ function insertIdentifier(identifier, type, action)
 
     });
 }
+
+// ------------------------------------------------------------------------------------------------------------------
