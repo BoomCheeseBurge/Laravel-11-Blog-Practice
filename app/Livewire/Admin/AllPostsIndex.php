@@ -3,7 +3,6 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Post;
-use App\Rules\Search;
 use Livewire\Component;
 use App\Models\Category;
 use Livewire\Attributes\Url;
@@ -12,10 +11,11 @@ use Livewire\Attributes\Locked;
 use Livewire\Attributes\Computed;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class AllPostsIndex extends Component
 {
-    use WithPagination;
+    use WithPagination, LivewireAlert;
 
     /**
      * Table Tools
@@ -34,12 +34,11 @@ class AllPostsIndex extends Component
         'sortDirection' => ['keep' => true] // Include the query string even on first page load
     ];
 
-    public array $checked = []; // Store record IDs to be bulk deleted
+    public array $selectedRecords = []; // Store record IDs to be bulk deleted
     public bool $selectCurrentPage = false; // Determine whether the records in the current page are all selected
     public bool $selectAll = false; // Determine whether the all records are selected
     public Collection $categories; // Store the categories from the database
     public ?int $selectedCategory = null; // Store the selected category
-
 
     /**
      * Table Info
@@ -138,18 +137,22 @@ class AllPostsIndex extends Component
      */
     public function removeSelected()
     {
-        Post::whereIn('id', $this->checked)->delete(); // Remove the selected posts
+        Post::whereIn('id', $this->selectedRecords)->delete(); // Remove the selected posts
 
         /**
          * Reset all variables
          */
-        $this->selectCurrentPage = false;
-        $this->selectAll = false;
-        $this->checked = [];
-
-        request()->session()->flash('success', 'Posts successfully removed to archive!');
+        $this->reset(['selectCurrentPage', 'selectAll', 'selectedRecords']);
 
         $this->dispatch('hide-bulk'); // Hide the bulk dropdown
+
+        // session()->flash('success', 'Posts successfully removed to archive!');
+
+        $this->alert('success', 'Posts successfully removed to archive!', [
+            'position' => 'center',
+            'timer' => null,
+            'showCloseButton' => true,
+        ]);
     }
 
     /**
@@ -160,35 +163,42 @@ class AllPostsIndex extends Component
         // Check if there is no selected category
         if($this->selectedCategory == null)
         {
-            request()->session()->flash('fail', 'Updated failed! No category was chosen for the bulk edit.');
-
             /**
              * Reset all variables
              */
-            $this->selectCurrentPage = false;
-            $this->selectAll = false;
-            $this->checked = [];
+            $this->reset(['selectCurrentPage', 'selectAll', 'selectedRecords']);
 
             $this->dispatch('hide-bulk'); // Hide the bulk dropdown
+
+            // session()->flash('fail', 'Updated failed! No category was chosen for the bulk edit.');
+
+            $this->alert('error', 'Updated failed! No category was chosen for the bulk edit.', [
+                            'position' => 'center',
+                            'timer' => null,
+                            'showCloseButton' => true,
+                        ]);
 
             return;
         }
 
-        Post::whereIn('id', $this->checked)->update(['category_id' => $this->selectedCategory]); // Update the selected posts with the new category
+        Post::whereIn('id', $this->selectedRecords)->update(['category_id' => $this->selectedCategory]); // Update the selected posts with the new category
 
-        request()->session()->flash('success', 'Posts\' category successfully updated!');
+        $this->resetPage(); // Reset to page 1
+
+        $this->dispatch('hide-bulk'); // Hide the bulk dropdown
 
         /**
          * Reset all variables
          */
-        $this->selectedCategory = null;
-        $this->selectCurrentPage = false;
-        $this->selectAll = false;
-        $this->checked = [];
+        $this->reset(['selectedCategory', 'selectCurrentPage', 'selectAll', 'selectedRecords']);
 
-        $this->resetPage(); // Go back to the first page of the table
+        // session()->flash('success', 'Posts\' category successfully updated!');
 
-        $this->dispatch('hide-bulk'); // Hide the bulk dropdown
+        $this->alert('success', 'Posts\' category successfully updated!', [
+                        'position' => 'center',
+                        'timer' => null,
+                        'showCloseButton' => true,
+                    ]);
     }
 
     /**
@@ -196,18 +206,22 @@ class AllPostsIndex extends Component
      */
     public function deleteSelected()
     {
-        Post::whereIn('id', $this->checked)->forceDelete(); // Delete the selected posts
+        Post::whereIn('id', $this->selectedRecords)->forceDelete(); // Delete the selected posts
 
         /**
          * Reset all variables
          */
-        $this->selectCurrentPage = false;
-        $this->selectAll = false;
-        $this->checked = [];
-
-        request()->session()->flash('success', 'Posts permanently deleted!');
+        $this->reset(['selectCurrentPage', 'selectAll', 'selectedRecords']);
 
         $this->dispatch('hide-bulk'); // Hide the bulk dropdown
+
+        // session()->flash('success', 'Posts permanently deleted!');
+
+        $this->alert('success', 'Posts permanently deleted!', [
+            'position' => 'center',
+            'timer' => null,
+            'showCloseButton' => true,
+        ]);
     }
 
     /**
@@ -215,20 +229,22 @@ class AllPostsIndex extends Component
      */
     public function restoreSelected()
     {
-        Post::whereIn('id', $this->checked)->restore(); // Restore the selected posts
+        Post::whereIn('id', $this->selectedRecords)->restore(); // Restore the selected posts
 
         /**
          * Reset all variables
          */
-        $this->selectCurrentPage = false;
-        $this->selectAll = false;
-        $this->checked = [];
-
-        $this->archive = false;
-
-        request()->session()->flash('success', 'Posts successfully restored!');
+        $this->reset(['selectCurrentPage', 'selectAll', 'selectedRecords', 'archive']);
 
         $this->dispatch('hide-bulk'); // Hide the bulk dropdown
+
+        // session()->flash('success', 'Posts successfully restored!');
+
+        $this->alert('success', 'Posts successfully restored!', [
+            'position' => 'center',
+            'timer' => null,
+            'showCloseButton' => true,
+        ]);
     }
 
     /**
@@ -247,9 +263,7 @@ class AllPostsIndex extends Component
     public function updatedPage()
     {
         // On the next page, reset bulk selection
-        $this->checked = [];
-        $this->selectCurrentPage = false;
-        $this->selectAll = false;
+        $this->reset(['selectCurrentPage', 'selectAll', 'selectedRecords']);
     }
 
     /**
@@ -275,7 +289,7 @@ class AllPostsIndex extends Component
     {
         $this->selectedPost->delete();
 
-        request()->session()->flash('success', 'Post successfully removed! Check archived posts.');
+        session()->flash('success', 'Post successfully removed! Check archived posts.');
     }
 
     /**
@@ -287,7 +301,7 @@ class AllPostsIndex extends Component
 
         $this->archive = false;
 
-        request()->session()->flash('success', 'Post successfully restored!');
+        session()->flash('success', 'Post successfully restored!');
     }
 
     /**
@@ -297,7 +311,7 @@ class AllPostsIndex extends Component
     {
         $this->selectedPost->forceDelete();
 
-        request()->session()->flash('success', 'Post permanently deleted!');
+        session()->flash('success', 'Post permanently deleted!');
     }
 
     /**

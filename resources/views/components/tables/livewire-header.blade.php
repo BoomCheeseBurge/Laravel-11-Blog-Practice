@@ -5,7 +5,7 @@
             <div x-show="bulk" class="flex items-center pt-2">
                 <input type="checkbox" wire:key="{{ $currentPage }}" x-model="selectCurrentPage">
             </div>
-            <div x-show="indeterminate">
+            <div x-cloak x-show="indeterminate">
                 <input x-model="indeterminate" x-on:click="resetChecked" name="cssCheckbox" id="indeterminate" type="checkbox" class="css-checkbox">
                 <label for="indeterminate"></label>
             </div>

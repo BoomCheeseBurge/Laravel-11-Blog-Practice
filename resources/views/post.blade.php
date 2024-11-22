@@ -44,9 +44,9 @@ URL: https://flowbite.com/docs/components/typography/
 
                 {{-- Post Featured Image --}}
                 @if ($post->featured_image)
-                <img src="{{ asset($post->featured_image) }}" alt="Post Featured Image" class="aspect-16/9">
+                <img src="{{ Storage::disk('posts')->url($post->featured_image) }}" alt="Post Featured Image" class="aspect-16/9">
                 @else
-                <img src="{{ asset('IMG/default/'. $post->category->slug .'.jpg') }}" alt="Default Featured Image" class="w-full h-3/5">
+                <img src="{{ Storage::disk('categories')->url($post->category->image) }}" alt="Default Featured Image" class="w-full h-3/5">
                 @endif
             </header>
 

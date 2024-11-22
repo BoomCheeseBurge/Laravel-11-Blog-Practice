@@ -8,14 +8,15 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\DashboardPostController;
 use App\Livewire\Admin\AllPostsIndex;
-
+use App\Livewire\Mytest;
+use App\Livewire\Testing;
 
 // Route to homepage
 Route::get('/', function () {
 
     return view('home', [
         'title' => 'Home',
-        'categories' => Category::select('slug')->get(),
+        'categories' => Category::select(['name', 'slug', 'image'])->get(),
     ]);
 })->name('home');
 

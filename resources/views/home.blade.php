@@ -391,7 +391,7 @@
                             @foreach ($categories as $category)
                             <li class="card-item swiper-slide list-none">
                                 <a href="/posts?category={{ $category->slug }}" class="card-link group !active:cursor-grabbing">
-                                    <img src="{{ asset('IMG/default/'. $category->slug .'.jpg') }}" alt="{{ $category->name }} category image" class="card-image">
+                                    <img src="{{ asset($category->image) }}" alt="{{ $category->name }} category image" class="card-image">
                                     {{-- <button type="button" class="invinsible p-4.5 w-85 h-full absolute top-0 left-0 rounded-xl group-active:cursor-grabbing sm:w-100"></button> --}}
 
                                     <div class="flex items-center mt-3">

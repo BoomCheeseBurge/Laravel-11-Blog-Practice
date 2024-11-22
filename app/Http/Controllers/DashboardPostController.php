@@ -79,7 +79,9 @@ class DashboardPostController extends Controller
 
         if ($request->hasFile('featured_image'))
         {
-            $validatedData['featured_image'] = $request->file('featured_image')->store('IMG/featured-images');
+            $featured_image = $request->file('featured_image');
+
+            $validatedData['featured_image'] = Storage::disk('posts')->putFileAs('/', $featured_image, str()->uuid() . '.' . $featured_image->extension() );
         }
 
         $validatedData['author_id'] = auth()->user()->id;
@@ -155,13 +157,15 @@ class DashboardPostController extends Controller
         if ($request->hasFile('featured_image'))
         {
             // Check if the current post has an existing featured image
-            if ($post->featured_image)
+            if(Storage::disk('posts')->exists($post->featured_image))
             {
                 // Delete the old featured image file
-                Storage::delete($post->featured_image);
+                Storage::disk('posts')->delete($post->featured_image);
             }
 
-            $validatedData['featured_image'] = $request->file('featured_image')->store('IMG/featured-images');
+            $featured_image = $request->file('featured_image');
+
+            $validatedData['featured_image'] = Storage::disk('posts')->putFileAs('/', $featured_image, str()->uuid() . '.' . $featured_image->extension() );
         } else {
             $validatedData['featured_image'] = $post->featured_image;
         }
@@ -196,10 +200,10 @@ class DashboardPostController extends Controller
         }
 
         // Check if the current post has an existing featured image
-        if ($post->featured_image)
+        if(Storage::disk('posts')->exists($post->featured_image))
         {
             // Delete the featured image file
-            Storage::delete($post->featured_image);
+            Storage::disk('posts')->delete($post->featured_image);
         }
 
         $post->forceDelete();

@@ -1,40 +1,34 @@
 
-Added show/hide column, display per page, and column resize functionalities.
-
-Added sort column functionality to dashboard posts and admin category tables.
-
-Added search functionality to dashboard posts and admin category tables.
+Create image field for category in its corresponding migration file.
 
 ________________________________________________________________
 
-Modified search query to be more flexible without basing off a single column for dashboard posts, admin posts, and admin categories.
+Specify the corresponding image file name for every category in the category seeder.
 
 ________________________________________________________________
 
-Included author column based on username for the admin posts.
+Add image validation rules for uploading image files in the admin category page.
 
 ________________________________________________________________
 
-Added a custom validation rule for search keywords.
-
-However, Eloquent methods already ensures that any variables passed in the parameters are escaped through the use of PDO parameter binding.
+Add image upload to the category creation form in the admin category page.
 
 ________________________________________________________________
 
-An issue with the 'search' custom validation rule used in the Livewire component.
-
-The error message shown is 'Call to a member function with() on null'.
-
-Based on forum answers, the error message is due to the custom validation rule causing a conflict with Livewire.
-
-The reason is because the custom validation rule will return an error message (if any) using the session's 'with()' method which does not exist in Livewire.
-
-This has been verified in the project here as well.
-
-Hence, the validation rule is performed directly on the Livewire component without using Laravels validation method nor the separate validation rule.
+Fixed the if statement for checking existing files for posts or categories.
 
 ________________________________________________________________
 
-Fixed search functionality where GET request does not need CSRF protection since no data is posted.
+Added two public custom storage disks for post and category in the 'filesystems.php' file.
 
-The consequence of including this will cause the CSRF token to be included in the URL parameter.
+________________________________________________________________
+
+Files are now accessed using the Storage facade instead of the asset url helper function.
+
+________________________________________________________________
+
+Installed SweetAlert2 due to Livewire session flash not playing nice with AlpineJS data reset.
+
+Installed Livewire SweetAlert to be exclusively for Livewire.
+
+Applied Livewire SweetAlert for the bulk edit, remove, restore, and delete.

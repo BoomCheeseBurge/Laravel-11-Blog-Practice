@@ -21,6 +21,7 @@
     "dependencies": {
         "@alpinejs/persist": "^3.14.3",
         "alpinejs": "^3.14.3",
+        "sweetalert2": "^11.6.13",
         "swiper": "^11.1.14"
     }
 }

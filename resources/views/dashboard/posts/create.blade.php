@@ -89,7 +89,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mx-auto w-8 h-8 mb-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
                             </svg>
-                            <h5 class="mb-2 text-xl font-bold tracking-tight text-slate-800 dark:text-gray-300">Upload picture</h5>
+                            <h5 class="mb-2 text-xl font-bold tracking-tight text-slate-800 dark:text-gray-300">Upload Picture</h5>
                             <p class="text-sm font-normal md:px-6">Choose photo size should be less than <b class="text-slate-800 dark:text-gray-300">2mb</b></p>
                             <p class="text-sm font-normal md:px-6">and should be in <b class="text-slate-800 dark:text-gray-300">JPG, PNG, or GIF</b> format.</p>
                             <span id="filename" class="z-50 text-gray-500 bg-gray-200"></span>

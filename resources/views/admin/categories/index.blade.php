@@ -30,6 +30,7 @@
 
     <!-- ====== Table Section Start -->
     <div x-data="{
+            fileExist: '',
             columns: true,
             dropdownOpen: false,
             openDisplay: false,
@@ -206,7 +207,7 @@
                                 </a>
 
                                 {{-- ================================================= EDIT BUTTON ================================================= --}}
-                                <button type="button" data-tooltip-target="edit-tooltip-{{ $loop->iteration }}" data-modal-target="editModal" data-modal-toggle="editModal" class="relative flex flex-col items-center pb-1.5 pl-3 text-amber-600 group dark:text-amber-400" onclick="insertEdit('{{ $category->slug }}', '{{ $category->name }}', '{{ $category->color }}')">
+                                <button type="button" x-on:click="fileExist = '{{  $category->image ? Storage::disk('categories')->url($category->image) : '' }}'" data-tooltip-target="edit-tooltip-{{ $loop->iteration }}" data-modal-target="editModal" data-modal-toggle="editModal" class="relative flex flex-col items-center pb-1.5 pl-3 text-amber-600 group dark:text-amber-400" onclick="insertEdit('{{ $category->slug }}', '{{ $category->name }}', '{{ $category->color }}')">
                                     <svg class="h-4.5 w-4.5 group-hover:animate-sway" width="24" height="24" viewBox="5.796 0.9 9.204 9.384" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M 12.146 1.146 C 12.342 0.951 12.658 0.951 12.854 1.146 L 14.854 3.146 C 15.049 3.342 15.049 3.658 14.854 3.854 L 10.911 7.796 C 10.835 7.872 10.747 7.935 10.651 7.984 L 6.724 9.947 C 6.531 10.044 6.299 10.006 6.146 9.854 C 5.994 9.701 5.957 9.469 6.053 9.276 L 8.016 5.349 C 8.065 5.253 8.128 5.165 8.204 5.089 L 12.146 1.146 Z M 12.5 2.207 L 8.911 5.796 L 7.873 7.873 L 8.127 8.127 L 10.204 7.089 L 13.793 3.5 L 12.5 2.207 Z" fill="currentColor"></path>
                                     </svg>
@@ -250,7 +251,7 @@
 
                 {{-- Create Modal START --}}
                 <div id="createModal" tabindex="-1" aria-hidden="true" class="h-modal w-full overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 hidden justify-center items-center md:h-full md:inset-0">
-                    <div class="w-full max-w-md h-full p-4 md:h-auto">
+                    <div class="w-full h-full p-4 md:max-w-[50rem] md:h-auto">
                         <!-- Modal content -->
                         <div class="relative p-4 text-center bg-white rounded-lg shadow dark:bg-graydark sm:p-5">
                             <button type="button" class="ml-auto absolute top-2.5 right-2.5 inline-flex items-center p-1.5 text-sm text-neutral-400 bg-transparent rounded-lg dark:hover:text-red-500 dark:hover:bg-neutral-600 hover:text-graydark hover:bg-slate-2" data-modal-toggle="createModal">
@@ -259,52 +260,84 @@
                             </button>
                             <p class="mb-4 font-bold text-neutral-500 dark:text-slate-100">Create Category</p>
                             <hr>
-                            <div class="relative flex justify-center items-center mt-3 space-x-4">
-                                <form action="{{ route('categories.store') }}" method="post" id="create-form">
+                            <div class="flex flex-col items-center mt-3 space-x-4">
+                                <form action="{{ route('categories.store') }}" method="post" id="create-form" enctype="multipart/form-data" class="w-full">
                                     @csrf
-                                    <div>
-                                        <label for="name" class="block mb-2 text-sm font-medium text-slate-900 dark:text-white">Category Name</label>
-                                        <input type="text" id="name" name="name" class="max-w-lg p-2.5 text-sm text-slate-900 bg-slate-50 rounded-lg dark:placeholder-slate-400 dark:text-white dark:bg-slate-700
-                                        @error('name')
-                                        is-invalid
-                                        @else
-                                        is-valid
-                                        @enderror" placeholder="Enter name here" value="{{ old('name') }}" autocomplete="off" autofocus required>
-                                        <svg class="w-6 h-6 text-red-600
+                                    <div class="flex flex-col justify-center items-center gap-5 mb-10 md:flex-row">
+                                        <div class="w-full flex flex-col items-center">
+                                            <div class="w-full relative">
+                                                <label for="name" class="block mb-2 text-sm font-medium text-slate-900 dark:text-white">Category Name</label>
+                                                <input type="text" id="name" name="name" class="w-[100%] max-w-[20rem] py-2.5 text-sm text-slate-900 bg-slate-50 rounded-lg dark:placeholder-slate-400 dark:text-white dark:bg-slate-700
+                                                @error('name')
+                                                is-invalid
+                                                @else
+                                                is-valid
+                                                @enderror" placeholder="Enter name here" value="{{ old('name') }}" autocomplete="off" autofocus required>
+                                                <svg class="w-6 h-6 text-red-600
+                                                    @error('name')
+                                                    absolute top-9.5 right-0 mr-3
+                                                    @else
+                                                    hidden
+                                                    @enderror" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13V8m0 8h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                                </svg>
+                                            </div>
                                             @error('name')
-                                            absolute top-9.5 right-21 mr-3
-                                            @else
-                                            hidden
-                                            @enderror" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13V8m0 8h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                        </svg>
-                                    </div>
-                                    @error('name')
-                                    <x-messages.error :message="$message"></x-messages.error>
-                                    @enderror
-                                    <div class="relative flex flex-col items-center mt-5 mb-8">
-                                        {{-- <label for="hs-color-input" class="block mb-2 text-sm font-medium">Color picker</label>
-                                        <input type="color" class="w-14 h-10 block p-1 bg-white rounded-lg border border-slate-200 cursor-pointer disabled:opacity-50 disabled:pointer-events-none" id="hs-color-input" value="#2563eb" title="Choose your color"> --}}
-                                        <label for="color" class="mb-2 text-sm font-medium text-slate-900 dark:text-white">Category Color</label>
-                                        <div>
-                                            <select id="color" name="color" class="max-w-lg p-2.5 text-sm text-center text-slate-900 bg-slate-50 rounded-lg border border-slate-300 dark:placeholder-slate-400 dark:text-white dark:bg-slate-700 dark:border-slate-600 dark:focus:border-blue-500 dark:focus:ring-blue-500 focus:border-blue-500 focus:ring-blue-500">
-                                                <option value="default" selected disabled>Choose available color</option>
-                                                @foreach ($colors as $color)
-                                                    @if (!in_array(Str::lower($color), $catColors))
-                                                    <option value="{{ Str::lower($color) }}">{{ $color }} </option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                            <span id="colorDisplay2" class="px-4 py-1.5 ml-4 rounded-md border-2 border-zinc-300"></span>
-                                            @error('color')
                                             <x-messages.error :message="$message"></x-messages.error>
                                             @enderror
+                                            <div class="w-full relative flex flex-col items-center mt-5">
+                                                {{-- <label for="hs-color-input" class="block mb-2 text-sm font-medium">Color picker</label>
+                                                <input type="color" class="w-14 h-10 block p-1 bg-white rounded-lg border border-slate-200 cursor-pointer disabled:opacity-50 disabled:pointer-events-none" id="hs-color-input" value="#2563eb" title="Choose your color"> --}}
+                                                <label for="color" class="mb-2 text-sm font-medium text-slate-900 dark:text-white">Category Color</label>
+                                                <div class="w-full flex justify-center">
+                                                    <select id="color" name="color" class="max-w-[15rem] w-[100%] py-2.5 text-sm text-center text-slate-900 bg-slate-50 rounded-lg border border-slate-300 dark:placeholder-slate-400 dark:text-white dark:bg-slate-700 dark:border-slate-600 dark:focus:border-blue-500 dark:focus:ring-blue-500 focus:border-blue-500 focus:ring-blue-500">
+                                                        <option value="default" selected disabled>Choose available color</option>
+                                                        @foreach ($colors as $color)
+                                                            @if (!in_array(Str::lower($color), $catColors))
+                                                            <option value="{{ Str::lower($color) }}">{{ $color }} </option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                    <span id="colorDisplay2" class="px-4.5 py-1.5 ml-4 rounded-md border-2 border-zinc-300"></span>
+                                                    @error('color')
+                                                    <x-messages.error :message="$message"></x-messages.error>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="w-full">
+                                            {{-- Category Image Input START --}}
+                                            <h3 class="mb-2 font-mono text-lg font-bold text-gray-900 dark:text-slate-100">Category Image</h3>
+                                            @error('image')
+                                            <x-messages.error :message="$message"></x-messages.error>
+                                            @enderror
+                                            <div x-data="imageData()" class="w-full max-w-2xl items-center p-4 text-center text-gray-900 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:text-gray-400 dark:bg-gray-800 dark:border-gray-400">
+                                                <div x-show="previewUrl == ''">
+                                                    <label for="image" class="cursor-pointer">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mx-auto w-8 h-8 mb-4">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                                                        </svg>
+                                                        <h5 class="mb-2 text-base font-bold tracking-tight text-slate-800 dark:text-gray-300">Upload Picture</h5>
+                                                        <p class="text-xs font-normal md:px-6">Choose photo size should be less than <b class="text-slate-800 dark:text-gray-300">2mb</b></p>
+                                                        <p class="text-xs font-normal md:px-6">and should be in <b class="text-slate-800 dark:text-gray-300">JPG, PNG, or GIF</b> format.</p>
+                                                        <span id="filename" class="z-50 text-gray-500 bg-gray-200"></span>
+                                                    </label>
+                                                    <input id="image" name="image" type="file" accept="image/*" class="hidden" @change="updatePreview()" />
+                                                </div>
+                                                <div class="w-full space-y-5" x-show="previewUrl !== ''">
+                                                    <img :src="previewUrl" alt="" class="h-[12rem] w-[20rem] mx-auto">
+                                                    <div class="">
+                                                        <button type="button" @click="clearPreview()" class="px-5 py-2.5 me-2 mb-2 text-sm font-medium text-center text-white bg-teal-600 rounded-full dark:font-semibold dark:text-teal-800 dark:bg-teal-400 dark:focus:ring-teal-500 dark:hover:bg-teal-600 focus:outline-none focus:ring-4 focus:ring-teal-500 hover:bg-teal-800">Choose Another</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{-- Category Image Input END --}}
                                         </div>
                                     </div>
-                                    <button type="submit" class="bg-primary-600 px-3 py-2 mr-10 text-sm font-medium text-center text-white rounded-lg dark:focus:ring-neutral-600 dark:hover:bg-primary-400 focus:ring-primary-300 focus:outline-none focus:ring-4 hover:bg-primary-500">
+                                    <button type="submit" class="bg-primary-600 px-3 py-2 mr-10 text-sm font-medium text-center text-white rounded-lg dark:focus:ring-neutral-600 dark:hover:bg-primary-400 focus:ring-primary-300 focus:outline-none focus:ring-4 hover:bg-primary-500 md:px-5 md:py-3 md:text-base">
                                         Create
                                     </button>
-                                    <button data-modal-toggle="createModal" type="button" class="px-3 py-2 text-sm font-medium text-slate-100 bg-red-700 rounded-lg dark:text-slate-2 dark:bg-red-600 dark:focus:ring-red-900 dark:hover:text-white dark:hover:bg-red-500 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300 hover:text-white hover:bg-red-600">
+                                    <button data-modal-toggle="createModal" type="button" class="px-3 py-2 text-sm font-medium text-slate-100 bg-red-700 rounded-lg dark:text-slate-2 dark:bg-red-600 dark:focus:ring-red-900 dark:hover:text-white dark:hover:bg-red-500 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300 hover:text-white hover:bg-red-600 md:px-5 md:py-3 md:text-base">
                                         Cancel
                                     </button>
                                 </form>
@@ -316,7 +349,7 @@
 
                 {{-- Edit Modal START --}}
                 <div id="editModal" tabindex="-1" aria-hidden="true" class="h-modal w-full overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 hidden justify-center items-center md:h-full md:inset-0">
-                    <div class="w-full max-w-md h-full p-4 md:h-auto">
+                    <div class="w-full h-full p-4 md:max-w-[50rem] md:h-auto">
                         <!-- Modal content -->
                         <div class="relative p-4 text-center bg-white rounded-lg shadow dark:bg-graydark sm:p-5">
                             <button type="button" class="ml-auto absolute top-2.5 right-2.5 inline-flex items-center p-1.5 text-sm text-neutral-400 bg-transparent rounded-lg dark:hover:text-red-500 dark:hover:bg-neutral-600 hover:text-graydark hover:bg-slate-2" data-modal-toggle="editModal">
@@ -326,51 +359,83 @@
                             <p class="mb-4 font-bold text-neutral-500 dark:text-slate-100">Edit Category</p>
                             <hr>
                             <div class="relative flex justify-center items-center mt-3 space-x-4">
-                                <form action="" method="POST" id="edit-form" class="w-full">
+                                <form action="" method="POST" id="edit-form" enctype="multipart/form-data" class="w-full">
                                     @method('PUT')
                                     @csrf
-                                    <div>
-                                        <label for="catName" class="block mb-2 text-sm font-medium text-slate-900 dark:text-white">Category Name</label>
-                                        <input type="text" id="catName" name="catName" class="max-w-lg p-2.5 text-sm text-slate-900 bg-slate-50 rounded-lg dark:placeholder-slate-400 dark:text-white dark:bg-slate-700 dark:border-slate-600
-                                        @error('catName')
-                                        is-invalid
-                                        @else
-                                        is-valid
-                                        @enderror" placeholder="Ente name here" value="{{ old('catName') }}" autocomplete="off" required>
-                                        <svg class="w-6 h-6 text-red-600
+                                    <div class="flex flex-col justify-center items-center gap-5 mb-10 md:flex-row">
+                                        <div class="w-full flex flex-col items-center">
+                                            <div>
+                                                <label for="catName" class="block mb-2 text-sm font-medium text-slate-900 dark:text-white">Category Name</label>
+                                                <input type="text" id="catName" name="catName" class="max-w-lg p-2.5 text-sm text-slate-900 bg-slate-50 rounded-lg dark:placeholder-slate-400 dark:text-white dark:bg-slate-700 dark:border-slate-600
+                                                @error('catName')
+                                                is-invalid
+                                                @else
+                                                is-valid
+                                                @enderror" placeholder="Ente name here" value="{{ old('catName') }}" autocomplete="off" required>
+                                                <svg class="w-6 h-6 text-red-600
+                                                    @error('catName')
+                                                    absolute bottom-0 top-9.5 right-21 mr-3
+                                                    @else
+                                                    hidden
+                                                    @enderror" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13V8m0 8h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                                </svg>
+                                            </div>
                                             @error('catName')
-                                            absolute bottom-0 top-9.5 right-21 mr-3
-                                            @else
-                                            hidden
-                                            @enderror" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13V8m0 8h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                        </svg>
-                                    </div>
-                                    @error('catName')
-                                    <x-messages.error :message="$message"></x-messages.error>
-                                    @enderror
-                                    <div class="relative flex flex-col items-center mt-5 mb-8">
-                                        {{-- <label for="hs-color-input" class="block mb-2 text-sm font-medium">Color picker</label>
-                                        <input type="color" class="w-14 h-10 block p-1 bg-white rounded-lg border border-slate-200 cursor-pointer disabled:opacity-50 disabled:pointer-events-none" id="hs-color-input" value="#2563eb" title="Choose your color"> --}}
-                                        <label for="catColor" class="mb-2 text-sm font-medium text-slate-900 dark:text-white">Category Color</label>
-                                        <div>
-                                            <select id="catColor" name="catColor" class="max-w-lg p-2.5 text-sm text-center text-slate-900 bg-slate-50 rounded-lg border border-slate-300 dark:placeholder-slate-400 dark:text-white dark:bg-slate-700 dark:border-slate-600 dark:focus:border-blue-500 dark:focus:ring-blue-500 focus:border-blue-500 focus:ring-blue-500">
-                                                @foreach ($colors as $color)
-                                                    @if (!in_array(Str::lower($color), $catColors))
-                                                    <option value="{{ Str::lower($color) }}">{{ $color }} </option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                            <span id="colorDisplay" class="px-4 py-1.5 ml-4 rounded-md border-2 border-zinc-300"></span>
-                                            @error('catColor')
                                             <x-messages.error :message="$message"></x-messages.error>
                                             @enderror
+                                            <div class="relative flex flex-col items-center mt-5 mb-8">
+                                                {{-- <label for="hs-color-input" class="block mb-2 text-sm font-medium">Color picker</label>
+                                                <input type="color" class="w-14 h-10 block p-1 bg-white rounded-lg border border-slate-200 cursor-pointer disabled:opacity-50 disabled:pointer-events-none" id="hs-color-input" value="#2563eb" title="Choose your color"> --}}
+                                                <label for="catColor" class="mb-2 text-sm font-medium text-slate-900 dark:text-white">Category Color</label>
+                                                <div>
+                                                    <select id="catColor" name="catColor" class="max-w-lg p-2.5 text-sm text-center text-slate-900 bg-slate-50 rounded-lg border border-slate-300 dark:placeholder-slate-400 dark:text-white dark:bg-slate-700 dark:border-slate-600 dark:focus:border-blue-500 dark:focus:ring-blue-500 focus:border-blue-500 focus:ring-blue-500">
+                                                        @foreach ($colors as $color)
+                                                            @if (!in_array(Str::lower($color), $catColors))
+                                                            <option value="{{ Str::lower($color) }}">{{ $color }} </option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                    <span id="colorDisplay" class="px-4 py-1.5 ml-4 rounded-md border-2 border-zinc-300"></span>
+                                                    @error('catColor')
+                                                    <x-messages.error :message="$message"></x-messages.error>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="w-full">
+                                            {{-- Category Image Input START --}}
+                                            <h3 class="mb-2 font-mono text-lg font-bold text-gray-900 dark:text-slate-100">Category Image</h3>
+                                            @error('image')
+                                            <x-messages.error :message="$message"></x-messages.error>
+                                            @enderror
+                                            <div x-data="catImageData()" class="w-full max-w-2xl items-center p-4 text-center text-gray-900 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:text-gray-400 dark:bg-gray-800 dark:border-gray-400">
+                                                <div x-show="fileExist == ''">
+                                                    <label for="catImage" class="cursor-pointer">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mx-auto w-8 h-8 mb-4">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                                                        </svg>
+                                                        <h5 class="mb-2 text-base font-bold tracking-tight text-slate-800 dark:text-gray-300">Upload Picture</h5>
+                                                        <p class="text-xs font-normal md:px-6">Choose photo size should be less than <b class="text-slate-800 dark:text-gray-300">2mb</b></p>
+                                                        <p class="text-xs font-normal md:px-6">and should be in <b class="text-slate-800 dark:text-gray-300">JPG, PNG, or GIF</b> format.</p>
+                                                        <span id="filename" class="z-50 text-gray-500 bg-gray-200"></span>
+                                                    </label>
+                                                    <input id="catImage" name="image" type="file" accept="image/*" class="hidden" @change="updatePreview()" />
+                                                </div>
+                                                <div class="w-full space-y-5" x-show="fileExist !== ''">
+                                                    <img :src="fileExist" alt="" class="h-[12rem] w-[20rem] mx-auto">
+                                                    <div class="">
+                                                        <button type="button" @click="clearPreview()" class="px-5 py-2.5 me-2 mb-2 text-sm font-medium text-center text-white bg-teal-600 rounded-full dark:font-semibold dark:text-teal-800 dark:bg-teal-400 dark:focus:ring-teal-500 dark:hover:bg-teal-600 focus:outline-none focus:ring-4 focus:ring-teal-500 hover:bg-teal-800">Choose Another</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{-- Category Image Input END --}}
                                         </div>
                                     </div>
-                                    <button type="submit" class="bg-warning px-3 py-2 mr-10 text-sm font-medium text-center text-white rounded-lg dark:focus:ring-neutral-600 dark:hover:bg-amber-400 focus:ring-primary-300 focus:outline-none focus:ring-4 hover:bg-amber-500">
+                                    <button type="submit" class="bg-warning px-3 py-2 mr-10 text-sm font-medium text-center text-white rounded-lg dark:focus:ring-neutral-600 dark:hover:bg-amber-400 focus:ring-primary-300 focus:outline-none focus:ring-4 hover:bg-amber-500 md:px-5 md:py-3 md:text-base">
                                         Update
                                     </button>
-                                    <button data-modal-toggle="editModal" type="button" class="px-3 py-2 text-sm font-medium text-slate-100 bg-red-700 rounded-lg dark:text-slate-2 dark:bg-red-600 dark:focus:ring-red-900 dark:hover:text-white dark:hover:bg-red-500 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300 hover:text-white hover:bg-red-600">
+                                    <button data-modal-toggle="editModal" type="button" class="px-3 py-2 text-sm font-medium text-slate-100 bg-red-700 rounded-lg dark:text-slate-2 dark:bg-red-600 dark:focus:ring-red-900 dark:hover:text-white dark:hover:bg-red-500 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300 hover:text-white hover:bg-red-600 md:px-5 md:py-3 md:text-base">
                                         Cancel
                                     </button>
                                 </form>

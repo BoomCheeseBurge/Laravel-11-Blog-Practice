@@ -15,6 +15,10 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+import Swal from 'sweetalert2'
+
+window.Swal = Swal;
+
 
 new Swiper('.card-wrapper', {
 

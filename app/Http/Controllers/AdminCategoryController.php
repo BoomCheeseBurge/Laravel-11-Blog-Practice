@@ -11,6 +11,7 @@ use App\Actions\CheckSlug;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class AdminCategoryController extends Controller
@@ -86,9 +87,17 @@ class AdminCategoryController extends Controller
         $validatedData = $request->validate([
             'name' => ['required', 'unique:categories', 'max:50', new Fullname],
             'color' => [ 'required', Rule::unique('categories', 'color'), Rule::in($colors)],
+            'image' => 'required | image | file | max:1024',
         ]);
 
         $validatedData['slug'] = SlugService::createSlug(Category::class, 'slug', $validatedData['name']);
+
+        if ($request->hasFile('image'))
+        {
+            $file = $request->file('image'); // Get the uploaded image file
+
+            $validatedData['image'] = Storage::disk('categories')->putFileAs('/', $file, $validatedData['slug'] . '.' . $file->extension() ); // Store the image file
+        }
 
         Category::create($validatedData);
 
@@ -135,6 +144,7 @@ class AdminCategoryController extends Controller
                                 }
                             },
                         ],
+            'image' => 'image | file | max:1024',
         ]);
 
         $category->name = $validatedData['catName'];
@@ -144,11 +154,45 @@ class AdminCategoryController extends Controller
         {
             $validatedData['slug'] = SlugService::createSlug(Category::class, 'slug', $validatedData['catName']);
             $category->slug = $validatedData['slug'];
+
+            if ($request->hasFile('image')) // Check if there is a new uploaded category image
+            {
+                // Check if the current category has an existing featured image
+                if(Storage::disk('categories')->exists($category->image))
+                {
+                    // Delete the featured image file
+                    Storage::disk('categories')->delete($category->image);
+                }
+
+                $file = $request->file('image'); // Get the uploaded image file
+
+                $category->image = Storage::disk('categories')->putFileAs('/', $file, $validatedData['slug'] . '.' . $file->extension() ); // Store the image file
+
+            } else {
+
+                $pathInfo = pathinfo($category->image); // Get the current image file
+
+                Storage::disk('categories')->move($category->image, $category->slug . '.' . $pathInfo['extension']); // Rename the old filename to the new category slug
+
+                $category->image =  $category->slug . '.' . $pathInfo['extension'];
+            }
+        } else if ($request->hasFile('image')) { // Check if there is a new uploaded category image
+
+            // Check if the current category has an existing featured image
+            if(Storage::disk('categories')->exists($category->image))
+            {
+                // Delete the featured image file
+                Storage::disk('categories')->delete($category->image);
+            }
+
+            $file = $request->file('image'); // Get the uploaded image file
+
+            $category->image = Storage::disk('categories')->putFileAs('/', $file, $category->slug . '.' . $file->extension() ); // Store the image file
         }
 
         $category->save();
 
-        if(!$category->wasChanged())
+        if(!$category->wasChanged()) // Check if the category model was not changed at all
         {
             return to_route('categories.index');
         }
@@ -171,7 +215,14 @@ class AdminCategoryController extends Controller
             return back()->with('fail', 'Category cannot be deleted due to existing post associations');
         }
 
-        // Else, destroy the category model instance
+        // Check if the current category has an existing featured image
+        if(Storage::disk('categories')->exists($category->image))
+        {
+            // Delete the featured image file
+            Storage::disk('categories')->delete($category->image);
+        }
+
+        // Destroy the category model instance
         $category->delete();
 
         // Return to the previous page with a message

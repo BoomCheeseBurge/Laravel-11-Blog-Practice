@@ -54,9 +54,9 @@
 
             <!-- Blog Post Featured Image START -->
             @if ($post->featured_image)
-            <img src="{{ asset($post->featured_image) }}" alt="Featured image" class="w-full h-auto mb-8 rounded-md dark:opacity-90">
+            <img src="{{ Storage::disk('posts')->url($post->featured_image) }}" alt="Featured image" class="w-full h-auto mb-8 rounded-md dark:opacity-90">
             @else
-            <img src="{{ asset('IMG/default/'. $post->category->slug .'.jpg') }}" alt="Featured image" class="w-full h-auto mb-8 rounded-md dark:opacity-90">
+            <img src="{{ Storage::disk('categories')->url($post->category->image) }}" alt="Default Featured image" class="w-full h-auto mb-8 rounded-md dark:opacity-90">
             @endif
             <!-- Blog Post Featured Image END -->
 

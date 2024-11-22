@@ -45,6 +45,22 @@ return [
             'throw' => false,
         ],
 
+        'posts' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/IMG/featured-images'),
+            'url' => '/IMG/featured-images',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'categories' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/IMG/category-img'),
+            'url' => '/IMG/category-img',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

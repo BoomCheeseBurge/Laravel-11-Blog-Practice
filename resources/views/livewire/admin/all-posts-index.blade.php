@@ -32,21 +32,21 @@
 
     {{-- ------------------------------------ Successful Message ------------------------------------ --}}
     @if (session()->has('success'))
-    <x-messages.dismissal-success :message="session('success')" class="mb-4"></x-messages.dismissal-success>
+        <x-messages.dismissal-success :message="session('success')" wire:ignore wire:key="1" class="mb-4"></x-messages.dismissal-success>
     @endif
 
     {{-- ------------------------------------ Fail Message ------------------------------------ --}}
     @if (session()->has('fail'))
-    <x-messages.dismissal-error errorID="1" :message="session('fail')" class="mb-4"></x-messages.dismissal-error>
+        <x-messages.dismissal-error :message="session('fail')" wire:ignore wire:key="2" class="mb-4"></x-messages.dismissal-error>
     @endif
 
     {{-- Table Section START --}}
     <div x-init="
             $watch('selectCurrentPage', value => selectCurrentPageUpdated(value));
-            $watch('checked', checked => checkBulk(checked));
+            $watch('selectedRecords', selectedRecords => checkBulk(selectedRecords));
         "
         x-data="{
-            checked:  $wire.entangle('checked').live,
+            selectedRecords:  $wire.entangle('selectedRecords').live,
             indeterminate: false,
             bulk: true,
             selectAll:  $wire.entangle('selectAll').live,
@@ -59,25 +59,25 @@
             async selectCurrentPageUpdated(value) {
                 if(value)
                 {
-                    this.checked = await @this.getCurrentPageRecords();
+                    this.selectedRecords = await @this.getCurrentPageRecords();
                 } else {
-                    this.checked = [];
+                    this.selectedRecords = [];
                     this.selectAll = false;
                 }
             },
             async selectAllUpdated() {
                 this.selectAll = true;
-                this.checked = await @this.getAllRecords();
+                this.selectedRecords = await @this.getAllRecords();
             },
             checkSelected() {
-                if (this.checked.length + 1 == $wire.perPage) {
+                if (this.selectedRecords.length + 1 == $wire.perPage) {
                     this.selectCurrentPage = true;
                 }
             },
-            async checkBulk(checked) {
+            async checkBulk(selectedRecords) {
 
                 const records = await @this.getAllRecords();
-                if(checked.length > 0 && checked.length < records.length && this.selectCurrentPage === false)
+                if(selectedRecords.length > 1 && selectedRecords.length < records.length && this.selectCurrentPage === false)
                 {
                     this.indeterminate = true;
                     this.bulk = false;
@@ -87,9 +87,10 @@
                 }
             },
             resetChecked() {
+
                 this.indeterminate = false;
                 this.bulk = true;
-                this.checked = [];
+                this.selectedRecords = [];
             },
             toggleColumn(column) {
                 let result = this.displayedColumns.find(e => e.toLowerCase() === column.toLowerCase());
@@ -109,20 +110,20 @@
                         <div class="w-full relative md:w-fit">
                             {{-- Bulk Delete Info START --}}
                             <div x-cloak x-show="selectAll && selectCurrentPage" class="mb-2 text-xs lg:text-sm">
-                                All <span x-text="checked.length"></span> records are currently selected
+                                All <span x-text="selectedRecords.length"></span> records are currently selected
                             </div>
                             <div x-cloak x-show="!selectAll && selectCurrentPage" class="mb-2 text-xs lg:text-sm">
-                                Selected <span x-text="checked.length"></span> records. Select all records instead?
+                                Selected <span x-text="selectedRecords.length"></span> records. Select all records instead?
                                 <button x-on:click="selectAllUpdated" type="button" class="underline hover:no-underline">Select All</button>
                             </div>
-                            <div x-cloak x-show="(checked.length > 1) && (selectAll == false) && (selectCurrentPage == false)" class="mb-2 text-sm font-bold dark:text-whiter dark:font-medium lg:text-base">
-                                Selected records: <span x-text="checked.length"></span>
+                            <div x-cloak x-show="(selectedRecords.length > 1) && (selectAll == false) && (selectCurrentPage == false)" class="mb-2 text-sm font-bold dark:text-whiter dark:font-medium lg:text-base">
+                                Selected records: <span x-text="selectedRecords.length"></span>
                             </div>
                             {{-- Bulk Delete Info END --}}
 
                             {{-- Bulk Button START --}}
                             <div>
-                                <button data-tooltip-target="bulk-tooltip" data-tooltip-placement="top" x-on:click="bulkOpen = !bulkOpen" type="button" x-bind:class=" checked.length > 1 ? 'opacity-100 dark:hover:text-blue-500 ' : 'opacity-50'" class="bg-primary-600 ring-primary-400 w-full inline-flex justify-center items-center gap-x-1.5 px-3 py-2 text-sm font-semibold text-white rounded-lg ring-1 ring-inset shadow-sm dark:text-gray-500 dark:bg-white dark:ring-gray-300 dark:hover:bg-gray-50 focus:shadow-outline focus:outline-none md:w-fit" id="bulk-button" aria-expanded="true" aria-haspopup="true" :disabled="(checked.length > 1) ? false : true">
+                                <button data-tooltip-target="bulk-tooltip" data-tooltip-placement="top" x-on:click="bulkOpen = !bulkOpen" type="button" x-bind:class=" selectedRecords.length > 1 ? 'opacity-100 dark:hover:text-blue-500 ' : 'opacity-50'" class="bg-primary-600 ring-primary-400 w-full inline-flex justify-center items-center gap-x-1.5 px-3 py-2 text-sm font-semibold text-white rounded-lg ring-1 ring-inset shadow-sm dark:text-gray-500 dark:bg-white dark:ring-gray-300 dark:hover:bg-gray-50 focus:shadow-outline focus:outline-none md:w-fit" id="bulk-button" aria-expanded="true" aria-haspopup="true" :disabled="(selectedRecords.length > 1) ? false : true">
                                     <svg class="w-6 h-6 hidden md:block" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                         <path fill-rule="evenodd" d="M5.005 10.19a1 1 0 0 1 1 1v.233l5.998 3.464L18 11.423v-.232a1 1 0 1 1 2 0V12a1 1 0 0 1-.5.866l-6.997 4.042a1 1 0 0 1-1 0l-6.998-4.042a1 1 0 0 1-.5-.866v-.81a1 1 0 0 1 1-1ZM5 15.15a1 1 0 0 1 1 1v.232l5.997 3.464 5.998-3.464v-.232a1 1 0 1 1 2 0v.81a1 1 0 0 1-.5.865l-6.998 4.042a1 1 0 0 1-1 0L4.5 17.824a1 1 0 0 1-.5-.866v-.81a1 1 0 0 1 1-1Z" clip-rule="evenodd"/>
                                         <path d="M12.503 2.134a1 1 0 0 0-1 0L4.501 6.17A1 1 0 0 0 4.5 7.902l7.002 4.047a1 1 0 0 0 1 0l6.998-4.04a1 1 0 0 0 0-1.732l-6.997-4.042Z"/>
@@ -335,7 +336,7 @@
                             <tr x-data wire:key="{{ $record->id }}" class="">
                                 {{-- Checkbox Column START --}}
                                 <td x-show="toggleColumn('Bulk')" class="px-6 py-12 border-b border-gray-500">
-                                    <input type="checkbox" x-model="checked" x-on:click="checkSelected" class="selectRow" value="{{ $record->id }}">
+                                    <input type="checkbox" x-model="selectedRecords" x-on:click="checkSelected" class="selectRow" value="{{ $record->id }}">
                                 </td>
                                 {{-- Checkbox Column END --}}
 
@@ -529,5 +530,6 @@
 
     @push('scripts')
     <script src="{{ asset('JS/admin-posts.js') }}"></script>
+    <x-livewire-alert::scripts />
     @endpush
 </div>
