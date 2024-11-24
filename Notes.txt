@@ -25,6 +25,10 @@ Added 'profile_pic', 'profile_cover', and 'about' fields to the User model.
 
 ________________________________________________________________
 
+Added soft delete to the User model.
+
+________________________________________________________________
+
 Added 'users.destroy' to the 'ziggy.php' file to utilize the route helper method in JS.
 
 ________________________________________________________________
