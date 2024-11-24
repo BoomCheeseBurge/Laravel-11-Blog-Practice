@@ -77,6 +77,7 @@ class DashboardPostController extends Controller
             'featured_image' => 'image | file | max:1024',
         ]);
 
+        // Check if there is an uploaded featured image for the post
         if ($request->hasFile('featured_image'))
         {
             $featured_image = $request->file('featured_image');
@@ -84,8 +85,10 @@ class DashboardPostController extends Controller
             $validatedData['featured_image'] = Storage::disk('posts')->putFileAs('/', $featured_image, str()->uuid() . '.' . $featured_image->extension() );
         }
 
+        // Assign the authorized user ID who wrote the post
         $validatedData['author_id'] = auth()->user()->id;
 
+        // Create the post with the validated data above
         Post::create($validatedData);
 
         return to_route('posts.index')->with('success', 'Post successfully created!');
@@ -136,7 +139,7 @@ class DashboardPostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Post $post): RedirectResponse
     {
         if(!auth()->user()->is_admin)
         {
@@ -166,15 +169,13 @@ class DashboardPostController extends Controller
             $featured_image = $request->file('featured_image');
 
             $validatedData['featured_image'] = Storage::disk('posts')->putFileAs('/', $featured_image, str()->uuid() . '.' . $featured_image->extension() );
-        } else {
-            $validatedData['featured_image'] = $post->featured_image;
         }
 
         $post->title = $validatedData['title'];
         $post->slug = $validatedData['slug'];
         $post->category_id = $validatedData['category_id'];
         $post->body = $validatedData['body'];
-        $post->featured_image = $validatedData['featured_image'];
+        $post->featured_image = $validatedData['featured_image'] ?? $post->featured_image;
 
         $post->save();
 

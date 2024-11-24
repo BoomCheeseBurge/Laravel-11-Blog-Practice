@@ -15,8 +15,6 @@ window.addEventListener('reinitTooltips', event => {
 
     // re-initialize tooltip object
     // tooltip.init();
-
-    // new Resize();
 });
 
 // --------------------------------------------------------------------------------------------------------------------------------
@@ -80,20 +78,3 @@ class Resize {
 }
 
 new Resize();
-
-// window.addEventListener('resetResizeColumn', event => {
-
-//     new Resize();
-// });
-
-// --------------
-
-// document.addEventListener('alpine:init', () => {
-//     Alpine.data('myComponent', () => ({
-//         checked: [],
-
-//         isSelected(id) {
-//             return this.checked.includes(id);
-//         },
-//     }));
-// });

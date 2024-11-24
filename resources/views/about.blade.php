@@ -4,7 +4,7 @@
     <div class="max-w-screen-xl items-center sm:flex">
         <div class="p-10 sm:w-1/2">
             <div class="image object-center text-center">
-                <img src="{{ asset('IMG/core-img/about-cover.png') }}">
+                <img src="{{ asset('IMG/core/about-cover.png') }}">
             </div>
         </div>
         <div class="p-5 sm:w-1/2">

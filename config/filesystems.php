@@ -47,16 +47,32 @@ return [
 
         'posts' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/IMG/featured-images'),
-            'url' => '/IMG/featured-images',
+            'root' => storage_path('app/public/IMG/featured'),
+            'url' => '/',
             'visibility' => 'public',
             'throw' => false,
         ],
 
         'categories' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/IMG/category-img'),
-            'url' => '/IMG/category-img',
+            'root' => storage_path('app/public/IMG/category'),
+            'url' => '/',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'profile' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/IMG/profile'),
+            'url' => '/',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'cover' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/IMG/cover'),
+            'url' => '/',
             'visibility' => 'public',
             'throw' => false,
         ],

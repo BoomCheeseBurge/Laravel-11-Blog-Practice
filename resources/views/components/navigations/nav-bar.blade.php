@@ -30,7 +30,7 @@
                             class="max-w-xs relative flex items-center text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                 <span class="-inset-1.5 absolute"></span>
                                 <span class="sr-only">Open user menu</span>
-                                <img class="w-9 h-9 rounded-full" src="{{ asset('IMG/default/default-user.png') }}" alt="Default Profile Image">
+                                <img class="w-9 h-9 rounded-full" src="{{ asset('IMG/default/default_user.png') }}" alt="Default Profile Image">
                             </button>
                         </div>
 
@@ -126,7 +126,7 @@
             <div class="flex justify-between pr-8">
                 <div class="flex items-center px-5">
                     <div class="flex-shrink-0">
-                        <img class="h-15 w-15 rounded-full" src="{{ asset('IMG/default/default-user.png') }}" alt="Default Profile Image">
+                        <img class="h-15 w-15 rounded-full" src="{{ asset('IMG/default/default_user.png') }}" alt="Default Profile Image">
                     </div>
                     <div class="ml-3 space-y-1">
                         <div class="text-boxdark-2 text-base font-medium tracking-widest leading-none dark:text-white">{{ auth()->user()->username }}</div>

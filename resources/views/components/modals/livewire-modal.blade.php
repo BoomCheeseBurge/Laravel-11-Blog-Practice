@@ -1,6 +1,7 @@
 @props(['name', 'title', 'width', 'height'])
 
-<div x-cloak x-data="{ show : false,  name : '{{ $name }}' }"
+<div x-cloak x-transition 
+    x-data="{ show : false,  name : '{{ $name }}' }"
     x-show="show"
     {{-- Event name must be separated with hyphen between words (camel case will not work) --}}
     x-on:open-modal.window = "show = ($event.detail.name === name)"
@@ -8,7 +9,6 @@
     x-trap.noscroll="show"
     x-on:keydown.escape.window = "show = false"
     class="z-999 fixed inset-0"
-    x-transition.duration
     >
     {{-- Modal Background --}}
     <div x-on:click="show = false" class="fixed inset-0 bg-gray-100 opacity-10 dark:bg-gray-700"></div>

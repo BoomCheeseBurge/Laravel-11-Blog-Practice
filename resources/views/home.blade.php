@@ -23,7 +23,7 @@
                 </div>
                 <!--Right Col-->
                 <div class="w-full py-10 text-center md:w-3/5 md:py-6">
-                    <img class="w-full z-50 md:w-4/5" src="{{ asset('IMG/core-img/hero.png') }}" alt="Hero Image" />
+                    <img class="w-full z-50 md:w-4/5" src="{{ asset('IMG/core/hero.png') }}" alt="Hero Image" />
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
                         <p class="mb-8 text-gray-600 dark:text-gray-200">
                             Create an account and share your knowledge with us! Showcase your best writing and untold story.
 
-                            <img src="{{ asset('IMG/core-img/woman-studying-svgrepo-com.svg') }}" alt="woman writing a post icon" class="w-1/6 mt-5">
+                            <img src="{{ asset('IMG/core/woman-studying-svgrepo-com.svg') }}" alt="woman writing a post icon" class="w-1/6 mt-5">
 
                             <br />
 
@@ -360,7 +360,7 @@
                             <p class="mb-8 text-gray-600 dark:text-gray-200">
                                 You can browse our collection of blog posts. We have blog posts from all around the world!
 
-                                <img src="{{ asset('IMG/core-img/a-person-who-was-inspired-by-reading-a-book-svgrepo-com.svg') }}" alt="a person who was inspired by reading a book icon" class="w-1/6 mt-5 mb-3 lg:mb-12 sm:mb-6">
+                                <img src="{{ asset('IMG/core/a-person-who-was-inspired-by-reading-a-book-svgrepo-com.svg') }}" alt="a person who was inspired by reading a book icon" class="w-1/6 mt-5 mb-3 lg:mb-12 sm:mb-6">
 
                                 Images from:
 
@@ -391,7 +391,7 @@
                             @foreach ($categories as $category)
                             <li class="card-item swiper-slide list-none">
                                 <a href="/posts?category={{ $category->slug }}" class="card-link group !active:cursor-grabbing">
-                                    <img src="{{ asset($category->image) }}" alt="{{ $category->name }} category image" class="card-image">
+                                    <img src="{{ Storage::disk('categories')->url($category->image) }}" alt="{{ $category->name }} category image" class="card-image">
                                     {{-- <button type="button" class="invinsible p-4.5 w-85 h-full absolute top-0 left-0 rounded-xl group-active:cursor-grabbing sm:w-100"></button> --}}
 
                                     <div class="flex items-center mt-3">
@@ -442,7 +442,7 @@
                 <div class="flex flex-col justify-center items-center md:flex-row md:my-4">
                     <div class="px-10 md:p-10 sm:w-1/2">
                         <div class="image object-center text-center">
-                            <img src="{{ asset('IMG/core-img/about-cover.png') }}" alt="about cover image" class="w-4/5">
+                            <img src="{{ asset('IMG/core/about-cover.png') }}" alt="about cover image" class="w-4/5">
                         </div>
                     </div>
                     <div class="p-5 sm:w-1/2">
@@ -455,7 +455,7 @@
                                 <br><br>
                                 Our mission is to inspire, inform, and entertain our readers with insightful articles, thought-provoking analyses, and engaging features. Join us on a journey of discovery as we delve into the depths of various topics, from technology and science to culture and current events.
 
-                                <img src="{{ asset('IMG/core-img/men-in-suits-to-guide-svgrepo-com.svg') }}" alt="men in suit explaining icon" class="h-25 w-25 mt-5">
+                                <img src="{{ asset('IMG/core/men-in-suits-to-guide-svgrepo-com.svg') }}" alt="men in suit explaining icon" class="h-25 w-25 mt-5">
                             </p>
                         </div>
                     </div>
@@ -497,7 +497,7 @@
             <h3 class="my-4 font-mono text-xl leading-tight text-slate-200 dark:text-boxdark md:text-3xl">
                 Ready to start writing?
 
-                <img src="{{ asset('IMG/core-img/woman-with-notebook-svgrepo-com.svg') }}" alt="woman with notebook icon" class="w-12 h-12 inline md:h-18 md:w-18">
+                <img src="{{ asset('IMG/core/woman-with-notebook-svgrepo-com.svg') }}" alt="woman with notebook icon" class="w-12 h-12 inline md:h-18 md:w-18">
             </h3>
             <a href="/register" class="transform mx-auto inline-block px-8 py-4 my-6 font-bold text-gray-800 bg-white rounded-full shadow-lg transition duration-300 ease-in-out dark:bg-primary-800 dark:text-slate-200 focus:shadow-outline focus:outline-none hover:underline hover:scale-105 lg:mx-0">
                 Sign Up!

@@ -2,7 +2,7 @@
     <tr>
         {{-- Header ID/No. START --}}
         @if ($attributes->has('id'))
-        <th x-show="toggleColumn('No')" class="px-7 py-5 text-sm tracking-wider leading-4 text-center text-white border-b-2 border-slate-600 group dark:text-primary-600 dark:border-gray-300 md:text-base">
+        <th x-show="toggleColumn('No')" class="p-5 text-sm tracking-wider leading-4 text-center text-white border-b-2 border-slate-600 group dark:text-primary-600 dark:border-gray-300 md:text-base">
             <div class="flex items-center">
                 No
                 {{-- Sort Button START --}}
@@ -24,8 +24,8 @@
         @foreach (array_filter($headers, function (string $value) {
                     return ($value != 'No') && ($value != 'Action');
                 }) as $header)
-            <th x-show="toggleColumn('{{ $header }}')" class="border-x-[2px] border-x-primary-600/40 px-6 py-5 text-sm tracking-wider leading-4 text-left text-white border-b-2 border-b-slate-600 group dark:border-x-gray-400/40 dark:text-primary-600 dark:border-b-gray-300 md:text-base">
-                <div class="gap-15 flex items-center">
+            <th x-show="toggleColumn('{{ $header }}')" class="border-x-[2px] border-x-primary-600/40 px-4 text-sm tracking-wider leading-4 text-left text-white border-b-2 border-b-slate-600 group dark:border-x-gray-400/40 dark:text-primary-600 dark:border-b-gray-300 md:text-base">
+                <div class="flex justify-between items-center gap-10">
                     {{ $header }}
                     {{-- Sort Button START --}}
                     <div class="sort-trigger flex flex-col space-y-1.5 text-slate-500 dark:text-gray-400 group-hover:cursor-pointer">
@@ -44,7 +44,7 @@
 
         {{-- Header Actions START --}}
         @if ($attributes->has('actions'))
-        <th x-show="toggleColumn('Action')" class="px-6 py-5 border-b-2 border-b-slate-600 dark:border-b-gray-300">
+        <th x-show="toggleColumn('Action')" class="border-b-2 border-b-slate-600 dark:border-b-gray-300">
             <div class="hidden">
                 {{-- Sort Button START --}}
                 <div class="sort-trigger ml-6 space-y-1.5 text-slate-500 dark:text-gray-400 group-hover:cursor-pointer">

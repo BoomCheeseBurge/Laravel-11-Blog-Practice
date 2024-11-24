@@ -1,34 +1,40 @@
 
-Create image field for category in its corresponding migration file.
+Created a resource based admin user controller.
+
+Created the necessary views for the controller.
 
 ________________________________________________________________
 
-Specify the corresponding image file name for every category in the category seeder.
+Uninstalled NPM Tailwind package because Laravel 11.X already has Tailwind installed in its core by default.
+
+If the Tailwind package is kept installed, then there can be conflicts and issues where utility classes may not work properly.
+
+Ex: Using grid and specifying grid-cols-[n] may cause some n-column to not work
 
 ________________________________________________________________
 
-Add image validation rules for uploading image files in the admin category page.
+Create a create user view and its associated controller method.
 
 ________________________________________________________________
 
-Add image upload to the category creation form in the admin category page.
+Added a custom rule for checking maximum characters of an input.
 
 ________________________________________________________________
 
-Fixed the if statement for checking existing files for posts or categories.
+Added 'profile_pic', 'profile_cover', and 'about' fields to the User model.
 
 ________________________________________________________________
 
-Added two public custom storage disks for post and category in the 'filesystems.php' file.
+Added 'users.destroy' to the 'ziggy.php' file to utilize the route helper method in JS.
 
 ________________________________________________________________
 
-Files are now accessed using the Storage facade instead of the asset url helper function.
+Merged 'dashboard-table' into the 'default-table' file.
 
 ________________________________________________________________
 
-Installed SweetAlert2 due to Livewire session flash not playing nice with AlpineJS data reset.
+When sending a trashed model to the route, then the 'withTrashed()' method must be chained to the route.
 
-Installed Livewire SweetAlert to be exclusively for Livewire.
+________________________________________________________________
 
-Applied Livewire SweetAlert for the bulk edit, remove, restore, and delete.
+Move the horizontal scrollbar to be specifically on the table excluding the pagination.

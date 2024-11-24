@@ -21,6 +21,14 @@ class AdminCategoryController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->is_admin)
+        {
+            if(($post->author->id !== auth()->user()->id))
+            {
+                abort(403);
+            }
+        }
+
         // Store the available category colors (whether already used or not)
         $colors = [
             "Slate", "Gray", "Zinc", "Neutral", "Stone",
@@ -53,7 +61,7 @@ class AdminCategoryController extends Controller
             'title' => 'Admin',
             'subTitle' => 'Admin Categories',
             'page' => 'categories',
-            'categories' => $adminCats->paginate(5),
+            'categories' => $adminCats->paginate($perPage),
             'headers' => ['No', 'Name', 'Slug', 'Color', 'Date Created', 'Action'],
             'columns' => ['name', 'slug', 'color', 'created_at'],
             'colors' => $colors,
@@ -75,6 +83,11 @@ class AdminCategoryController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->is_admin)
+        {
+            abort(403);
+        }
+
         // Store the available category colors (whether already used or not)
         $colors = [
             "slate", "gray", "zinc", "neutral", "stone",
@@ -125,6 +138,11 @@ class AdminCategoryController extends Controller
      */
     public function update(Request $request, Category $category, CheckSlug $checkSlug)
     {
+        if(!auth()->user()->is_admin)
+        {
+            abort(403);
+        }
+
         $validatedData = $request->validate([
             'catName' => [ Rule::unique('categories', 'name')->ignore($category->id), 'max:50', new Fullname],
             'catColor' => [ Rule::unique('categories', 'color')->ignore($category->id), function (string $attribute, mixed $value, Closure $fail) {
@@ -205,6 +223,11 @@ class AdminCategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        if(!auth()->user()->is_admin)
+        {
+            abort(403);
+        }
+
         // Find if there is existing post(s) associated with the category
         $match = Post::where('category_id', $category->id)->first();
 

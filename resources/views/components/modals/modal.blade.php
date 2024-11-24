@@ -2,8 +2,10 @@
 <div class="fixed inset-0 z-50" x-cloak x-transition
     x-data="{ show : false, name: '{{ $name }}'}"
     x-show="show"
+    {{-- Event name must be separated with hyphen between words (camel case will not work) --}}
     x-on:show-modal.window="show = ($event.detail.name === name)"
     x-on:hide-modal.window="show = false"
+    x-trap.noscroll="show"
     x-on:keydown.escape.window="show = false">
 
     {{-- Modal Background --}}
@@ -26,9 +28,11 @@
             <div class="text-md font-semibold dark:text-white lg:text-lg">
                 {{ $body }}
             </div>
+            @if (isset($footer))
             <div>
                 {{ $footer }}
             </div>
+            @endif
         </div>
     </div>
 

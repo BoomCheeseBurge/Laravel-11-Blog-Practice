@@ -17,7 +17,12 @@ class Category extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug', 'color', 'image'];
+    protected $fillable = [
+                            'name',
+                            'slug',
+                            'color',
+                            'image'
+                        ];
 
     /**
      * Get the posts that belongs to a category.

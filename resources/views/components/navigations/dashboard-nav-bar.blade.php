@@ -71,7 +71,7 @@ class="flex-grow shadow-2 flex justify-between items-center px-4 py-4 2xl:px-11 
             </span>
 
             <span class="w-10 h-10 rounded-full md:w-12 md:h-12">
-                <img src="{{ asset('IMG/default/default-user.png') }}" alt="Default Profile Image" />
+                <img src="{{ asset('IMG/default/default_user.png') }}" alt="Default Profile Image" />
             </span>
 
             {{-- Arrow to Open Profile Dropdown --}}

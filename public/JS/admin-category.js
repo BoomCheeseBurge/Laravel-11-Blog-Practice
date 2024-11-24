@@ -101,6 +101,7 @@ function insertEdit(slug, name, color)
  * @param {string} type
  * @param {string} action
  */
+// ================================ Delete and Restore Modal ================================
 function insertIdentifier(identifier, type, action)
 {
     const currentModalName = action + 'Modal';
@@ -115,7 +116,7 @@ function insertIdentifier(identifier, type, action)
         // Extract info from data-bs-* attributes
         // const slug = deleteModalBtn.getAttribute('data-bs-slug');
 
-        if (action == "delete") {
+        if (action == "destroy") {
 
             // Update the modal's form action
             document.getElementById('deletionModalForm').action = route(type + '.destroy', identifier);
@@ -125,7 +126,7 @@ function insertIdentifier(identifier, type, action)
             // Update the modal's form action
             document.getElementById('restorationModalForm').action = route(type + '.restore', identifier);
 
-        } else if (action == "permaDelete") {
+        } else if (action == "erase") {
 
             // Update the modal's form action
             document.getElementById('permaDeletionModalForm').action = route(type + '.erase', identifier);

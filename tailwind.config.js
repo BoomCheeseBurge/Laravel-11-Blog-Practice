@@ -424,6 +424,9 @@ export default {
         require('flowbite-typography'),
     ],
     safelist: [
+        // ------------------
+        // Background Colors
+        // ------------------
         'bg-cyan-100',
         'bg-teal-100',
         'bg-amber-100',
@@ -472,6 +475,13 @@ export default {
         'bg-purple-400',
         'bg-fuchsia-400',
         'bg-pink-400',
-        'bg-rose-400'
+        'bg-rose-400',
+        // ------------
+        // Text Colors
+        // ------------
+        'text-green-400',
+        'text-teal-300',
+        'text-red-500',
+        'text-rose-300',
     ],
 };

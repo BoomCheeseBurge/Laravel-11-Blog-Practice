@@ -6,10 +6,9 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\DashboardPostController;
 use App\Livewire\Admin\AllPostsIndex;
-use App\Livewire\Mytest;
-use App\Livewire\Testing;
 
 // Route to homepage
 Route::get('/', function () {
@@ -83,14 +82,11 @@ Route::middleware('auth')->group(function () {
         // Route to admin dashboard categories
         Route::resource('/dashboard/admin/categories', AdminCategoryController::class)->except(['create', 'edit']);
 
+        // Route to restore user
+        Route::post('/dashboard/admin/users/{user}/restore', [AdminUserController::class, 'restore'])->name('users.restore')->withTrashed();
+        // Route to force delete user
+        Route::post('/dashboard/admin/users/{user}/erase', [AdminUserController::class, 'erase'])->name('users.erase')->withTrashed();
         // Route to admin dashboard users
-        Route::get('/dashboard/admin/users', function () {
-
-            return view('users', [
-                'title' => 'Admin',
-                'subTitle' => 'Admin Users',
-                'page' => 'users',
-            ]);
-        });
+        Route::resource('/dashboard/admin/users', AdminUserController::class);
     });
 });

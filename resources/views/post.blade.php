@@ -28,7 +28,7 @@ URL: https://flowbite.com/docs/components/typography/
                 <a href="/posts" class="text-base font-medium text-blue-600 dark:text-teal-300 hover:underline">Back to Posts</a>
                 <address class="flex items-center my-10 not-italic">
                     <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-                        <img class="w-12 h-12 mr-4 rounded-full lg:w-16 lg:h-16 md:w-14 md:h-14" src="{{ asset('IMG/default/default-user.png') }}" alt="{{ $post->author->fullname }}">
+                        <img class="w-12 h-12 mr-4 rounded-full lg:w-16 lg:h-16 md:w-14 md:h-14" src="{{ asset('IMG/default/default_user.png') }}" alt="{{ $post->author->fullname }}">
                         <div>
                             <a href="/posts?author={{ $post->author->username }}" rel="author" class="text-xl font-bold text-gray-900 dark:text-white">{{ $post->author->fullname }}</a>
                             <p class="mb-1 text-base text-gray-500 dark:text-gray-400"><time pubdate datetime="{{ $post->created_at }}" title="{{ $post->created_at->format('F j, Y') }}">{{ $post->created_at->format('F j, Y') }}</time></p>

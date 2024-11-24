@@ -3,9 +3,21 @@
     <div
     class="flex flex-col gap-3 mb-6 sm:flex-row sm:justify-between sm:items-center"
     >
-        <h2 class="text-title-md2 font-bold text-black dark:text-white">
-            {{ $subTitle }}
-        </h2>
+        <div class="flex items-center gap-10">
+            <h2 class="text-title-md2 font-bold text-black dark:text-white">
+                {{ $subTitle }}
+            </h2>
+
+            {{-- View Archived Posts START --}}
+            <a href="{{ route('users.index', ['archive' => !$archive]) }}" class="text-sm underline hover:no-underline">
+                @if ($archive)
+                    View Active Posts
+                @else
+                    View Archived Posts
+                @endif
+            </a>
+            {{-- View Archived Posts END --}}
+        </div>
 
         <nav>
             <ol class="flex items-center gap-2">
@@ -23,6 +35,11 @@
     <x-messages.dismissal-success :message="session('success')" class="mb-4"></x-messages.dismissal-success>
     @endif
 
+    {{-- ------------------------------------ Failed Message ------------------------------------ --}}
+    @if (session()->has('fail'))
+    <x-messages.dismissal-error :message="session('fail')" class="mb-4"></x-messages.dismissal-error>
+    @endif
+
     <!-- ====== Table Section Start -->
     <div x-data="{
             columns: true,
@@ -37,7 +54,7 @@
             },
         }"
         class="flex flex-col gap-10">
-        <div class="-my-2 overflow-x-auto py-2 pr-10 lg:-mx-8 lg:px-8 sm:-mx-6 sm:px-6">
+        <div class="-my-2 py-2 pr-10 lg:-mx-8 lg:px-8 sm:-mx-6 sm:px-6">
             <div class="w-full inline-block px-12 py-6 align-middle bg-white rounded-tl-lg rounded-tr-lg shadow-md dark:bg-slate-600">
                 <div class="flex justify-between">
                     <div class="w-full flex items-center gap-5">
@@ -52,8 +69,8 @@
                                         </svg>
                                     </span>
                                 </div>
-                                <form action="" method="get" class="flex-grow flex-shrink w-px relative flex-auto px-3">
-                                    <input name="search" type="search" class="w-full h-full text-xs font-thin tracking-wide leading-normal text-gray-500 rounded rounded-l-none border border-l-0 border-none dark:placeholder-white dark:text-teal-400 dark:bg-slate-600 dark:focus:ring-teal-400 focus:outline-none lg:text-base" placeholder="Search by title or category">
+                                <form action="#" method="get" class="flex-grow flex-shrink w-px relative flex-auto px-3">
+                                    <input name="search" type="search" class="w-full h-full text-xs font-thin tracking-wide leading-normal text-gray-500 rounded rounded-l-none border border-l-0 border-none dark:placeholder-white dark:text-teal-400 dark:bg-slate-600 dark:focus:ring-teal-400 focus:outline-none lg:text-base" placeholder="Search by fullname/username/email">
                                 </form>
                             </div>
                         </div>
@@ -132,12 +149,12 @@
                         {{-- Show/Hide Table Columns END --}}
 
                         {{-- Table Create Button START --}}
-                        <a href="{{ route('posts.create') }}" data-tooltip-target="create-tooltip" class="px-2.5 py-1.5 text-sm font-medium text-white bg-blue-700 rounded-lg cursor-pointer dark:bg-blue-600 dark:focus:ring-blue-800 dark:hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 hover:bg-blue-800">
+                        <a href="{{ route('users.create') }}" data-tooltip-target="create-tooltip" class="px-2.5 py-1.5 text-sm font-medium text-white bg-blue-700 rounded-lg cursor-pointer dark:bg-blue-600 dark:focus:ring-blue-800 dark:hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 hover:bg-blue-800">
                             <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
                             </svg>
                             <div id="create-tooltip" role="tooltip" class="tooltip absolute invisible z-10 inline-block px-3 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 dark:bg-primary-700">
-                                Create Post
+                                Create User
                                 <div class="tooltip-arrow" data-popper-arrow></div>
                             </div>
                         </a>
@@ -146,17 +163,16 @@
                 </div>
             </div>
             <div class="min-w-full px-8 pt-5 pb-10 align-middle bg-white rounded-br-lg rounded-bl-lg dark:bg-slate-800">
-
                 {{-- Table Data START --}}
                 <!-- This div is for the horizontal scrollbar on the table -->
-                <div class="overflow-y-hidden overflow-x-scroll">
+                <div class="overflow-y-hidden overflow-x-scroll"> 
                     <x-tables.table id actions :headers="$headers">
-                        @forelse ($posts as $post)
+                        @forelse ($users as $user)
                         <tr>
                             {{-- Number Column START --}}
-                            <td x-show="toggleColumn('No')" class="border-b border-gray-300 dark:border-gray-500">
+                            <td x-show="toggleColumn('No')" class="p-7 border-b border-gray-300 dark:border-gray-500">
                                 <div class="flex items-center">
-                                    <div class="mx-auto text-sm leading-5 text-gray-800 dark:text-white">{{ $posts->firstItem() + $loop->index }}</div>
+                                    <div class="text-sm leading-5 text-gray-800 dark:text-white">{{ $users->firstItem() + $loop->index }}</div>
                                 </div>
                             </td>
                             {{-- Number Column END --}}
@@ -166,17 +182,17 @@
                             @foreach (array_filter($columns, function (string $value) {
                                         return ($value != 'No') && ($value != 'Action');
                                     }) as $name)
-                            @if ($name === 'category')
-                            <td x-show="toggleColumn('Category')" class="px-4 py-6 border-b border-gray-300 dark:border-gray-500">
-                                <div class="px-2.5 py-1 w-fit mx-auto text-xs font-medium text-blue-800 whitespace-nowrap bg-{{ $post->category->color }}-100 rounded-full">{{ $post->category->name }}</div>
+                            @if ($name === 'created_at')
+                            <td x-show="toggleColumn('Date Created')" class="p-7 border-b border-gray-300 dark:border-gray-500">
+                                <span class="text-sm leading-5 text-blue-900 dark:text-white">{{ $user->created_at->format('F j, Y') }}</span>
                             </td>
-                            @elseif ($name === 'created_at')
-                            <td x-show="toggleColumn('Date Created')" class="px-4 py-6 border-b border-gray-300 dark:border-gray-500">
-                                <span class="text-sm leading-5 text-blue-900 dark:text-white">{{ $post->created_at->format('F j, Y') }}</span>
+                            @elseif ($name === 'is_admin')
+                            <td x-show="toggleColumn('Role')" class="p-7 border-b border-gray-300 dark:border-gray-500">
+                                <div class="mx-auto w-fit px-2.5 py-1 text-xs tracking-wide font-medium text-white {{ $user->is_admin === 1 ? 'bg-teal-500' : 'bg-primary-600' }} whitespace-nowrap rounded-full">{{ $user->is_admin === 1 ? 'Admin' : 'User' }}</div>
                             </td>
                             @else
-                            <td x-show="toggleColumn('{{ $name }}')" class="px-4 py-6 border-b border-gray-300 dark:border-gray-500">
-                                <div class="text-sm leading-5 text-blue-900 dark:text-white">{{ $post[$name] }}</div>
+                            <td x-show="toggleColumn('{{ $name }}')" class="p-7 border-b border-gray-300 dark:border-gray-500">
+                                <div class="text-sm leading-5 text-blue-900 dark:text-white">{{ $user[$name] }}</div>
                             </td>
                             @endif
                             @endforeach
@@ -185,8 +201,44 @@
                             {{-- Action Column START --}}
                             <td x-show="toggleColumn('Action')" class="text-sm border-b border-gray-300 dark:border-gray-500">
                                 <div class="flex items-center px-8 space-x-6">
+
+                                    @if ($user->trashed())
+                                    {{-- Restore Button START --}}
+                                    <button data-modal-target="restoreModal" data-modal-toggle="restoreModal" data-tooltip-target="restore-tooltip-{{ $loop->iteration }}" onclick="insertIdentifier('{{ $user->username }}', 'users', 'restore')" class="relative text-green-500 group dark:text-green-400">
+                                        <svg class="w-8 h-8 group-hover:animate-spin" viewBox="3.9 3.9 19.54 17.2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M 5.885 17 C 7.325 19.113 9.75 20.5 12.5 20.5 C 16.918 20.5 20.5 16.918 20.5 12.5 C 20.5 8.082 16.918 4.5 12.5 4.5 C 8.082 4.5 4.5 8.082 4.5 12.5 L 4.5 13.5" stroke="currentColor" stroke-width="1.2" style="transform-box: fill-box; transform-origin: 50% 50%;" transform="matrix(-0.777146, -0.629321, 0.629321, -0.777146, 0, 0)"></path><path d="M 23 11 L 20.5 13.5 L 18 11" stroke="currentColor" stroke-width="1.2" style="transform-box: fill-box; transform-origin: 50% 50%;"></path>
+                                        </svg>
+                                        <svg class="w-4 h-4 absolute bottom-2 left-2" viewBox="11.951 7.983 3.967 7.935" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M 12.5 8 L 12.5 12.5 L 15.5 15.5" stroke="currentColor" stroke-width="1.2"></path>
+                                        </svg>
+                                        {{-- Restore Tooltip START --}}
+                                        <div id="restore-tooltip-{{ $loop->iteration }}" role="tooltip" class="tooltip absolute invisible z-10 inline-block px-3 py-2 text-sm font-semibold text-white bg-emerald-600 rounded-lg border border-green-400 shadow-sm opacity-0 transition-opacity duration-300 dark:bg-emerald-500 dark:border-green-400">
+                                            Restore
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                        {{-- Restore Tooltip END --}}
+                                    </button>
+                                    {{-- Restore Button END --}}
+
+                                    {{-- Permanent Delete Button START --}}
+                                    <button data-modal-target="eraseModal" data-modal-toggle="eraseModal" data-tooltip-target="perma-tooltip-{{ $loop->iteration }}" onclick="insertIdentifier('{{ $user->username }}', 'users', 'erase')" class="relative text-red-600 group dark:text-red-300">
+                                        <svg class="w-8 h-8" viewBox="1.01 1.01 21.98 21.98" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12ZM3.00683 12C3.00683 16.9668 7.03321 20.9932 12 20.9932C16.9668 20.9932 20.9932 16.9668 20.9932 12C20.9932 7.03321 16.9668 3.00683 12 3.00683C7.03321 3.00683 3.00683 7.03321 3.00683 12Z" fill="currentColor"></path>
+                                        </svg>
+                                        <svg class="w-4 h-4 absolute bottom-2 left-2 group-hover:animate-gentle_tilt" viewBox="7.709 7.709 8.582 8.582" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M8.00386 9.41816C7.61333 9.02763 7.61334 8.39447 8.00386 8.00395C8.39438 7.61342 9.02755 7.61342 9.41807 8.00395L12.0057 10.5916L14.5907 8.00657C14.9813 7.61605 15.6144 7.61605 16.0049 8.00657C16.3955 8.3971 16.3955 9.03026 16.0049 9.42079L13.4199 12.0058L16.0039 14.5897C16.3944 14.9803 16.3944 15.6134 16.0039 16.0039C15.6133 16.3945 14.9802 16.3945 14.5896 16.0039L12.0057 13.42L9.42097 16.0048C9.03045 16.3953 8.39728 16.3953 8.00676 16.0048C7.61624 15.6142 7.61624 14.9811 8.00676 14.5905L10.5915 12.0058L8.00386 9.41816Z" fill="currentColor"></path>
+                                        </svg>
+                                        {{-- Permanent Delete Tooltip START --}}
+                                        <div id="perma-tooltip-{{ $loop->iteration }}" data-tooltip-style="light" role="tooltip" class="tooltip absolute invisible z-10 inline-block px-3 py-2 text-sm font-semibold text-white bg-red-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 dark:bg-red-500">
+                                            Delete
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                        {{-- Permanent Delete Tooltip END --}}
+                                    </button>
+                                    {{-- Permanent Delete Button END --}}
+                                    @else
                                     {{-- ================================================= SHOW BUTTON ================================================= --}}
-                                    <a data-tooltip-target="view-tooltip-{{ $loop->iteration }}" href="{{ route('posts.show', ['post' => $post->slug]) }}" class="group">
+                                    <a data-tooltip-target="view-tooltip-{{ $loop->iteration }}" href="{{ route('users.show', ['user' => $user->username]) }}" class="group">
                                         <svg class="text-primary-500 z-[-1] w-6 h-6 absolute invisible opacity-0 transition-opacity duration-300 ease-in-out dark:text-white group-hover:static group-hover:visible group-hover:opacity-100 md:w-8 md:h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                             <path fill-rule="evenodd" d="M4.998 7.78C6.729 6.345 9.198 5 12 5c2.802 0 5.27 1.345 7.002 2.78a12.713 12.713 0 0 1 2.096 2.183c.253.344.465.682.618.997.14.286.284.658.284 1.04s-.145.754-.284 1.04a6.6 6.6 0 0 1-.618.997 12.712 12.712 0 0 1-2.096 2.183C17.271 17.655 14.802 19 12 19c-2.802 0-5.27-1.345-7.002-2.78a12.712 12.712 0 0 1-2.096-2.183 6.6 6.6 0 0 1-.618-.997C2.144 12.754 2 12.382 2 12s.145-.754.284-1.04c.153-.315.365-.653.618-.997A12.714 12.714 0 0 1 4.998 7.78ZM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd"/>
                                         </svg>
@@ -199,8 +251,9 @@
                                             <div class="tooltip-arrow" data-popper-arrow></div>
                                         </div>
                                     </a>
+                                    
                                     {{-- ================================================= EDIT BUTTON ================================================= --}}
-                                    <a data-tooltip-target="edit-tooltip-{{ $loop->iteration }}" href="{{ route('posts.edit', ['post' => $post->slug]) }}" class="relative flex flex-col items-center pb-1.5 pl-3 text-amber-600 group dark:text-amber-400">
+                                    <a data-tooltip-target="edit-tooltip-{{ $loop->iteration }}" href="{{ route('users.edit', ['user' => $user->username]) }}" class="relative flex flex-col items-center pb-1.5 pl-3 text-amber-600 group dark:text-amber-400">
                                         <svg class="h-4.5 w-4.5 group-hover:animate-sway" width="24" height="24" viewBox="5.796 0.9 9.204 9.384" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M 12.146 1.146 C 12.342 0.951 12.658 0.951 12.854 1.146 L 14.854 3.146 C 15.049 3.342 15.049 3.658 14.854 3.854 L 10.911 7.796 C 10.835 7.872 10.747 7.935 10.651 7.984 L 6.724 9.947 C 6.531 10.044 6.299 10.006 6.146 9.854 C 5.994 9.701 5.957 9.469 6.053 9.276 L 8.016 5.349 C 8.065 5.253 8.128 5.165 8.204 5.089 L 12.146 1.146 Z M 12.5 2.207 L 8.911 5.796 L 7.873 7.873 L 8.127 8.127 L 10.204 7.089 L 13.793 3.5 L 12.5 2.207 Z" fill="currentColor"></path></svg>
                                         <svg class="w-6 h-6 absolute right-0.5" width="24" height="24" viewBox="1.999 1.999 12.011 12.001" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M 10 2 L 9 3 L 4.9 3 C 4.472 3 4.181 3 3.956 3.019 C 3.736 3.037 3.624 3.069 3.546 3.109 C 3.358 3.205 3.205 3.358 3.109 3.546 C 3.069 3.624 3.037 3.736 3.019 3.956 C 3 4.181 3 4.472 3 4.9 L 3 11.1 C 3 11.528 3 11.819 3.019 12.045 C 3.037 12.264 3.069 12.376 3.109 12.454 C 3.205 12.642 3.358 12.795 3.546 12.891 C 3.624 12.931 3.736 12.963 3.956 12.981 C 4.181 13 4.472 13 4.9 13 L 11.1 13 C 11.528 13 11.819 13 12.045 12.981 C 12.264 12.963 12.376 12.931 12.454 12.891 C 12.642 12.795 12.795 12.642 12.891 12.454 C 12.931 12.376 12.963 12.264 12.981 12.045 C 13 11.819 13 11.528 13 11.1 L 13 7 L 14 6 L 14 11.1 L 14 11.121 C 14 11.523 14 11.855 13.978 12.126 C 13.955 12.407 13.906 12.665 13.782 12.908 C 13.59 13.284 13.284 13.59 12.908 13.782 C 12.665 13.906 12.407 13.955 12.126 13.978 C 11.855 14 11.523 14 11.121 14 L 11.1 14 L 4.9 14 L 4.879 14 C 4.477 14 4.145 14 3.874 13.978 C 3.593 13.955 3.335 13.906 3.092 13.782 C 2.716 13.59 2.41 13.284 2.218 12.908 C 2.094 12.665 2.045 12.407 2.022 12.126 C 2 11.855 2 11.523 2 11.121 L 2 11.1 L 2 4.9 L 2 4.879 C 2 4.477 2 4.145 2.022 3.874 C 2.045 3.593 2.094 3.335 2.218 3.092 C 2.41 2.716 2.716 2.41 3.092 2.218 C 3.335 2.094 3.593 2.045 3.874 2.022 C 4.145 2 4.477 2 4.879 2 L 4.9 2 L 10 2 Z" fill="currentColor"></path>
@@ -210,8 +263,9 @@
                                             <div class="tooltip-arrow" data-popper-arrow></div>
                                         </div>
                                     </a>
+                                    
                                     {{-- ================================================= DELETE BUTTON ================================================= --}}
-                                    <button data-modal-target="deleteModal" data-modal-toggle="deleteModal" data-tooltip-target="delete-tooltip-{{ $loop->iteration }}" type="button" class="pb-4.5 relative flex flex-col items-center text-rose-500 group dark:text-rose-300 focus:outline-none focus:ring-0" onclick="insertIdentifier('{{ $post->slug }}', 'posts', 'destroy')">
+                                    <button data-modal-target="destroyModal" data-modal-toggle="destroyModal" data-tooltip-target="delete-tooltip-{{ $loop->iteration }}" type="button" class="pb-4.5 relative flex flex-col items-center text-rose-500 group dark:text-rose-300 focus:outline-none focus:ring-0" onclick="insertIdentifier('{{ $user->username }}', 'users', 'destroy')">
                                         <svg class="w-5 h-5 transition-transform group-hover:rotate-45 group-hover:translate-x-1" width="24" height="24" viewBox="0.016 0 26.039 10.05" version="1.1" xmlns="http://www.w3.org/2000/svg">
                                             <title>trash</title><desc>Created with Sketch Beta.</desc><g id="trash-lid" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="Icon-Set" transform="translate(-259.000000, -203.000000)" fill="currentColor"><path d="M 282 211 L 262 211 C 261.448 211 261 210.553 261 210 C 261 209.448 261.448 209 262 209 L 282 209 C 282.552 209 283 209.448 283 210 C 283 210.553 282.552 211 282 211 Z M 281 213 L 263 213 L 281 213 Z M 269 206 C 269 205.447 269.448 205 270 205 L 274 205 C 274.552 205 275 205.447 275 206 L 275 207 L 269 207 L 269 206 Z M 283 207 L 277 207 L 277 205 C 277 203.896 276.104 203 275 203 L 269 203 C 267.896 203 267 203.896 267 205 L 267 207 L 261 207 C 259.896 207 259 207.896 259 209 L 259 211 C 259 212.104 259.896 213 261 213 L 283 213 C 284.104 213 285 212.104 285 211 L 285 209 C 285 207.896 284.104 207 283 207 Z" id="trash-1"></path></g></g>
                                         </svg>
@@ -223,6 +277,8 @@
                                             <div class="tooltip-arrow" data-popper-arrow></div>
                                         </div>
                                     </button>
+                                    @endif
+
                                 </div>
                             </td>
                             {{-- Action Column END --}}
@@ -240,7 +296,7 @@
 
                 {{-- Table Pagination START --}}
                 <div class="mt-5">
-                    {{ $posts->appends(compact('perPage'))->withQueryString()->links() }}
+                    {{ $users->appends(compact('perPage'))->withQueryString()->links() }}
                 </div>
                 {{-- Table Pagination END --}}
             </div>
@@ -248,44 +304,55 @@
     </div>
     <!-- ====== Table Section End -->
 
-    <!-- -------------------------------------------------------------------------------------------------- -->
+    {{-- ============================================================================================================================================================== --}}
 
-    {{-- Delete Modal START --}}
-    <div id="deleteModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="h-[calc(100%-1rem)] w-full max-h-full overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 hidden justify-center items-center md:inset-0">
-        <div class="w-full max-w-sm max-h-full relative p-4">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <!-- Modal header -->
-                <div class="flex justify-between items-center p-2 rounded-t border-b dark:border-gray-600 md:p-3">
-                    <button type="button" class="ms-auto w-8 h-8 inline-flex justify-center items-center text-sm text-gray-400 bg-transparent rounded-lg dark:hover:text-white dark:hover:bg-gray-600 hover:text-gray-900 hover:bg-gray-200" data-modal-hide="deleteModal">
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                        </svg>
-                        <span class="sr-only">Close modal</span>
-                    </button>
-                </div>
-                <!-- Modal body -->
-                <div class="p-4 space-y-4 md:p-5">
-                    <p class="text-base font-semibold leading-relaxed text-center text-gray-500 dark:text-gray-200">
-                        Perform this deletion?
-                    </p>
-                </div>
-                <!-- Modal footer -->
-                <div class="flex justify-center items-center p-4 rounded-b border-t border-gray-200 dark:border-gray-600 md:p-5">
-                    <form id="deletionModalForm" action="#" method="POST">
-                        @method('DELETE')
-                        @csrf
-                        <button data-modal-hide="deleteModal" type="submit" class="px-5 py-2.5 text-sm font-semibold text-center text-white bg-blue-700 rounded-lg border border-blue-200 dark:bg-blue-800 dark:border-blue-600 dark:focus:ring-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 hover:bg-blue-800">
-                            Confirm
-                        </button>
-                    </form>
-                    <button data-modal-hide="deleteModal" type="button" class="px-5 py-2.5 ms-3 text-sm font-semibold text-slate-200 bg-rose-700 rounded-lg border border-rose-200 dark:text-slate-300 dark:bg-rose-800 dark:border-rose-600 dark:focus:ring-rose-700 dark:hover:text-white dark:hover:bg-rose-600 focus:z-10 focus:outline-none focus:ring-4 focus:ring-rose-100 hover:text-slate-100 hover:bg-rose-800">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+    @if ($archive && $users->isNotEmpty()) 
+        {{-- Permanent Delete Modal START --}}
+        <x-modals.flowbite-modal modalID="eraseModal" height="max-h-40" width="md:max-w-xs">
+            <x-slot:body>
+                <div class="text-center">Permanently delete this post?</div>
+            </x-slot:body>
+            <x-slot:footer>
+                <form id="permaDeletionModalForm" action="#" method="POST" class="flex justify-center items-center space-x-5">
+                    @csrf
+                    <button data-modal-hide="eraseModal" type="submit" class="px-5 py-2.5 ms-3 text-sm font-semibold text-slate-200 bg-rose-700 rounded-lg border border-rose-200 dark:text-slate-300 dark:bg-rose-800 dark:border-rose-600 dark:focus:ring-rose-700 dark:hover:text-white dark:hover:bg-rose-600 focus:z-10 focus:outline-none focus:ring-4 focus:ring-rose-100 hover:text-slate-100 hover:bg-rose-800">Delete</button>
+                    <button data-modal-hide="eraseModal" type="button" class="px-5 py-2.5 text-sm font-semibold text-center text-white bg-blue-700 rounded-lg border border-blue-200 dark:bg-blue-800 dark:border-blue-600 dark:focus:ring-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 hover:bg-blue-800">Cancel</button>
+                </form>
+            </x-slot:footer>
+        </x-modals.flowbite-modal>
+        {{-- Permanent Delete Modal END --}}
+
+        {{-- Restore Modal START --}}
+        <x-modals.flowbite-modal modalID="restoreModal" height="max-h-40" width="md:max-w-xs">
+            <x-slot:body>
+                <div class="text-center">Restore this post?</div>
+            </x-slot:body>
+            <x-slot:footer>
+                <form id="restorationModalForm" action="#" method="POST" class="flex justify-center items-center space-x-5">
+                    @csrf
+                    <button data-modal-hide="restoreModal" type="submit" class="px-5 py-2.5 me-2 text-sm font-medium text-white bg-green-500 rounded-lg dark:focus-teal-400 dark:bg-green-700 dark:border-teal-400 dark:focus:ring-teal-500 dark:hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-green-700 hover:bg-green-600">Restore</button>
+                    <button data-modal-hide="restoreModal" type="button" class="px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-200 dark:bg-blue-800 dark:border-blue-600 dark:focus:ring-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 hover:bg-blue-800">Cancel</button>
+                </form>
+            </x-slot:footer>
+        </x-modals.flowbite-modal>
+        {{-- Restore Modal END --}}
+    @elseif(!$archive && $users->isNotEmpty()) 
+        {{-- Temporary Remove Modal START --}}
+        <x-modals.flowbite-modal modalID="destroyModal" height="max-h-40" width="md:max-w-xs">
+            <x-slot:body>
+                <div class="text-center">Temporarily remove this post?</div>
+            </x-slot:body>
+            <x-slot:footer>
+                <form id="deletionModalForm" action="#" method="POST" class="flex justify-center items-center space-x-5">
+                @method('DELETE')
+                @csrf
+                    <button data-modal-hide="destroyModal" type="submit" class="px-5 py-2.5 ms-3 text-sm font-semibold text-slate-200 bg-rose-700 rounded-lg border border-rose-200 dark:text-slate-300 dark:bg-rose-800 dark:border-rose-600 dark:focus:ring-rose-700 dark:hover:text-white dark:hover:bg-rose-600 focus:z-10 focus:outline-none focus:ring-4 focus:ring-rose-100 hover:text-slate-100 hover:bg-rose-800">Remove</button>
+                    <button data-modal-hide="destroyModal" type="button" class="px-5 py-2.5 text-sm font-semibold text-center text-white bg-blue-700 rounded-lg border border-blue-200 dark:bg-blue-800 dark:border-blue-600 dark:focus:ring-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 hover:bg-blue-800">Cancel</button>
+                </form>
+            </x-slot:footer>
+        </x-modals.flowbite-modal>
+        {{-- Temporary Remove Modal END --}}
+    @endif
 
     @push('scripts')
     <script src="{{ asset('JS/default-table.js') }}"></script>

@@ -34,7 +34,7 @@
                         @else
                         is-valid
                         @enderror" placeholder="Ente title here" value="{{ old('title') }}" autocomplete="off" autofocus required>
-                        <svg class="w-6 h-6 text-red-600 dark:text-white
+                        <svg class="w-6 h-6 text-red-600 dark:text-rose-500
                         @error('title')
                         absolute bottom-0 top-10 right-0 mr-3
                         @else
