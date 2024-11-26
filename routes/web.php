@@ -8,6 +8,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\DashboardPostController;
+use App\Http\Controllers\ProfileController;
 use App\Livewire\Admin\AllPostsIndex;
 
 // Route to homepage
@@ -71,22 +72,29 @@ Route::middleware('auth')->group(function () {
     // Route to dashboard posts
     Route::resource('/dashboard/posts', DashboardPostController::class);
 
+    // Route to User Profile
+    Route::get('dashboard/profile/{user}', [ProfileController::class, 'index'])->name('user.profile');
+
+    // Route to User Profile
+    Route::get('/account/{user}', [ProfileController::class, 'show'])->name('user.account');
+
     // Route to log out a user in session
     Route::post('/logout', [LoginController::class, 'logout'])->name('login.out'); // POST request is used to avoid the browser prefetching links on a webpage that would inadvertently logout the user's session
+});
 
-    Route::middleware('admin')->group(function () {
+// Admin Middleware Group
+Route::middleware('admin')->group(function () {
 
-        // Route to admin dashboard categories
-        Route::get('/dashboard/admin/posts', AllPostsIndex::class)->name('admin.posts.index');
+    // Route to admin dashboard categories
+    Route::get('/dashboard/admin/posts', AllPostsIndex::class)->name('admin.posts.index');
 
-        // Route to admin dashboard categories
-        Route::resource('/dashboard/admin/categories', AdminCategoryController::class)->except(['create', 'edit']);
+    // Route to admin dashboard categories
+    Route::resource('/dashboard/admin/categories', AdminCategoryController::class)->except(['create', 'edit']);
 
-        // Route to restore user
-        Route::post('/dashboard/admin/users/{user}/restore', [AdminUserController::class, 'restore'])->name('users.restore')->withTrashed();
-        // Route to force delete user
-        Route::post('/dashboard/admin/users/{user}/erase', [AdminUserController::class, 'erase'])->name('users.erase')->withTrashed();
-        // Route to admin dashboard users
-        Route::resource('/dashboard/admin/users', AdminUserController::class);
-    });
+    // Route to restore user
+    Route::post('/dashboard/admin/users/{user}/restore', [AdminUserController::class, 'restore'])->name('users.restore')->withTrashed();
+    // Route to force delete user
+    Route::post('/dashboard/admin/users/{user}/erase', [AdminUserController::class, 'erase'])->name('users.erase')->withTrashed();
+    // Route to admin dashboard users
+    Route::resource('/dashboard/admin/users', AdminUserController::class);
 });

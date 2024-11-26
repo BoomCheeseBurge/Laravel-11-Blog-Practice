@@ -22,6 +22,15 @@ return new class extends Migration
             $table->text('about')->nullable();
             $table->string('password');
             $table->boolean('is_admin')->default(false);
+            $table->date('date_of_birth')->nullable();
+            $table->smallInteger('sex')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('phone_country')->nullable()->default(null);
+            $table->string('phone_normalized')->nullable()->default(null);
+            $table->string('phone_national')->nullable()->default(null);
+            $table->string('phone_e164')->nullable()->default(null);
+            $table->string('website')->nullable()->default(null);
+            $table->string('location')->nullable()->default(null);
             $table->rememberToken();
             $table->timestamps();
         });

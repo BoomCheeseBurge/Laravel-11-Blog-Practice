@@ -289,6 +289,5 @@
 
     @push('scripts')
     <script src="{{ asset('JS/default-table.js') }}"></script>
-    <script src="{{ asset('JS/dashboard-table.js') }}"></script>
     @endpush
 </x-layouts.dashboard-layout>

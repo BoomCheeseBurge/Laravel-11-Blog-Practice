@@ -28,6 +28,15 @@ class User extends Authenticatable
                             'about',
                             'password',
                             'is_admin',
+                            'date_of_birth',
+                            'sex',
+                            'phone',
+                            'phone_country',
+                            'phone_normalized',
+                            'phone_national',
+                            'phone_e164',
+                            'website',
+                            'location',
                         ];
 
     /**

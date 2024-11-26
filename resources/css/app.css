@@ -3,68 +3,177 @@
 @tailwind utilities;
 
 @layer base {
-    body * {
-        @apply transition-colors duration-300;
-    }
+	body * {
+		@apply transition-colors duration-300;
+	}
 }
 
 @layer components {
-    .dashboard-body {
-      @apply relative z-1 bg-whiten font-satoshi text-base font-normal text-body;
-    }
+	.dashboard-body {
+	@apply relative z-1 bg-whiten font-satoshi text-base font-normal text-body;
+	}
 
-    .is-valid {
-      @apply border border-gray-300 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500 focus:ring-primary-600 focus:border-primary-600;
-    }
-    .is-invalid {
-      @apply border border-red-600 focus:ring-red-600 focus:border-red-600;
-    }
+	.is-valid {
+	@apply border border-gray-300 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500 focus:ring-primary-600 focus:border-primary-600;
+	}
+	.is-invalid {
+	@apply border border-red-600 focus:ring-red-600 focus:border-red-600;
+	}
 
-    .gradient-light {
-        background: linear-gradient(90deg, #93c5fd 0%, #3b82f6 100%);
-    }
-    .gradient-dark {
-        background: linear-gradient(90deg, #1e40af 0%, #1d4ed8 200%);
-    }
+	.gradient-light {
+		background: linear-gradient(90deg, #93c5fd 0%, #3b82f6 100%);
+	}
+	.gradient-dark {
+		background: linear-gradient(90deg, #1e40af 0%, #1d4ed8 200%);
+	}
 
-    .card-list .card-item .card-link {
-        @apply w-70 sm:w-100 xl:max-2xl:w-90 block bg-slate-100 dark:bg-primary-600 p-4.5 rounded-xl shadow-md hover:border-2 hover:border-slate-300 dark:hover:border-primary-500
-    }
-    .card-list .card-link .card-image {
-        @apply w-full aspect-[16/9] rounded-md
-    }
-    .card-wrapper .swiper-pagination-bullet {
-        @apply h-3 w-3 md:h-5 md:w-5 opacity-75 dark:bg-primary-700 bg-slate-200
-    }
-    .card-wrapper .swiper-pagination-bullet-active {
-        @apply h-3 w-3 md:h-5 md:w-5 opacity-100 dark:bg-primary-800 bg-slate-400
-    }
-    .card-wrapper .swiper-slide-button {
-        @apply dark:text-primary-600 text-slate-200 hover:scale-125 transition-transform ease-linear hidden sm:block
-    }
+	.card-list .card-item .card-link {
+		@apply w-70 sm:w-100 xl:max-2xl:w-90 block bg-slate-100 dark:bg-primary-600 p-4.5 rounded-xl shadow-md hover:border-2 hover:border-slate-300 dark:hover:border-primary-500
+	}
+	.card-list .card-link .card-image {
+		@apply w-full aspect-[16/9] rounded-md
+	}
+	.card-wrapper .swiper-pagination-bullet {
+		@apply h-3 w-3 md:h-5 md:w-5 opacity-75 dark:bg-primary-700 bg-slate-200
+	}
+	.card-wrapper .swiper-pagination-bullet-active {
+		@apply h-3 w-3 md:h-5 md:w-5 opacity-100 dark:bg-primary-800 bg-slate-400
+	}
+	.card-wrapper .swiper-slide-button {
+		@apply dark:text-primary-600 text-slate-200 hover:scale-125 transition-transform ease-linear hidden sm:block
+	}
 
-    /* Highlight table row on checkbox input */
-    tr:has(.selectRow:checked) {
-        @apply bg-sky-100/80 dark:bg-slate-700;
-    }
-    /* ... */
+	/* Highlight table row on checkbox input */
+	tr:has(.selectRow:checked) {
+		@apply bg-sky-100/80 dark:bg-slate-700;
+	}
+	
+	/* Profile Page Book Info */
+	.book {
+		height: 16rem;
+		perspective: 70rem;
+	}
+	.cover {
+		background-color: #36354e;
+		transform: rotateY(0deg);
+		width: 14rem;
+		height: 16.5rem;
+	}
+	.page {
+		background-color: #ede9c0;
+		transform: rotateY(0deg);
+		width: 14rem;
+		height: 15.5rem;
+		text-align: right;
+		font-size: 8px;
+		font-family: monospace;
+	}
+	.page::before, .page::after {
+		display: block;
+		border-top: 1px dashed rgba(0, 0, 0, 0.3);
+		padding-bottom: 1rem;
+	}
+	.cover, .page {
+		position: absolute;
+		padding: 1rem;
+		transform-origin: 100% 0;
+		border-radius: 5px 0 0 5px;
+		box-shadow: inset 3px 0px 20px rgba(0, 0, 0, 0.2),
+			0px 0px 15px rgba(0, 0, 0, 0.1);
+		box-sizing: border-box;
+	}
+	.text-flip {
+		-moz-transform: scale(-1, 1);
+		-webkit-transform: scale(-1, 1);
+		-o-transform: scale(-1, 1);
+		-ms-transform: scale(-1, 1);
+		transform: scale(-1, 1);
+	}
+	.cover.turn {
+		animation: bookCover 3s forwards;
+	}
+	.page.turn {
+		animation: bookOpen 3s forwards;
+	}
+	.page:nth-of-type(1) {
+		animation-delay: 0.05s;
+	}
+	.page:nth-of-type(2) {
+		animation-delay: 0.33s
+	}
+	.page:nth-of-type(3) {
+		animation-delay: 0.66s;
+	}
+	.page:nth-of-type(4) {
+		animation: bookOpen175deg 3s forwards;
+		animation-delay: 0.99s;
+	}
+	.page:nth-of-type(5) {
+		animation: bookOpen5deg 3s forwards;
+		animation-delay: 1.2s;
+	}
+	.page:nth-of-type(6) {
+		animation: bookOpen2deg 3s forwards;
+		animation-delay: 1.25s;
+	}
+	@keyframes bookOpen {
+		30% { z-index: 999 }
+		100% {  transform: rotateY(180deg);
+			z-index: 999;}
+	}
+	@keyframes bookCover {
+		30% { z-index: 999 }
+		100% {  transform: rotateY(180deg);
+			z-index: 1;}
+	}
+	@keyframes bookOpen175deg {
+		30% { z-index: 999 }
+		100% {  transform: rotateY(175deg);
+			z-index: 999;}
+	}
+	@keyframes bookOpen150deg {
+		30% { z-index: 999 }
+		100% {  transform: rotateY(150deg);
+			z-index: 999;}
+	}
+	@keyframes bookOpen55deg {
+		30% { z-index: 999 }
+		100% {  transform: rotateY(55deg);
+			z-index: 999;}
+	}
+	@keyframes bookOpen30deg {
+		50% { z-index: 999 }
+		100% {  transform: rotateY(30deg);
+			z-index: 999;}
+	}
+	@keyframes bookOpen5deg {
+		50% { z-index: 999 }
+		100% {  transform: rotateY(5deg);
+			z-index: 999;}
+	}
+	@keyframes bookOpen2deg {
+		50% { z-index: 999 }
+		100% {  transform: rotateY(2deg);
+			z-index: 999;}
+	}
+	/* ... */
 }
 
 @layer utilities {
-    /* Chrome, Safari and Opera */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
+	/* Chrome, Safari and Opera */
+	.no-scrollbar::-webkit-scrollbar {
+	display: none;
+	}
 
-    .no-scrollbar {
-      -ms-overflow-style: none; /* IE and Edge */
-      scrollbar-width: none; /* Firefox */
-    }
+	.no-scrollbar {
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+	}
 
-    .chat-height {
-      @apply h-[calc(100vh_-_8.125rem)] lg:h-[calc(100vh_-_5.625rem)];
-    }
-    .inbox-height {
-      @apply h-[calc(100vh_-_8.125rem)] lg:h-[calc(100vh_-_5.625rem)];
-    }
+	.chat-height {
+	@apply h-[calc(100vh_-_8.125rem)] lg:h-[calc(100vh_-_5.625rem)];
+	}
+	.inbox-height {
+	@apply h-[calc(100vh_-_8.125rem)] lg:h-[calc(100vh_-_5.625rem)];
+	}
 }

@@ -59,6 +59,20 @@ class Post extends Model
     }
 
     /**
+     * Scope a query to a post based on author's username.
+     */
+    public function scopeRecent($query, $author): void
+    {
+        if(!empty($author))
+        {
+            $query->whereHas('author', function ($query) use ($author) {
+
+                $query->where('username', $author);
+            });
+        }
+    }
+
+    /**
      * Get the route key for the model.
      */
     public function getRouteKeyName(): string

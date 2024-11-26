@@ -67,7 +67,7 @@
 
                 {{-- Blog Post Author --}}
                 <div class="flex justify-between items-center mt-5">
-                    <a href="/posts?author={{ $post->author->username }}">
+                    <a href="{{ route('user.account', ['user' => $post->author->username]) }}">
                         <div class="flex items-center space-x-3">
                             <img class="w-7 h-7 rounded-full" src="{{ asset('IMG/default/default_user.png') }}" alt="Default Profile Image" />
                             <span class="text-sm font-medium dark:text-white">

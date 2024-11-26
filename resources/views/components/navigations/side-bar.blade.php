@@ -190,11 +190,10 @@
             <li>
                 <a
                     class="text-bodydark1 relative flex items-center gap-2.5 px-4 py-2 font-medium rounded-sm duration-300 ease-in-out group dark:hover:bg-meta-4 hover:bg-graydark"
-                    href="profile.html"
+                    href="{{ route('user.profile', ['user' => auth()->user()->username]) }}"
                     @click="selected = (selected === 'Profile' ? '':'Profile')"
-                    :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Profile') && (page === 'profile') }"
-                    :class="page === 'profile' && 'bg-graydark'"
-                >
+:class="page === 'profile' ? '!text-white !bg-primary-500/80 dark:!bg-slate-100 dark:!bg-opacity-90 dark:!text-slate-800' : ''"
+                    >
                     <svg
                     class="fill-current"
                     width="18"

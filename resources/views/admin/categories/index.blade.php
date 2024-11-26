@@ -382,7 +382,7 @@
                                                 is-invalid
                                                 @else
                                                 is-valid
-                                                @enderror" placeholder="Ente name here" value="{{ old('catName') }}" autocomplete="off" required>
+                                                @enderror" placeholder="Enter name here" value="{{ old('catName') }}" autocomplete="off" required>
                                                 <svg class="w-6 h-6 text-red-600 dark:text-rose-500
                                                     @error('catName')
                                                     absolute bottom-0 top-9.5 right-21 mr-3

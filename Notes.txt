@@ -1,40 +1,40 @@
 
-Created a resource based admin user controller.
-
-Created the necessary views for the controller.
+Created a profile basic controller and its view.
 
 ________________________________________________________________
 
-Uninstalled NPM Tailwind package because Laravel 11.X already has Tailwind installed in its core by default.
-
-If the Tailwind package is kept installed, then there can be conflicts and issues where utility classes may not work properly.
-
-Ex: Using grid and specifying grid-cols-[n] may cause some n-column to not work
+Installed the Laravel phone number package by Propaganistas.
 
 ________________________________________________________________
 
-Create a create user view and its associated controller method.
+Validation rules in a Livewire component cannot have any spaces between the pipes.
 
 ________________________________________________________________
 
-Added a custom rule for checking maximum characters of an input.
+Created a Livewire component for the profile, profile cover, and profile picture.
 
 ________________________________________________________________
 
-Added 'profile_pic', 'profile_cover', and 'about' fields to the User model.
+Able to change profile picture and profile cover directly in the profile page without submit button.
 
 ________________________________________________________________
 
-Added 'users.destroy' to the 'ziggy.php' file to utilize the route helper method in JS.
+Added fillable parameters in the User model for these fields:
+
+    'date_of_birth',
+    'sex',
+    'phone',
+    'phone_country',
+    'phone_normalized',
+    'phone_national',
+    'phone_e164',
+    'website',
+    'location',
 
 ________________________________________________________________
 
-Merged 'dashboard-table' into the 'default-table' file.
+Added a Livewire form object called 'profileForm' to separate the main component from the validation and model update.
 
 ________________________________________________________________
 
-When sending a trashed model to the route, then the 'withTrashed()' method must be chained to the route.
-
-________________________________________________________________
-
-Move the horizontal scrollbar to be specifically on the table excluding the pagination.
+Able to edit the logged in user's profile information.

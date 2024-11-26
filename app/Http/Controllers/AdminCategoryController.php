@@ -109,7 +109,9 @@ class AdminCategoryController extends Controller
         {
             $file = $request->file('image'); // Get the uploaded image file
 
-            $validatedData['image'] = Storage::disk('categories')->putFileAs('/', $file, $validatedData['slug'] . '.' . $file->extension() ); // Store the image file
+            Storage::disk('categories')->putFileAs('/', $file, $validatedData['slug'] . '.' . $file->extension() ); // Store the image file
+
+            $validatedData['image'] = $validatedData['slug'] . '.' . $file->extension(); // Store the category filename
         }
 
         Category::create($validatedData);
@@ -184,7 +186,9 @@ class AdminCategoryController extends Controller
 
                 $file = $request->file('image'); // Get the uploaded image file
 
-                $category->image = Storage::disk('categories')->putFileAs('/', $file, $validatedData['slug'] . '.' . $file->extension() ); // Store the image file
+                Storage::disk('categories')->putFileAs('/', $file, $validatedData['slug'] . '.' . $file->extension() ); // Store the image file
+
+                $category->image = $validatedData['slug'] . '.' . $file->extension(); // Store the category filename
 
             } else {
 
@@ -204,8 +208,10 @@ class AdminCategoryController extends Controller
             }
 
             $file = $request->file('image'); // Get the uploaded image file
+            
+            Storage::disk('categories')->putFileAs('/', $file, $category->slug . '.' . $file->extension() ); // Store the image file
 
-            $category->image = Storage::disk('categories')->putFileAs('/', $file, $category->slug . '.' . $file->extension() ); // Store the image file
+            $category->image = $category->slug . '.' . $file->extension(); // Store the category filename
         }
 
         $category->save();

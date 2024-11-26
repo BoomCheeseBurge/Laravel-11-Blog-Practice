@@ -48,7 +48,7 @@ return [
         'posts' => [
             'driver' => 'local',
             'root' => storage_path('app/public/IMG/featured'),
-            'url' => '/',
+            'url' => '/IMG/featured',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -56,7 +56,7 @@ return [
         'categories' => [
             'driver' => 'local',
             'root' => storage_path('app/public/IMG/category'),
-            'url' => '/',
+            'url' => '/IMG/category',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -64,7 +64,7 @@ return [
         'profile' => [
             'driver' => 'local',
             'root' => storage_path('app/public/IMG/profile'),
-            'url' => '/',
+            'url' => '/IMG/profile',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -72,7 +72,7 @@ return [
         'cover' => [
             'driver' => 'local',
             'root' => storage_path('app/public/IMG/cover'),
-            'url' => '/',
+            'url' => '/IMG/cover',
             'visibility' => 'public',
             'throw' => false,
         ],

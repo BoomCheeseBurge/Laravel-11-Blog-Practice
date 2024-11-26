@@ -59,7 +59,7 @@
                                 </svg>
                                 Dashboard
                             </a>
-                            <a href="#" class="flex items-center gap-2 px-4 py-3 text-sm border-b border-slate-300 dark:hover:text-boxdark-2 hover:bg-slate-100" role="menuitem" tabindex="-1" id="user-menu-item-1">
+                            <a href="{{ route('user.profile', ['user' => auth()->user()->username]) }}" class="flex items-center gap-2 px-4 py-3 text-sm border-b border-slate-300 dark:hover:text-boxdark-2 hover:bg-slate-100" role="menuitem" tabindex="-1" id="user-menu-item-1">
                                 <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-width="2" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                                 </svg>
@@ -93,7 +93,11 @@
                     </div>
                 </div>
             </div>
-            <div class="-mr-2 flex md:hidden">
+            <div class="-mr-2 flex items-center gap-12 md:hidden">
+                <!-- Dark Mode Toggler -->
+                <x-ui.toggle-dark-mode></x-ui.toggle-dark-mode>
+                <!-- Dark Mode Toggler -->
+
                 <!-- Mobile menu button -->
                 <button type="button" x-on:click="isOpen = !isOpen"
                 class="relative inline-flex justify-center items-center p-2 text-gray-200 bg-indigo-800 rounded-md dark:text-boxdark-2 dark:bg-slate-200 dark:focus:ring-offset-slate-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-800" aria-controls="mobile-menu" aria-expanded="false">
@@ -144,7 +148,7 @@
                 <!-- Dark Mode Toggler -->
             </div>
             <div class="px-2 mt-3 space-y-3">
-                <a href="#" class="text-primary-600 block px-3 py-2 text-base font-medium rounded-md dark:text-slate-200 dark:hover:bg-gray-600 hover:text-primary-800 hover:bg-slate-300">Your Profile</a>
+                <a href="{{ route('user.profile', ['user' => auth()->user()->username]) }}" class="text-primary-600 block px-3 py-2 text-base font-medium rounded-md dark:text-slate-200 dark:hover:bg-gray-600 hover:text-primary-800 hover:bg-slate-300">Your Profile</a>
                 <a href="#" class="text-primary-600 block px-3 py-2 text-base font-medium rounded-md dark:text-slate-200 dark:hover:bg-gray-600 hover:text-primary-800 hover:bg-slate-300">Settings</a>
                 <form action="{{ route('login.out') }}" method="POST">
                     @csrf

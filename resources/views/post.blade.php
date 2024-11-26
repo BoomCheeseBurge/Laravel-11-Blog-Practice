@@ -1,27 +1,12 @@
 <x-layouts.base-layout :title="$title">
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    {{-- <article class="max-w-screen-md py-8">
-        <h2 class="mb-1 text-3xl font-bold tracking-tight text-gray-900">{{ $post['title'] }}</h2>
+<!--
+    Install the "flowbite-typography" NPM package to apply styles and format the article content:
 
-        <div>
-            By
-            <a href="/authors/{{ $post->author->username }}" class="text-base text-gray-500 hover:underline">{{ $post->author->fullname }}</a>
-            in
-            <a href="/categories/{{ $post->category->slug }}" class="text-base text-gray-500 hover:underline">{{ $post->category->name }}</a>
-            | {{ $post->created_at->format('F j, Y') }}
-        </div>
-        <p class="my-4 font-light">{{ $post['body'] }}</p>
-        <a href="/posts" class="font-medium text-blue-500 hover:underline">&laquo; Back to Posts</a>
-    </article> --}}
-
-    <!--
-Install the "flowbite-typography" NPM package to apply styles and format the article content:
-
-URL: https://flowbite.com/docs/components/typography/
+    URL: https://flowbite.com/docs/components/typography/
 -->
 
-<main class="pt-8 pb-16 antialiased bg-white dark:bg-gray-900 lg:pt-16 lg:pb-24">
     <div class="mx-auto max-w-screen-xl flex justify-between px-4">
         <article class="format format-blue format-sm mx-auto w-full max-w-2xl dark:format-invert lg:format-lg lg:max-w-4xl sm:format-base">
             <header class="not-format mb-4 lg:mb-6">
@@ -30,7 +15,7 @@ URL: https://flowbite.com/docs/components/typography/
                     <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
                         <img class="w-12 h-12 mr-4 rounded-full lg:w-16 lg:h-16 md:w-14 md:h-14" src="{{ asset('IMG/default/default_user.png') }}" alt="{{ $post->author->fullname }}">
                         <div>
-                            <a href="/posts?author={{ $post->author->username }}" rel="author" class="text-xl font-bold text-gray-900 dark:text-white">{{ $post->author->fullname }}</a>
+                            <a href="{{ route('user.account', ['user' => $post->author->username]) }}" rel="author" class="text-xl font-bold text-gray-900 dark:text-white">{{ $post->author->fullname }}</a>
                             <p class="mb-1 text-base text-gray-500 dark:text-gray-400"><time pubdate datetime="{{ $post->created_at }}" title="{{ $post->created_at->format('F j, Y') }}">{{ $post->created_at->format('F j, Y') }}</time></p>
                             <a href="/posts?category={{ $post->category->slug }}">
                                 <span class="bg-{{ $post->category->color }}-100 text-primary-800 inline-flex items-center px-2.5 py-0.5 text-xs lg:text-sm font-medium rounded dark:bg-primary-200 dark:text-primary-800">
@@ -46,7 +31,7 @@ URL: https://flowbite.com/docs/components/typography/
                 @if ($post->featured_image)
                 <img src="{{ Storage::disk('posts')->url($post->featured_image) }}" alt="Post Featured Image" class="aspect-16/9">
                 @else
-                <img src="{{ Storage::disk('categories')->url($post->category->image) }}" alt="Default Featured Image" class="w-full h-3/5">
+                <img src="{{ Storage::disk('categories')->url($post->category->image) }}" alt="Default Featured Image" class="w-full h-3/5 lg:mx-auto lg:w-4/5">
                 @endif
             </header>
 
@@ -222,7 +207,6 @@ URL: https://flowbite.com/docs/components/typography/
              </section>
         </article>
     </div>
-  </main>
 
   <aside aria-label="Related Articles" class="py-8 bg-gray-50 dark:bg-gray-800 lg:py-24">
     <div class="mx-auto max-w-screen-xl px-8">
@@ -278,10 +262,10 @@ URL: https://flowbite.com/docs/components/typography/
                 <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Company</h2>
                 <ul class="text-gray-500 dark:text-gray-400">
                     <li class="mb-4">
-                        <a href="#" class="hover:underline">About</a>
+                        <a href="/about" class="hover:underline">About</a>
                     </li>
                     <li class="mb-4">
-                        <a href="#" class="hover:underline">Blog</a>
+                        <a href="/posts" class="hover:underline">Blog</a>
                     </li>
                 </ul>
             </div>
@@ -295,7 +279,7 @@ URL: https://flowbite.com/docs/components/typography/
                         <a href="#" class="hover:underline">Facebook</a>
                     </li>
                     <li class="mb-4">
-                        <a href="#" class="hover:underline">Contact Us</a>
+                        <a href="/contact" class="hover:underline">Contact Us</a>
                     </li>
                 </ul>
             </div>

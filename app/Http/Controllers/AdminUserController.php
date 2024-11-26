@@ -122,7 +122,7 @@ class AdminUserController extends Controller
      */
     public function show(User $user): RedirectResponse
     {
-        return to_route('profile.index', ['user' => $user->username]);
+        return to_route('user.account', ['user' => $user->username]);
     }
 
     /**
@@ -182,7 +182,7 @@ class AdminUserController extends Controller
         if ($request->hasFile('profile_cover')) // Check if there is an uploaded profile cover
         {
             // Check if the current post has an existing featured image
-            if(!is_null($user->profile_cover) && Storage::disk('cover')->exists($user->profile_cover))
+            if(!empty($user->profile_cover) && Storage::disk('cover')->exists($user->profile_cover))
             {
                 // Delete the old featured image file
                 Storage::disk('cover')->delete($user->profile_cover);

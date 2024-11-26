@@ -113,7 +113,7 @@ class="flex-grow shadow-2 flex justify-between items-center px-4 py-4 2xl:px-11 
                     class="border-stroke flex flex-col gap-5 p-5 border-b dark:border-strokedark">
                     <li class="pt-2 sm:pt-0">
                         <a
-                            href="profile.html"
+                            href="{{ route('user.profile', ['user' => auth()->user()->username]) }}"
                             class="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary-500 lg:text-base">
                             <svg
                             class="fill-current"

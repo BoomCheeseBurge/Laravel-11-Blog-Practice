@@ -80,9 +80,13 @@ class DashboardPostController extends Controller
         // Check if there is an uploaded featured image for the post
         if ($request->hasFile('featured_image'))
         {
-            $featured_image = $request->file('featured_image');
+            $featured_image = $request->file('featured_image'); // Get the uploaded featured image
 
-            $validatedData['featured_image'] = Storage::disk('posts')->putFileAs('/', $featured_image, str()->uuid() . '.' . $featured_image->extension() );
+            $uuid = str()->uuid(); // Generate UUID
+
+            Storage::disk('posts')->putFileAs('/', $featured_image, $uuid . '.' . $featured_image->extension() ); // Store the uploaded featured image
+            
+            $validatedData['featured_image'] = $uuid . '.' . $featured_image->extension(); // Store the featured image filename
         }
 
         // Assign the authorized user ID who wrote the post
@@ -168,7 +172,11 @@ class DashboardPostController extends Controller
 
             $featured_image = $request->file('featured_image');
 
-            $validatedData['featured_image'] = Storage::disk('posts')->putFileAs('/', $featured_image, str()->uuid() . '.' . $featured_image->extension() );
+            $uuid = str()->uuid(); // Generate UUID
+
+            Storage::disk('posts')->putFileAs('/', $featured_image, $uuid . '.' . $featured_image->extension() ); // Store the uploaded featured image
+            
+            $validatedData['featured_image'] = $uuid . '.' . $featured_image->extension(); // Store the featured image filename
         }
 
         $post->title = $validatedData['title'];

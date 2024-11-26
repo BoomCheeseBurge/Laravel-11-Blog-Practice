@@ -11,6 +11,7 @@
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
+        "propaganistas/laravel-phone": "^5.3",
         "tightenco/ziggy": "^2.3"
     },
     "require-dev": {

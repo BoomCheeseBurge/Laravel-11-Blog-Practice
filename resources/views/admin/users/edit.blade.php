@@ -171,7 +171,7 @@
                 <div class="w-full mt-5 dark:bg-slate-600">
                     <div class="mx-auto w-full">
                         <!-- User Profile Cover -->
-                        @if ( isset($user->profile_cover))
+                        @if (isset($user->profile_cover))
                         <img src="{{ Storage::disk('cover')->url($user->profile_cover) }}" alt="{{ $user->username }} Profile Cover" id="cover_preview"
                             class="max-h-50 w-full object-fill rounded-md lg:max-h-75" />
                         @else
