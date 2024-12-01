@@ -325,6 +325,27 @@ export default {
                 sway: 'sway 1s linear infinite',
                 spin: 'spin 1.5s linear infinite',
                 gentle_tilt: 'tilt_shaking 0.5s infinite',
+
+                // Confetti for Like Button
+                confetti_cone: 'confetti_cone1 0.75s ease infinite',
+                confdash: 'confdash 0.75s ease infinite',
+                a1: 'confa 0.75s ease-out infinite',
+                a2: 'confa 0.75s ease-out infinite',
+            
+                b1: 'confb 0.75s ease-out infinite',
+                b2: 'confb 0.75s ease-out infinite',
+                b3: 'confb 0.75s ease-out infinite',
+                b4: 'confb 0.75s ease-out infinite',
+                b5: 'confb 0.75s ease-out infinite',
+            
+                c1: 'confc 0.75s ease-out infinite',
+                c2: 'confc 0.75s ease-out infinite',
+                c3: 'confc 0.75s ease-out infinite',
+                c4: 'confc 0.75s ease-out infinite',
+            
+                d1: 'confd 0.75s ease-out infinite',
+                d2: 'confd 0.75s ease-out infinite',
+                d3: 'confd 0.75s ease-out infinite',
             },
             keyframes: {
                 wobble: {
@@ -411,6 +432,86 @@ export default {
                     '50%': { transform: 'rotate(0eg)' },
                     '75%': { transform: 'rotate(-5deg)' },
                     '100%': { transform: 'rotate(0deg)' },
+                },
+                //---------------------
+                // Confetti Keyframes
+                // --------------------
+                confetti_cone1: {
+                    '0%': { transform: 'translate(40px, 40px) rotate(45deg) scale(1, 1)' },
+                    '15%': { transform: 'translate(10px, 90px) rotate(45deg) scale(1.1, 0.85)' },
+                    '100%': { transform: 'translate(40px, 50px) rotate(45deg) scale(1, 1)' },
+                },
+                confa: {
+                    '0%': {
+                      opacity: '0',
+                      transform: 'translate(-30px, -20px) rotate(0)',
+                    },
+                    '15%': {
+                      opacity: '1',
+                      transform: 'translate(25px, -30px) rotate(60deg)',
+                    },
+                    '80%': {
+                      opacity: '1',
+                      transform: 'translate(33px, -38px) rotate(180deg)',
+                    },
+                    '100%': {
+                      opacity: '0',
+                      transform: 'translate(37px, -46px) scale(0.5)rotate(230deg)',
+                    },
+                },
+                confb: {
+                    '0%': {
+                      opacity: '0',
+                      transform: 'translate(-30px, -20px) rotate(0)',
+                    },
+                    '12%': {
+                      opacity: '1',
+                      transform: 'translate(25px, -30px) rotate(60deg)',
+                    },
+                    '76%': {
+                      opacity: '1',
+                      transform: 'translate(33px, -38px) rotate(180deg)',
+                    },
+                    '100%': {
+                      opacity: '0',
+                      transform: 'translate(37px, -46px) scale(0.5) rotate(240deg)',
+                    },
+                },
+                confc: {
+                    '0%': {
+                      opacity: '0.7',
+                      transform: 'translate(-30px, -20px) rotate(0)',
+                    },
+                    '18%': {
+                      opacity: '1',
+                      transform: 'translate(5px, -30px) rotate(60deg)',
+                    },
+                    '76%': {
+                      opacity: '1',
+                      transform: 'translate(13px, -38px) rotate(180deg)',
+                    },
+                    '100%': {
+                      opacity: '0',
+                      transform: 'translate(17px, -46px) scale(0.5) rotate(230deg)',
+                    },
+                },
+                confd: {
+                    '0%': {
+                      opacity: '0.7',
+                      transform: 'translate(-20px, -20px) rotate(0)',
+                    },
+                    '18%': {
+                      opacity: '1',
+                      transform: 'translate(-5px, -30px) rotate(60deg)',
+                    },
+                    '76%': {
+                      opacity: '1',
+                      transform: 'translate(-8px, -38px) rotate(180deg)',
+                    },
+                    '100%': {
+                      opacity: '0',
+                      transform: 'translate(-10px, -46px) scale(0.5) rotate(230deg)',
+                    },
                 },
             },
             aspectRatio: {

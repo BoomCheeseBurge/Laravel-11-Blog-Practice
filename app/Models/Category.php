@@ -24,6 +24,8 @@ class Category extends Model
                             'image'
                         ];
 
+    // --------------------------------------------------------------
+
     /**
      * Get the posts that belongs to a category.
      */
@@ -32,6 +34,8 @@ class Category extends Model
         return $this->hasMany(Post::class, 'category_id');
     }
 
+    // --------------------------------------------------------------
+
     /**
      * Get the route key for the model.
      */
@@ -39,6 +43,8 @@ class Category extends Model
     {
         return 'slug';
     }
+
+    // --------------------------------------------------------------
 
     /**
      * Return the sluggable configuration array for this model.

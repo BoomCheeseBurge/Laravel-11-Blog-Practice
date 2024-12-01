@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Post extends Model
 {
@@ -29,6 +31,8 @@ class Post extends Model
                             'featured_image'
                         ];
 
+    // --------------------------------------------------------------
+
     /**
      * Get the user that owns the post.
      */
@@ -44,6 +48,24 @@ class Post extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    /**
+     * Get the comments that belong to the post.
+     */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Get all of the 'User' likes for the post.
+     */
+    public function likes(): MorphToMany
+    {
+        return $this->morphToMany(User::class, 'likeable')->whereDeletedAt(null);
+    }
+
+    // --------------------------------------------------------------
 
     /**
      * Scope a query to filter search based on all, author, or category.
@@ -72,6 +94,8 @@ class Post extends Model
         }
     }
 
+    // --------------------------------------------------------------
+
     /**
      * Get the route key for the model.
      */
@@ -79,6 +103,8 @@ class Post extends Model
     {
         return 'slug';
     }
+
+    // --------------------------------------------------------------
 
     /**
      * Return the sluggable configuration array for this model.
@@ -92,5 +118,17 @@ class Post extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    // --------------------------------------------------------------
+
+    /**
+     * Check whether the post had been given a like by an authorized user
+     */
+    public function isLiked(): bool
+    {
+        $like = $this->likes()->where('user_id', auth()->id())->first();
+
+        return !is_null($like) ? true : false;
     }
 }

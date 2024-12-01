@@ -550,15 +550,15 @@
                     <div class="flex-1">
                         <p class="font-semibold text-gray-500 uppercase dark:font-normal dark:text-gray-200 dark:underline md:mb-6">Social</p>
                         <ul class="list-reset mb-6">
-                        <li class="inline-block mt-2 mr-2 md:block md:mr-0">
-                            <a href="#" class="text-gray-800 no-underline dark:text-slate-200 dark:hover:text-pink-300 hover:text-pink-500 hover:underline">Facebook</a>
-                        </li>
-                        <li class="inline-block mt-2 mr-2 md:block md:mr-0">
-                            <a href="#" class="text-gray-800 no-underline dark:text-slate-200 dark:hover:text-pink-300 hover:text-pink-500 hover:underline">Linkedin</a>
-                        </li>
-                        <li class="inline-block mt-2 mr-2 md:block md:mr-0">
-                            <a href="#" class="text-gray-800 no-underline dark:text-slate-200 dark:hover:text-pink-300 hover:text-pink-500 hover:underline">Instagram</a>
-                        </li>
+                            <li class="inline-block mt-2 mr-2 md:block md:mr-0">
+                                <a href="#" class="text-gray-800 no-underline dark:text-slate-200 dark:hover:text-pink-300 hover:text-pink-500 hover:underline">Facebook</a>
+                            </li>
+                            <li class="inline-block mt-2 mr-2 md:block md:mr-0">
+                                <a href="#" class="text-gray-800 no-underline dark:text-slate-200 dark:hover:text-pink-300 hover:text-pink-500 hover:underline">Linkedin</a>
+                            </li>
+                            <li class="inline-block mt-2 mr-2 md:block md:mr-0">
+                                <a href="#" class="text-gray-800 no-underline dark:text-slate-200 dark:hover:text-pink-300 hover:text-pink-500 hover:underline">Instagram</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

@@ -3,10 +3,10 @@
 namespace App\Livewire\User;
 
 use Livewire\Component;
-use Livewire\Attributes\On;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Validate;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ProfileCover extends Component
@@ -16,7 +16,10 @@ class ProfileCover extends Component
     #[Validate('nullable|image|mimes:png,jpeg,jpg|max:2048')]
     public $profileCover;
 
-    public function updatedProfileCover() // Update the profile cover when there is a change in the input file
+    /**
+     * Update the profile cover when there is a change in the input file
+     */
+    public function updatedProfileCover(): void
     {
         $this->validate(); // Validate the uploaded file
 
@@ -40,7 +43,7 @@ class ProfileCover extends Component
         ]);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.user.profile-cover');
     }

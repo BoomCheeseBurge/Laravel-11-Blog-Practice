@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\Post;
 use App\Rules\Title;
@@ -13,13 +15,15 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\View\View;
 
 class DashboardPostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
         $userPosts = Auth::user()->posts(); // Base Eloquent query
 
@@ -54,7 +58,7 @@ class DashboardPostController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
         return view('dashboard.posts.create', [
             'title' => 'Dashboard',
@@ -101,7 +105,7 @@ class DashboardPostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(Post $post): View
     {
         if(!auth()->user()->is_admin)
         {
@@ -121,7 +125,7 @@ class DashboardPostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(Post $post): View
     {
         if(!auth()->user()->is_admin)
         {
@@ -223,7 +227,7 @@ class DashboardPostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function checkSlug(String $val)
+    public function checkSlug(String $val): JsonResponse
     {
         $slug = SlugService::createSlug(Post::class, 'slug', $val);
 

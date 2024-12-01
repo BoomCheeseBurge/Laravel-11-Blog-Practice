@@ -156,6 +156,83 @@
 		100% {  transform: rotateY(2deg);
 			z-index: 999;}
 	}
+
+	/* Like Button Confetti */
+	.conf0 { @apply fill-[#FC6394] }
+	.conf1 { @apply fill-[#EF3C8A] }
+	.conf2 { @apply fill-[#5ADAEA] }
+	.conf3 { @apply fill-[#974CBE] }
+	.conf4 { @apply fill-[#3CBECD] }
+	.conf5 { @apply fill-[#813BBE] }
+	.conf6 { @apply fill-[#F9B732] }
+
+	.yellow-strip {
+		fill:none;
+		stroke:#F9B732;
+		stroke-width:9;
+		stroke-linecap:round;
+		stroke-miterlimit:10;
+	}
+
+	/* When the like button is has been clicked */
+
+	.nconf0 { @apply fill-slate-400 }
+	.nconf1 { @apply fill-slate-400 }
+	.nconf2 { @apply fill-slate-400 }
+	.nconf3 { @apply fill-slate-400 }
+	.nconf4 { @apply fill-slate-400 }
+	.nconf5 { @apply fill-slate-400 }
+	.nconf6 { @apply fill-slate-400 }
+
+	.nyellow-strip {
+		@apply fill-none stroke-none
+	}
+	.nyellow-strip {
+		stroke-width:9;
+		stroke-linecap:round;
+		stroke-miterlimit:10;
+	}
+
+	/* Confetti Keyframe */
+
+	@keyframes confdash {
+		0%{
+			stroke-dasharray:1000;
+			stroke-dashoffset:500;
+			transform:translate(-30px, -20px);
+			opacity:0;
+		}
+		2%{
+			stroke-dasharray:1000;
+			stroke-dashoffset:500;
+			transform:translate(-30px, -20px);
+			opacity:0;
+		}
+		35%{
+			stroke-dasharray:1000;
+			stroke-dashoffset:900;
+			transform:translate(-2px, -30px);
+			opacity:1;
+		}
+		85%{
+			stroke-dasharray:1000;
+			stroke-dashoffset:1000;
+			transform:translate(1px, -60px);
+			opacity:1;
+		}
+		90%{
+			stroke-dashoffset:1000;
+			stroke-dashoffset:1000;
+			transform:translate(2px, -80px);
+			opacity:0;
+		}
+		100%{
+			stroke-dashoffset:1000;
+			stroke-dashoffset:500;
+		  	transform:translate(2px, -8px);
+		  	opacity:0;
+		}
+	}
 	/* ... */
 }
 

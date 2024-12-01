@@ -11,21 +11,36 @@
         <article class="format format-blue format-sm mx-auto w-full max-w-2xl dark:format-invert lg:format-lg lg:max-w-4xl sm:format-base">
             <header class="not-format mb-4 lg:mb-6">
                 <a href="/posts" class="text-base font-medium text-blue-600 dark:text-teal-300 hover:underline">Back to Posts</a>
-                <address class="flex items-center my-10 not-italic">
-                    <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-                        <img class="w-12 h-12 mr-4 rounded-full lg:w-16 lg:h-16 md:w-14 md:h-14" src="{{ asset('IMG/default/default_user.png') }}" alt="{{ $post->author->fullname }}">
-                        <div>
-                            <a href="{{ route('user.account', ['user' => $post->author->username]) }}" rel="author" class="text-xl font-bold text-gray-900 dark:text-white">{{ $post->author->fullname }}</a>
-                            <p class="mb-1 text-base text-gray-500 dark:text-gray-400"><time pubdate datetime="{{ $post->created_at }}" title="{{ $post->created_at->format('F j, Y') }}">{{ $post->created_at->format('F j, Y') }}</time></p>
-                            <a href="/posts?category={{ $post->category->slug }}">
-                                <span class="bg-{{ $post->category->color }}-100 text-primary-800 inline-flex items-center px-2.5 py-0.5 text-xs lg:text-sm font-medium rounded dark:bg-primary-200 dark:text-primary-800">
-                                    {{ $post->category->name }}
-                                </span>
-                            </a>
+                <div class="flex justify-between">
+                    {{-- Post Info START --}}
+                    <address class="flex items-center my-10 not-italic">
+                        <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
+                            <img class="w-12 h-12 mr-4 rounded-full lg:w-16 lg:h-16 md:w-14 md:h-14" src="{{ asset('IMG/default/default_user.png') }}" alt="{{ $post->author->fullname }}">
+                            <div>
+                                <a href="{{ route('user.account', ['user' => $post->author->username]) }}" rel="author" class="text-xl font-bold text-gray-900 dark:text-white">{{ $post->author->fullname }}</a>
+                                <p class="mt-1.5 mb-1 text-base text-gray-700 dark:text-gray-400"><time pubdate datetime="{{ $post->created_at }}" title="{{ $post->created_at->format('F j, Y') }}">{{ $post->created_at->format('F j, Y') }}</time></p>
+                                <a href="/posts?category={{ $post->category->slug }}" class="block">
+                                    <span class="bg-{{ $post->category->color }}-100 text-primary-800 inline-flex items-center px-2.5 py-0.5 text-xs lg:text-sm font-medium rounded dark:bg-primary-200 dark:text-primary-800">
+                                        {{ $post->category->name }}
+                                    </span>
+                                </a>
+                            </div>
                         </div>
+                    </address>
+                    {{-- Post Info END --}}
+
+                    {{-- Post Like Button START --}}
+                    <div class="mt-20 mr-40">
+                        @auth                            
+                            <livewire:like-button :key="'likeButton-1'" :set_icon="false" :model="$post"/>
+                        @endauth
                     </div>
-                </address>
-                <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 dark:text-white lg:mb-6 lg:text-4xl">{{ $post['title'] }}</h1>
+                    {{-- Post Like Button END --}}
+                </div>
+                
+                <hr class="border-slate-300 dark:border-primary-800">
+
+                <h1 class="mt-8 mb-4 text-3xl font-extrabold leading-tight text-gray-900 dark:text-white lg:mb-6 lg:text-4xl">{{ $post['title'] }}</h1>
 
                 {{-- Post Featured Image --}}
                 @if ($post->featured_image)
@@ -39,176 +54,16 @@
 
             <hr>
 
-            <section class="not-format">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-lg font-bold text-gray-900 dark:text-white lg:text-2xl">Discussion (20)</h2>
-                </div>
-                <form class="mb-6">
-                    <div class="px-4 py-2 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                        <label for="comment" class="sr-only">Your comment</label>
-                        <textarea id="comment" rows="6"
-                            class="w-full px-0 text-sm text-gray-900 border-0 dark:placeholder-gray-400 dark:text-white dark:bg-gray-800 focus:ring-0"
-                            placeholder="Write a comment..." required></textarea>
-                    </div>
-                    <button type="submit"
-                        class="bg-primary-700 inline-flex items-center px-4 py-2.5 text-xs font-medium text-center text-white rounded-lg dark:focus:ring-primary-900 focus:ring-primary-200 focus:ring-4 hover:bg-primary-800">
-                        Post comment
-                    </button>
-                </form>
-                <article class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900">
-                    <footer class="flex justify-between items-center mb-2">
-                        <div class="flex items-center">
-                            <p class="inline-flex items-center mr-3 text-sm font-semibold text-gray-900 dark:text-white"><img
-                                    class="w-6 h-6 mr-2 rounded-full"
-                                    src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                                    alt="Michael Gough">Michael Gough</p>
-                            <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate datetime="2022-02-08"
-                                    title="February 8th, 2022">Feb. 8, 2022</time></p>
-                        </div>
-                        <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1"
-                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg dark:text-gray-400 dark:bg-gray-900 dark:focus:ring-gray-600 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-50 hover:bg-gray-100"
-                            type="button">
-                              <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
-                                  <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
-                              </svg>
-                            <span class="sr-only">Comment settings</span>
-                        </button>
-                        <!-- Dropdown menu -->
-                        <div id="dropdownComment1"
-                            class="w-36 z-10 hidden bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                aria-labelledby="dropdownMenuIconHorizontalButton">
-                                <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 dark:hover:text-white dark:hover:bg-gray-600 hover:bg-gray-100">Edit</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 dark:hover:text-white dark:hover:bg-gray-600 hover:bg-gray-100">Remove</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 dark:hover:text-white dark:hover:bg-gray-600 hover:bg-gray-100">Report</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </footer>
-                    <p>Very straight-to-point article. Really worth time reading. Thank you! But tools are just the
-                        instruments for the UX designers. The knowledge of the design tools are as important as the
-                        creation of the design strategy.</p>
-                    <div class="flex items-center mt-4 space-x-4">
-                        <button type="button"
-                            class="flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 hover:underline">
-                              <svg class="w-3 h-3 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                              <path d="M18 0H2a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2v4a1 1 0 0 0 1.707.707L10.414 13H18a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5 4h2a1 1 0 1 1 0 2h-2a1 1 0 1 1 0-2ZM5 4h5a1 1 0 1 1 0 2H5a1 1 0 0 1 0-2Zm2 5H5a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Zm9 0h-6a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2Z"/>
-                              </svg>
-                            Reply
-                        </button>
-                    </div>
-                </article>
-                <article class="p-6 mb-6 ml-6 text-base bg-white rounded-lg dark:bg-gray-900 lg:ml-12">
-                    <footer class="flex justify-between items-center mb-2">
-                        <div class="flex items-center">
-                            <p class="inline-flex items-center mr-3 text-sm font-semibold text-gray-900 dark:text-white"><img
-                                    class="w-6 h-6 mr-2 rounded-full"
-                                    src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                                    alt="Jese Leos">Jese Leos</p>
-                            <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate datetime="2022-02-12"
-                                    title="February 12th, 2022">Feb. 12, 2022</time></p>
-                        </div>
-                        <button id="dropdownComment2Button" data-dropdown-toggle="dropdownComment2"
-                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg dark:text-gray-400 dark:bg-gray-900 dark:focus:ring-gray-600 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-50 hover:bg-gray-100"
-                            type="button">
-                              <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
-                                  <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
-                              </svg>
-                            <span class="sr-only">Comment settings</span>
-                        </button>
-                        <!-- Dropdown menu -->
-                        <div id="dropdownComment2"
-                            class="w-36 z-10 hidden bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                aria-labelledby="dropdownMenuIconHorizontalButton">
-                                <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 dark:hover:text-white dark:hover:bg-gray-600 hover:bg-gray-100">Edit</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 dark:hover:text-white dark:hover:bg-gray-600 hover:bg-gray-100">Remove</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 dark:hover:text-white dark:hover:bg-gray-600 hover:bg-gray-100">Report</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </footer>
-                    <p>Much appreciated! Glad you liked it ☺️</p>
-                    <div class="flex items-center mt-4 space-x-4">
-                        <button type="button"
-                            class="flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 hover:underline">
-                              <svg class="w-3 h-3 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                                  <path d="M18 0H2a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2v4a1 1 0 0 0 1.707.707L10.414 13H18a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5 4h2a1 1 0 1 1 0 2h-2a1 1 0 1 1 0-2ZM5 4h5a1 1 0 1 1 0 2H5a1 1 0 0 1 0-2Zm2 5H5a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Zm9 0h-6a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2Z"/>
-                              </svg>
-                            Reply
-                        </button>
-                    </div>
-                </article>
-                <article class="p-6 mb-6 text-base bg-white border-t border-gray-200 dark:bg-gray-900 dark:border-gray-700">
-                    <footer class="flex justify-between items-center mb-2">
-                        <div class="flex items-center">
-                            <p class="inline-flex items-center mr-3 text-sm font-semibold text-gray-900 dark:text-white"><img
-                                    class="w-6 h-6 mr-2 rounded-full"
-                                    src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
-                                    alt="Bonnie Green">Bonnie Green</p>
-                            <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate datetime="2022-03-12"
-                                    title="March 12th, 2022">Mar. 12, 2022</time></p>
-                        </div>
-                        <button id="dropdownComment3Button" data-dropdown-toggle="dropdownComment3"
-                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg dark:text-gray-400 dark:bg-gray-900 dark:focus:ring-gray-600 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-50 hover:bg-gray-100"
-                            type="button">
-                              <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
-                                  <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
-                              </svg>
-                            <span class="sr-only">Comment settings</span>
-                        </button>
-                        <!-- Dropdown menu -->
-                        <div id="dropdownComment3"
-                            class="w-36 z-10 hidden bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                aria-labelledby="dropdownMenuIconHorizontalButton">
-                                <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 dark:hover:text-white dark:hover:bg-gray-600 hover:bg-gray-100">Edit</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 dark:hover:text-white dark:hover:bg-gray-600 hover:bg-gray-100">Remove</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 dark:hover:text-white dark:hover:bg-gray-600 hover:bg-gray-100">Report</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </footer>
-                    <p>The article covers the essentials, challenges, myths and stages the UX designer should consider while creating the design strategy.</p>
-                    <div class="flex items-center mt-4 space-x-4">
-                        <button type="button"
-                            class="flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 hover:underline">
-                            <svg class="w-3 h-3 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                              <path d="M18 0H2a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2v4a1 1 0 0 0 1.707.707L10.414 13H18a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5 4h2a1 1 0 1 1 0 2h-2a1 1 0 1 1 0-2ZM5 4h5a1 1 0 1 1 0 2H5a1 1 0 0 1 0-2Zm2 5H5a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Zm9 0h-6a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2Z"/>
-                            </svg>
-                            Reply
-                        </button>
-                    </div>
-                </article>
-             </section>
+            <section>
+                {{-- Comment Section START --}}
+                <livewire:comment.post-comment :key="$post->id" :$post>
+                {{-- Comment Section END --}}
+            </section>
+
         </article>
     </div>
 
-  <aside aria-label="Related Articles" class="py-8 bg-gray-50 dark:bg-gray-800 lg:py-24">
+  <aside aria-label="Related Articles" class="py-8 bg-slate-100 dark:bg-gray-800 lg:py-24">
     <div class="mx-auto max-w-screen-xl px-8">
         <h2 class="mb-8 text-2xl font-bold text-gray-900 dark:text-white">Related Posts</h2>
         <div class="grid gap-12 lg:grid-cols-4 sm:grid-cols-2">
@@ -255,7 +110,7 @@
     </div>
   </section>
 
-  <footer class="antialiased bg-gray-50 dark:bg-gray-800">
+  <footer class="antialiased bg-slate-100 dark:bg-gray-800">
     <div class="mx-auto max-w-screen-xl p-4 py-6 lg:p-10 md:p-8">
         <div class="grid grid-cols-2 gap-8 lg:grid-cols-5 md:grid-cols-3">
             <div>
@@ -352,5 +207,7 @@
         </div>
     </div>
   </footer>
+
+  @stack('scripts')
 
 </x-layouts.base-layout>

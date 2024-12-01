@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         return view('posts', [
             'title' => 'Blog',
@@ -15,7 +15,7 @@ class PostController extends Controller
         ]);
     }
 
-    public function show(Post $post)
+    public function show(string $slug): View
     {
         /**
          * Using Eloquent, the 'find' method will find a record based on ID by default.
@@ -24,7 +24,7 @@ class PostController extends Controller
          */
         return view('post', [
             'title' => 'Single Post',
-            'post' => $post,
+            'post' => Post::where('slug', $slug)->with(['author', 'category'])->first(),
         ]);
     }
 }

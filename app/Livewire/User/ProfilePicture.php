@@ -3,7 +3,7 @@
 namespace App\Livewire\User;
 
 use Livewire\Component;
-use Livewire\Attributes\On;
+use Illuminate\View\View;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Validate;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +16,10 @@ class ProfilePicture extends Component
     #[Validate('nullable|image|mimes:png,jpeg,jpg|max:1024')]
     public $profilePic;
 
-    public function updatedProfilePic() // Update the profile cover when there is a change in the input file
+    /**
+     * Update the profile cover when there is a change in the input file
+     */
+    public function updatedProfilePic(): void
     {
         $this->validate(); // Validate the uploaded file
 
@@ -40,7 +43,7 @@ class ProfilePicture extends Component
         ]);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.user.profile-picture');
     }

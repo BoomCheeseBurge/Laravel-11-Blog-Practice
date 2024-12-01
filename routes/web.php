@@ -1,15 +1,15 @@
 <?php
 
 use App\Models\Category;
+use App\Livewire\Admin\AllPostsIndex;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\AdminCategoryController;
-use App\Http\Controllers\AdminUserController;
-use App\Http\Controllers\DashboardPostController;
-use App\Http\Controllers\ProfileController;
-use App\Livewire\Admin\AllPostsIndex;
+use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\User\DashboardPostController;
+use App\Http\Controllers\Admin\AdminCategoryController;
 
 // Route to homepage
 Route::get('/', function () {
@@ -39,12 +39,12 @@ Route::get('/contact', function () {
 // Route to display a single post
 Route::get('/posts', [PostController::class, 'index'])->name('blog.posts');
 // Route to display list of posts
-Route::get('/posts/{post}', [PostController::class, 'show']);
+Route::get('/posts/{slug}', [PostController::class, 'show']);
 
 // Guest Middleware Group
 Route::middleware('guest')->group(function () {
     // Route to login page
-    Route::get('/login', [LoginController::class, 'index']);
+    Route::get('/login', [LoginController::class, 'index'])->name('login.index');
     // Route to authenticate user login
     Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 

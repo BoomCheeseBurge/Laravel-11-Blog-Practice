@@ -5,6 +5,7 @@ namespace App\Livewire\Admin;
 use App\Models\Post;
 use Livewire\Component;
 use App\Models\Category;
+use Illuminate\View\View;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 use Livewire\Attributes\Locked;
@@ -12,6 +13,7 @@ use Livewire\Attributes\Computed;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class AllPostsIndex extends Component
 {
@@ -74,7 +76,7 @@ class AllPostsIndex extends Component
     /**
      * Data passed into components is received through the mount() lifecycle hook as method parameters
      */
-    public function mount()
+    public function mount(): void
     {
         $this->categories = Category::get();
     }
@@ -83,7 +85,7 @@ class AllPostsIndex extends Component
      * Retrieve the models for this table
      */
     #[Computed()]
-    public function loadData() // Retrieve the table records
+    public function loadData(): LengthAwarePaginator
     {
         if(!empty($this->search)) // Validate search keyword if exist
         {
@@ -115,7 +117,7 @@ class AllPostsIndex extends Component
      * Reset to the first page when there is a search input,
      * otherwise, the page is stuck on wherever the page was before and the table data will not display correctly
      */
-    public function updatedSearch()
+    public function updatedSearch(): void
     {
         $this->resetPage();
     }
@@ -123,7 +125,7 @@ class AllPostsIndex extends Component
     /**
      * Sort column
      */
-    public function sortBy(string $columnName)
+    public function sortBy(string $columnName): void
     {
         $this->sortHeader === $columnName ?
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc' // Sort direction based on the clicked column name
@@ -135,7 +137,7 @@ class AllPostsIndex extends Component
     /**
      * Bulk remove selected records
      */
-    public function removeSelected()
+    public function removeSelected(): void
     {
         Post::whereIn('id', $this->selectedRecords)->delete(); // Remove the selected posts
 
@@ -158,7 +160,7 @@ class AllPostsIndex extends Component
     /**
      * Bulk edit selected records
      */
-    public function editSelected()
+    public function editSelected(): void
     {
         // Check if there is no selected category
         if($this->selectedCategory == null)
@@ -204,7 +206,7 @@ class AllPostsIndex extends Component
     /**
      * Bulk permanent delete selected records
      */
-    public function deleteSelected()
+    public function deleteSelected(): void
     {
         Post::whereIn('id', $this->selectedRecords)->forceDelete(); // Delete the selected posts
 
@@ -227,7 +229,7 @@ class AllPostsIndex extends Component
     /**
      * Bulk restore selected records
      */
-    public function restoreSelected()
+    public function restoreSelected(): void
     {
         Post::whereIn('id', $this->selectedRecords)->restore(); // Restore the selected posts
 
@@ -250,17 +252,17 @@ class AllPostsIndex extends Component
     /**
      * Select all records
      */
-    public function getAllRecords() { return Post::pluck('id')->toArray(); }
+    public function getAllRecords(): array { return Post::pluck('id')->toArray(); }
 
     /**
      * Select records in current page
      */
-    public function getCurrentPageRecords() { return $this->loadData()->pluck('id')->toArray(); }
+    public function getCurrentPageRecords(): array { return $this->loadData()->pluck('id')->toArray(); }
 
     /**
      * Livewire Pagination Hook
      */
-    public function updatedPage()
+    public function updatedPage(): void
     {
         // On the next page, reset bulk selection
         $this->reset(['selectCurrentPage', 'selectAll', 'selectedRecords']);
@@ -269,7 +271,7 @@ class AllPostsIndex extends Component
     /**
      * Retrieve modal based on slug
      */
-    public function getPostSlug(Post $post)
+    public function getPostSlug(Post $post): void
     {
         $this->selectedPost = $post;
     }
@@ -277,7 +279,7 @@ class AllPostsIndex extends Component
     /**
      * Find trashed post
      */
-    public function getTrashedPost(string $slug)
+    public function getTrashedPost(string $slug): void
     {
         $this->selectedPost = Post::onlyTrashed()->where('slug', $slug)->firstOrFail();
     }
@@ -285,7 +287,7 @@ class AllPostsIndex extends Component
     /**
      * Remove single post
      */
-    public function removeSinglePost()
+    public function removeSinglePost(): void
     {
         $this->selectedPost->delete();
 
@@ -295,7 +297,7 @@ class AllPostsIndex extends Component
     /**
      * Restore single post
      */
-    public function restoreSinglePost()
+    public function restoreSinglePost(): void
     {
         $this->selectedPost->restore();
 
@@ -307,7 +309,7 @@ class AllPostsIndex extends Component
     /**
      * Delete single post
      */
-    public function deleteSinglePost()
+    public function deleteSinglePost(): void
     {
         $this->selectedPost->forceDelete();
 
@@ -317,12 +319,12 @@ class AllPostsIndex extends Component
     /**
      * Runs after the page is updated for this component
      */
-    public function updatedPaginators($page, $pageName)
+    public function updatedPaginators($page, $pageName): void
     {
         $this->dispatch('resetResizeColumn');
     }
 
-    public function render()
+    public function render(): View
     {
         $this->dispatch('reinitTooltips');
 

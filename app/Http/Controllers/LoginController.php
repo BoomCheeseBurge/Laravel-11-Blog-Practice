@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Validation\Rules\Password;
+use Illuminate\View\View;
 
 class LoginController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         return view('login.index', [
             'title' => 'User Login',

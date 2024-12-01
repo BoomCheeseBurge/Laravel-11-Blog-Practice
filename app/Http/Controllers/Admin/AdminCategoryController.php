@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
 
 use Closure;
 use App\Models\Post;
 use App\Rules\Search;
 use App\Rules\Fullname;
 use App\Models\Category;
+use Illuminate\View\View;
 use App\Actions\CheckSlug;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -19,7 +22,7 @@ class AdminCategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
         if(!auth()->user()->is_admin)
         {
@@ -73,7 +76,7 @@ class AdminCategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): void
     {
         //
     }
@@ -81,7 +84,7 @@ class AdminCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         if(!auth()->user()->is_admin)
         {
@@ -130,7 +133,7 @@ class AdminCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit(Category $category): void
     {
         //
     }
@@ -138,7 +141,7 @@ class AdminCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category, CheckSlug $checkSlug)
+    public function update(Request $request, Category $category, CheckSlug $checkSlug): RedirectResponse
     {
         if(!auth()->user()->is_admin)
         {
@@ -227,7 +230,7 @@ class AdminCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(Category $category): RedirectResponse
     {
         if(!auth()->user()->is_admin)
         {

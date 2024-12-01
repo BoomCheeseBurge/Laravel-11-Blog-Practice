@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Post;
 use App\Models\User;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,8 +39,11 @@ class AppServiceProvider extends ServiceProvider
                     ->uncompromised();
         });
 
-        Gate::define('admin', function (User $user) {
-            return $user->is_admin;
-        });
+        Gate::define('admin', fn(User $user) => $user->is_admin);
+
+        Relation::enforceMorphMap([
+            'post' => Post::class,
+            'comment' => Comment::class,
+        ]);
     }
 }

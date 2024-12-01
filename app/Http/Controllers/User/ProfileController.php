@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(User $user)
+    public function index(User $user): View
     {
         return view('profile.index', [
             'title' => 'Profile',
@@ -24,7 +26,7 @@ class ProfileController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(User $user): View
     {
         return view('profile.show', [
             'title' => $user->username . '\'s Profile',

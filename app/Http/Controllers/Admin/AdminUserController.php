@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\User;
 use App\Rules\Search;
@@ -12,13 +14,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\View\View;
 
 class AdminUserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
         if(!auth()->user()->is_admin)
         {
@@ -60,7 +63,7 @@ class AdminUserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
         if(!auth()->user()->is_admin)
         {
@@ -128,7 +131,7 @@ class AdminUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(User $user): View
     {
         if(!auth()->user()->is_admin)
         {
@@ -146,7 +149,7 @@ class AdminUserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user): RedirectResponse
     {
         if(!auth()->user()->is_admin)
         {
@@ -215,7 +218,7 @@ class AdminUserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(User $user): RedirectResponse
     {
         if(!auth()->user()->is_admin)
         {
@@ -236,7 +239,7 @@ class AdminUserController extends Controller
     /**
      * Restore the specified resource from storage.
      */
-    public function restore(User $user)
+    public function restore(User $user): RedirectResponse
     {
         if(!auth()->user()->is_admin)
         {
@@ -252,7 +255,7 @@ class AdminUserController extends Controller
     /**
      * Delete the specified resource from storage.
      */
-    public function erase(User $user)
+    public function erase(User $user): RedirectResponse
     {
         if(!auth()->user()->is_admin)
         {

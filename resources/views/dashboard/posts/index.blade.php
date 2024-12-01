@@ -25,7 +25,6 @@
 
     <!-- ====== Table Section Start -->
     <div x-data="{
-            columns: true,
             dropdownOpen: false,
             openDisplay: false,
             columns: @js($headers),

@@ -4,9 +4,9 @@ namespace App\Livewire\User;
 
 use App\Models\User;
 use Livewire\Component;
+use Illuminate\View\View;
 use Livewire\Attributes\On;
 use App\Livewire\Forms\ProfileForm;
-use Illuminate\Contracts\View\View;
 use Propaganistas\LaravelPhone\PhoneNumber;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 

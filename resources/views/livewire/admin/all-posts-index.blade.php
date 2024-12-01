@@ -1,4 +1,5 @@
-<div class="mx-auto max-w-screen-2xl p-4 2xl:p-10 md:p-6">
+<div x-init="initFlowbite()"
+    class="mx-auto max-w-screen-2xl p-4 2xl:p-10 md:p-6">
     <!-- Breadcrumb Start -->
     <div
     class="flex flex-col gap-3 mb-6 sm:flex-row sm:justify-between sm:items-center"

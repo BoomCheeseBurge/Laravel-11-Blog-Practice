@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -62,6 +63,8 @@ class User extends Authenticatable
         ];
     }
 
+    // --------------------------------------------------------------
+
     /**
      * Get the posts for the user.
      */
@@ -69,6 +72,40 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class, 'author_id');
     }
+
+    /**
+     * Get the comments for the user/author.
+     */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Post::class, 'author_id');
+    }
+
+    /**
+     * Get the likes for the user.
+     */
+    public function likes(): HasMany
+    {
+        return $this->hasMany(Likeable::class);
+    }
+
+    /**
+     * Get all of the posts that are liked by this user.
+     */
+    public function likedPosts(): MorphToMany
+    {
+        return $this->morphedByMany(Post::class, 'likeable');
+    }
+
+    /**
+     * Get all of the comments that are liked by this user.
+     */
+    public function likedComments(): MorphToMany
+    {
+        return $this->morphedByMany(Comment::class, 'likeable');
+    }
+
+    // --------------------------------------------------------------
 
     /**
      * Get the route key for the model.
