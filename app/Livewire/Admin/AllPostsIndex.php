@@ -324,6 +324,14 @@ class AllPostsIndex extends Component
         $this->dispatch('resetResizeColumn');
     }
 
+    /**
+     *  Returns the name of the Livewire pagination view to be used
+     */
+    public function paginationView()
+    {
+        return 'vendor.livewire.custom';
+    }
+
     public function render(): View
     {
         $this->dispatch('reinitTooltips');

@@ -69,7 +69,13 @@
                 <div class="flex justify-between items-center mt-5">
                     <a href="{{ route('user.account', ['user' => $post->author->username]) }}">
                         <div class="flex items-center space-x-3">
-                            <img class="w-7 h-7 rounded-full" src="{{ asset('IMG/default/default_user.png') }}" alt="Default Profile Image" />
+                            @if ($post->author->profile_pic)
+                            <img src="{{ Storage::disk('profile')->url($post->author->profile_pic) }}" alt="{{ $post->author->username }} Profile Picture" class="w-7 h-7 rounded-full">
+                            @else
+                            <div class="text-primary-500 p-1.5 text-base font-semibold tracking-widest bg-slate-100 rounded-full border border-slate-300 dark:border-none">
+                            {{ strtoupper(implode('', array_map(fn($n) => $n[0], array_slice(explode(' ', $post->author->fullname), 0, 2)))); }}
+                            </div>
+                            @endif
                             <span class="text-sm font-medium dark:text-white">
                                 {{ $post->author->username }}
                             </span>

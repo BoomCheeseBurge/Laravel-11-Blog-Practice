@@ -30,7 +30,7 @@
         </nav>
     </div>
     <!-- Breadcrumb End -->
-
+    
     {{-- ------------------------------------ Successful Message ------------------------------------ --}}
     @if (session()->has('success'))
         <x-messages.dismissal-success :message="session('success')" wire:ignore wire:key="1" class="mb-4"></x-messages.dismissal-success>
@@ -150,14 +150,14 @@
                             x-transition:leave="transition ease-in duration-75"
                             x-transition:leave-start="transform opacity-100 scale-100"
                             x-transition:leave-end="transform opacity-0 scale-95"
-                            class="bg-boxdark-2 ring-black/5 absolute right-0 left-0 z-10 flex flex-col items-center mt-2 rounded-md ring-1 shadow-lg dark:bg-white focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                            class="bg-boxdark-2 ring-black/5 w-fit absolute right-0 left-0 z-10 flex flex-col items-center mt-2 rounded-md ring-1 shadow-lg dark:bg-white focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                                 <div class="w-full flex flex-col items-center px-3 py-2 space-y-4 md:space-y-2" role="none">
                                     <!-- Active: "bg-gray-100 text-gray-900 outline-none", Not Active: "text-gray-700" -->
 
                                     @if ($this->archive)
                                     {{-- Bulk Restoration START --}}
                                     <button x-cloak type="button" x-on:click="$dispatch('show-modal', { name: 'restoreSelectedModal' })"
-                                        class="w-full px-5 py-2.5 text-base font-medium text-white bg-emerald-600 rounded-lg dark:bg-emerald-600 dark:focus:ring-emerald-900 dark:hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300 hover:bg-emerald-700 lg:text-sm lg:font-semibold">
+                                        class="w-full px-4 py-3 text-base font-medium text-white bg-emerald-600 rounded-lg dark:bg-emerald-600 dark:focus:ring-emerald-900 dark:hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300 hover:bg-emerald-700 lg:text-sm lg:font-semibold">
                                         Bulk Restore
                                     </button>
                                     <x-modals.modal name="restoreSelectedModal" height="max-h-40" width="max-w-xs">
@@ -173,7 +173,7 @@
 
                                     {{-- Bulk Remove START --}}
                                     <button x-cloak type="button" x-on:click="$dispatch('show-modal', { name: 'editSelectedModal' })"
-                                            class="w-full px-5 py-2.5 text-base font-medium text-white bg-amber-600 rounded-lg dark:bg-amber-600 dark:focus:ring-amber-900 dark:hover:bg-amber-700 focus:outline-none focus:ring-4 focus:ring-amber-300 hover:bg-amber-700 lg:text-sm lg:font-semibold">
+                                            class="w-full px-4 py-3 text-base font-medium text-white bg-amber-600 rounded-lg dark:bg-amber-600 dark:focus:ring-amber-900 dark:hover:bg-amber-700 focus:outline-none focus:ring-4 focus:ring-amber-300 hover:bg-amber-700 lg:text-sm lg:font-semibold">
                                             Bulk Remove
                                     </button>
                                     <x-modals.modal name="deleteSelectedModal" height="max-h-40" width="max-w-xs">
@@ -189,7 +189,7 @@
                                     @else
                                     {{-- Bulk Deletion START --}}
                                     <button x-cloak type="button" x-on:click="$dispatch('show-modal', { name: 'removeSelectedModal' })"
-                                        class="w-full px-5 py-2.5 text-base font-medium text-white bg-red-600 rounded-lg dark:bg-red-600 dark:focus:ring-red-900 dark:hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 hover:bg-red-700 lg:text-sm lg:font-semibold">
+                                        class="w-full px-4 py-3 text-base font-medium text-white bg-red-600 rounded-lg dark:bg-red-600 dark:focus:ring-red-900 dark:hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 hover:bg-red-700 lg:text-sm lg:font-semibold">
                                         Bulk Delete
                                     </button>
                                     <x-modals.modal name="removeSelectedModal" height="max-h-40" width="max-w-xs">
@@ -205,7 +205,7 @@
 
                                     {{-- Bulk Edit START --}}
                                     <button x-cloak type="button" x-on:click="$dispatch('show-modal', { name: 'editSelectedModal' })"
-                                            class="w-full px-5 py-2.5 text-base font-medium text-white bg-amber-600 rounded-lg dark:bg-amber-600 dark:focus:ring-amber-900 dark:hover:bg-amber-700 focus:outline-none focus:ring-4 focus:ring-amber-300 hover:bg-amber-700 lg:text-sm lg:font-semibold">
+                                            class="w-full px-4 py-3 text-base font-medium text-white bg-amber-600 rounded-lg dark:bg-amber-600 dark:focus:ring-amber-900 dark:hover:bg-amber-700 focus:outline-none focus:ring-4 focus:ring-amber-300 hover:bg-amber-700 lg:text-sm lg:font-semibold">
                                             Bulk Edit
                                     </button>
                                     <x-modals.modal name="editSelectedModal" height="h-fit" width="max-w-sm">
@@ -326,8 +326,20 @@
 
                 {{-- Table Data START --}}
                 <!-- This div is for the horizontal scrollbar on the table -->
-                <div class="overflow-y-hidden overflow-x-scroll">
-                    <table class="min-w-full">
+                <div class="overflow-y-hidden overflow-x-scroll relative 
+                    [&::-webkit-scrollbar]:w-1
+                    [&::-webkit-scrollbar]:h-3
+                    [&::-webkit-scrollbar-track]:rounded-full
+                    [&::-webkit-scrollbar-track]:bg-gray-100
+                    [&::-webkit-scrollbar-thumb]:rounded-full
+                    [&::-webkit-scrollbar-thumb]:bg-primary-600
+                    dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+                    dark:[&::-webkit-scrollbar-thumb]:bg-slate-300">
+                    <div wire:loading.delay class="m-auto z-99 w-full h-full absolute right-0 left-0 flex justify-center items-center bg-gray-50 border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                        <div class="[&>.loading-dot]:animate-blink motion-reduce:[&>.loading-dot]:animate-blink text-6xl text-primary-500 [&>.loading-dot]:w-8 [&>.loading-dot]:h-8 [&>.loading-dot]:inline-block space-x-6 [&>.loading-dot]:bg-current [&>.loading-dot]:rounded-full [&>.loading-dot:nth-child(2)]:animation-delay-300 [&>.loading-dot:nth-child(3)]:animation-delay-500" role="status">Loading <div class="loading-dot animate-bounce"></div><div class="loading-dot"></div><div class="loading-dot"></div>
+                        </div>
+                    </div>
+                    <table wire:loading.class="invinsible" class="min-w-full">
                         {{-- Table Header START --}}
                         <x-tables.livewire-header id actions :headers="$columns" :sortDirection="$sortDirection" :sortHeader="$sortHeader" :currentPage="$records->currentPage()"></x-tables.livewire-header>
                         {{-- Table Header END --}}
@@ -336,15 +348,15 @@
                         <tbody class="bg-white dark:bg-slate-800">
                             @if ($records->isNotEmpty())
                                 @foreach ($records as $record)
-                                <tr x-data wire:key="{{ $record->id }}" class="">
+                                <tr x-data wire:key="{{ $record->id }}">
                                     {{-- Checkbox Column START --}}
-                                    <td x-show="toggleColumn('Bulk')" class="px-6 py-12 border-b border-gray-500">
+                                    <td x-show="toggleColumn('Bulk')" class="px-6 py-8 border-b border-gray-500">
                                         <input type="checkbox" x-model="selectedRecords" x-on:click="checkSelected" class="selectRow" value="{{ $record->id }}">
                                     </td>
                                     {{-- Checkbox Column END --}}
 
                                     {{-- Number Column START --}}
-                                    <td x-show="toggleColumn('Number')" class="border-b border-gray-500">
+                                    <td x-show="toggleColumn('Number')" class="px-6 py-8 border-b border-gray-500">
                                         <div class="flex justify-center">
                                             <div class="text-sm leading-5 text-gray-800 dark:text-white">{{ $records->firstItem() + $loop->index }}</div>
                                         </div>
@@ -355,7 +367,7 @@
                                     @foreach (array_filter($columns, function (string $value) {
                                                 return ($value != 'Bulk') && ($value != 'Number') && ($value != 'Action');
                                             }) as $column)
-                                    <td x-show="toggleColumn('{{ $column }}')" class="m-auto text-center border-b border-gray-500">
+                                    <td x-show="toggleColumn('{{ $column }}')" class="m-auto px-6 py-8 text-center border-b border-gray-500">
                                         @if ($column === 'Category')
                                         <span class="px-2.5 py-1 text-xs font-medium text-blue-800 whitespace-nowrap bg-{{ $record->category_color }}-100 rounded-full">{{ $record->category_name }}</span>
                                         @elseif ($column === 'Date Created')
@@ -370,7 +382,7 @@
                                     {{-- Data Columns END --}}
 
                                     {{-- Action Column START --}}
-                                    <td x-show="toggleColumn('Action')" class="text-sm border-b border-gray-500">
+                                    <td x-show="toggleColumn('Action')" class="px-6 py-8 text-sm border-b border-gray-500">
                                         <div class="flex items-center px-8 space-x-6">
                                             @if ($record->trashed())
                                             {{-- Restore Button START --}}
@@ -408,16 +420,16 @@
                                             {{-- Permanent Delete Button END --}}
                                             @else
                                             {{-- View Button START --}}
-                                            <a data-tooltip-target="view-tooltip-{{ $loop->iteration }}" href="{{ route('posts.show', ['post' => $record->slug]) }}" class="group">
-                                                <svg class="text-primary-500 z-[-1] w-6 h-6 absolute invisible opacity-0 transition-opacity duration-300 ease-in-out dark:text-white group-hover:static group-hover:visible group-hover:opacity-100 md:w-8 md:h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                            <a wire:ignore data-tooltip-target="view-tooltip-{{ $loop->iteration }}" href="{{ route('posts.show', ['post' => $record->slug]) }}" class="relative group">
+                                                <svg class="text-primary-500 w-6 h-6 invisible opacity-0 transition-opacity duration-300 ease-in-out dark:text-white group-hover:visible group-hover:opacity-100 md:w-8 md:h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                                     <path fill-rule="evenodd" d="M4.998 7.78C6.729 6.345 9.198 5 12 5c2.802 0 5.27 1.345 7.002 2.78a12.713 12.713 0 0 1 2.096 2.183c.253.344.465.682.618.997.14.286.284.658.284 1.04s-.145.754-.284 1.04a6.6 6.6 0 0 1-.618.997 12.712 12.712 0 0 1-2.096 2.183C17.271 17.655 14.802 19 12 19c-2.802 0-5.27-1.345-7.002-2.78a12.712 12.712 0 0 1-2.096-2.183 6.6 6.6 0 0 1-.618-.997C2.144 12.754 2 12.382 2 12s.145-.754.284-1.04c.153-.315.365-.653.618-.997A12.714 12.714 0 0 1 4.998 7.78ZM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd"/>
                                                 </svg>
-                                                <svg class="text-primary-700 w-6 h-6 static visible block opacity-100 transition-opacity duration-300 ease-in-out dark:text-white group-hover:invinsible group-hover:z-[-1] group-hover:absolute group-hover:opacity-0 md:w-8 md:h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                                <svg class="text-primary-700 w-6 h-6 absolute bottom-0 visible opacity-100 transition-opacity duration-300 ease-in-out dark:text-white group-hover:invinsible group-hover:opacity-0 md:w-8 md:h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                                     <path stroke="#e1e2e3" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
                                                     <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                                                 </svg>
                                                 {{-- View Tooltip START --}}
-                                                <div id="view-tooltip-{{ $loop->iteration }}" data-tooltip-style="light" role="tooltip" class="bg-primary-500 tooltip absolute invisible z-10 inline-block px-3 py-2 text-sm font-semibold text-white rounded-lg shadow-sm opacity-0 transition-opacity duration-300 dark:bg-primary-700">
+                                                <div wire:ignore id="view-tooltip-{{ $loop->iteration }}" data-tooltip-style="light" role="tooltip" class="bg-primary-500 tooltip absolute invisible z-10 inline-block px-3 py-2 text-sm font-semibold text-white rounded-lg shadow-sm opacity-0 transition-opacity duration-300 dark:bg-primary-700">
                                                     View
                                                     <div class="tooltip-arrow" data-popper-arrow></div>
                                                 </div>
@@ -478,7 +490,7 @@
                 {{-- Table Data END --}}
 
                 {{-- Table Pagination START --}}
-                <div class="mt-5">
+                <div wire:loading.class="invinsible" class="mt-5">
                     {{ $records->links(data: ['scrollTo' => '#tableMenu']) }}
                 </div>
                 {{-- Table Pagination END --}}
@@ -531,7 +543,7 @@
         </x-slot:footer>
     </x-modals.livewire-modal>
     {{-- Restore Modal END --}}
-
+    
     @push('scripts')
     <script src="{{ asset('JS/admin-posts.js') }}"></script>
     <x-livewire-alert::scripts />

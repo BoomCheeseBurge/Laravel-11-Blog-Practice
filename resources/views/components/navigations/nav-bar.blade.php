@@ -3,7 +3,7 @@
         <div class="h-16 flex justify-between items-center">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
-                    <img class="w-8 h-8" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+                    <img class="w-14 h-10" src="{{ asset('IMG/logo/book-logo-2.jpg') }}" alt="Logo">
                 </div>
                 <div class="hidden md:block">
                     <div class="flex items-baseline ml-10 space-x-4">
@@ -27,10 +27,16 @@
                         <div class="flex items-center">
                             <span class="text-boxdark-2 mr-3 text-base font-medium tracking-wider dark:text-white">{{ auth()->user()->username }}</span>
                             <button type="button" x-on:click="isOpen = !isOpen" x-on:click.outside="isOpen = false"
-                            class="max-w-xs relative flex items-center text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                            class="max-w-xs relative flex items-center text-sm rounded-full focus:ring-offset-primary-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                 <span class="-inset-1.5 absolute"></span>
                                 <span class="sr-only">Open user menu</span>
-                                <img class="w-9 h-9 rounded-full" src="{{ asset('IMG/default/default_user.png') }}" alt="Default Profile Image">
+                                @if (auth()->user()->profile_pic)
+                                <img src="{{ Storage::disk('profile')->url(auth()->user()->profile_pic) }}" alt="{{ auth()->user()->username }} Profile Picture" class="w-10 h-10 rounded-full md:w-12 md:h-12">
+                                @else
+                                <div class="text-primary-500 p-3 text-lg font-semibold tracking-widest bg-slate-100 rounded-full border border-slate-300 dark:border-none">
+                                {{ strtoupper(implode('', array_map(fn($n) => $n[0], array_slice(explode(' ', auth()->user()->fullname), 0, 2)))); }}
+                                </div>
+                                @endif
                             </button>
                         </div>
 
@@ -130,7 +136,13 @@
             <div class="flex justify-between pr-8">
                 <div class="flex items-center px-5">
                     <div class="flex-shrink-0">
-                        <img class="h-15 w-15 rounded-full" src="{{ asset('IMG/default/default_user.png') }}" alt="Default Profile Image">
+                        @if (auth()->user()->profile_pic)
+                        <img src="{{ Storage::disk('profile')->url(auth()->user()->profile_pic) }}" alt="{{ auth()->user()->username }} Profile Picture" class="h-15 w-15 rounded-full">
+                        @else
+                        <div class="text-primary-500 p-3 text-lg font-semibold tracking-widest bg-slate-100 rounded-full border border-slate-300 dark:border-none">
+                        {{ strtoupper(implode('', array_map(fn($n) => $n[0], array_slice(explode(' ', auth()->user()->fullname), 0, 2)))); }}
+                        </div>
+                        @endif
                     </div>
                     <div class="ml-3 space-y-1">
                         <div class="text-boxdark-2 text-base font-medium tracking-widest leading-none dark:text-white">{{ auth()->user()->username }}</div>

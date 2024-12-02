@@ -15,7 +15,13 @@
                     {{-- Post Info START --}}
                     <address class="flex items-center my-10 not-italic">
                         <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-                            <img class="w-12 h-12 mr-4 rounded-full lg:w-16 lg:h-16 md:w-14 md:h-14" src="{{ asset('IMG/default/default_user.png') }}" alt="{{ $post->author->fullname }}">
+                            @if ($post->author->profile_pic)
+                            <img src="{{ Storage::disk('profile')->url($post->author->profile_pic) }}" alt="{{ $post->author->username }} Profile Picture" class="w-12 h-12 mr-4 rounded-full lg:w-16 lg:h-16 md:w-14 md:h-14">
+                            @else
+                            <div class="text-primary-500 p-2 mr-2 text-lg font-semibold tracking-widest bg-slate-100 rounded-full border border-slate-300 dark:border-none">
+                            {{ strtoupper(implode('', array_map(fn($n) => $n[0], array_slice(explode(' ', $post->author->fullname), 0, 2)))); }}
+                            </div>
+                            @endif
                             <div>
                                 <a href="{{ route('user.account', ['user' => $post->author->username]) }}" rel="author" class="text-xl font-bold text-gray-900 dark:text-white">{{ $post->author->fullname }}</a>
                                 <p class="mt-1.5 mb-1 text-base text-gray-700 dark:text-gray-400"><time pubdate datetime="{{ $post->created_at }}" title="{{ $post->created_at->format('F j, Y') }}">{{ $post->created_at->format('F j, Y') }}</time></p>
@@ -42,12 +48,13 @@
 
                 <h1 class="mt-8 mb-4 text-3xl font-extrabold leading-tight text-gray-900 dark:text-white lg:mb-6 lg:text-4xl">{{ $post['title'] }}</h1>
 
-                {{-- Post Featured Image --}}
+                {{-- Post Featured Image START --}}
                 @if ($post->featured_image)
-                <img src="{{ Storage::disk('posts')->url($post->featured_image) }}" alt="Post Featured Image" class="aspect-16/9">
+                <img src="{{ Storage::disk('posts')->url($post->featured_image) }}" alt="{{ $post->title }}'s Featured Image" class="aspect-16/9">
                 @else
                 <img src="{{ Storage::disk('categories')->url($post->category->image) }}" alt="Default Featured Image" class="w-full h-3/5 lg:mx-auto lg:w-4/5">
                 @endif
+                {{-- Post Featured Image END --}}
             </header>
 
             <p class="dark:text-slate-300">{!! $post->body !!}</p>
@@ -66,19 +73,28 @@
   <aside aria-label="Related Articles" class="py-8 bg-slate-100 dark:bg-gray-800 lg:py-24">
     <div class="mx-auto max-w-screen-xl px-8">
         <h2 class="mb-8 text-2xl font-bold text-gray-900 dark:text-white">Related Posts</h2>
-        <div class="grid gap-12 lg:grid-cols-4 sm:grid-cols-2">
-            <article class="max-w-xs">
-                <a href="#">
-                    <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-1.png" class="mb-5 rounded-lg" alt="Image 1">
-                </a>
+        <div class="grid gap-5 lg:grid-cols-4 sm:grid-cols-2">
+            @forelse ($related as $post)
+            <article class="max-w-xs box-border px-8 py-4 rounded-md border border-slate-300 dark:border-none">
+                {{-- Post Featured Image START --}}
+                @if ($post->featured_image)
+                <img src="{{ Storage::disk('posts')->url($post->featured_image) }}" alt="{{ $post->title }}'s Featured Image" class="mb-5 rounded-lg">
+                @else
+                <img src="{{ Storage::disk('categories')->url($post->category->image) }}" alt="Default Featured Image" class="mb-5 rounded-lg">
+                @endif
+                {{-- Post Featured Image END --}}
                 <h2 class="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
-                    <a href="#">Our first office</a>
+                    {{ $post->title }}
                 </h2>
-                <p class="mb-4 text-gray-500 dark:text-gray-400">Over the past year, Volosoft has undergone many changes! After months of preparation.</p>
-                <a href="#" class="text-primary-600 inline-flex items-center font-medium underline underline-offset-4 dark:text-primary-500 hover:no-underline">
-                    Read in 2 minutes
+                <p class="mb-4 text-gray-500 dark:text-gray-400">{{ Str::limit(strip_tags($post['body']), 50) }}</p>
+                <a href="/posts/{{ $post->slug }}" class="text-primary-600 inline-flex items-center font-medium underline underline-offset-4 dark:text-primary-500 hover:no-underline">
+                    Read here!
                 </a>
             </article>
+            @empty
+            <div>No Posts in this Category yet...</div>
+            @endforelse
+
         </div>
     </div>
   </aside>

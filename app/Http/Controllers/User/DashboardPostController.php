@@ -25,6 +25,11 @@ class DashboardPostController extends Controller
      */
     public function index(): View
     {
+        // Check if the user can access this resource
+        if (auth()->user()->cannot('viewAny', Post::class)) {
+            abort(403);
+        }
+
         $userPosts = Auth::user()->posts(); // Base Eloquent query
 
         // Check for a search keyword input
@@ -60,6 +65,9 @@ class DashboardPostController extends Controller
      */
     public function create(): View
     {
+        // Check if the user can perform this action through policy 
+        auth()->user()->can('create', Post::class);
+                
         return view('dashboard.posts.create', [
             'title' => 'Dashboard',
             'subTitle' => 'Create Post',
@@ -72,7 +80,7 @@ class DashboardPostController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request): RedirectResponse
-    {
+    {        
         $validatedData = $request->validate([
             'title' => ['required', 'max:100', new Title],
             'slug' => 'required | unique:posts',
@@ -107,14 +115,11 @@ class DashboardPostController extends Controller
      */
     public function show(Post $post): View
     {
-        if(!auth()->user()->is_admin)
-        {
-            if(($post->author->id !== auth()->user()->id))
-            {
-                abort(403);
-            }
+        // Check if the user can access this resource
+        if (auth()->user()->cannot('view', Post::class)) {
+            abort(403);
         }
-
+        
         return view('dashboard.posts.show', [
             'title' => 'Single Post',
             'page' => 'singlePost',
@@ -127,12 +132,9 @@ class DashboardPostController extends Controller
      */
     public function edit(Post $post): View
     {
-        if(!auth()->user()->is_admin)
-        {
-            if(($post->author->id !== auth()->user()->id))
-            {
-                abort(403);
-            }
+        // Check if the user can perform this action through policy 
+        if (auth()->user()->cannot('update', $post)) {
+            abort(403);
         }
 
         return view('dashboard.posts.edit', [
@@ -149,12 +151,9 @@ class DashboardPostController extends Controller
      */
     public function update(Request $request, Post $post): RedirectResponse
     {
-        if(!auth()->user()->is_admin)
-        {
-            if(($post->author->id !== auth()->user()->id))
-            {
-                abort(403);
-            }
+        // Check if the user can perform this action through policy 
+        if (auth()->user()->cannot('update', $post)) {
+            abort(403);
         }
 
        $validatedData = $request->validate([
@@ -204,12 +203,15 @@ class DashboardPostController extends Controller
      */
     public function destroy(Post $post): RedirectResponse
     {
-        if(!auth()->user()->is_admin)
+        // Check if the user can perform this action through policy 
+        if (auth()->user()->cannot('forceDelete', $post)) {
+            abort(403);
+        }
+
+        // Check if the post has any related comments
+        if(!is_null($post->comments()->withTrashed()->first()))
         {
-            if(($post->author->id !== auth()->user()->id))
-            {
-                abort(403);
-            }
+            return to_route('posts.index')->with('fail', 'This post has comments!');
         }
 
         // Check if the current post has an existing featured image

@@ -1,6 +1,8 @@
 import defaultTheme from 'tailwindcss/defaultTheme'; // TailwindCSS now imports its theme by default
 import colors from 'tailwindcss/colors';
 
+const plugin = require('tailwindcss/plugin') // Import TailwindCSS plugin
+
 /** @type {import('tailwindcss').Config} */
 export default {
     darkMode: 'class',
@@ -346,6 +348,10 @@ export default {
                 d1: 'confd 0.75s ease-out infinite',
                 d2: 'confd 0.75s ease-out infinite',
                 d3: 'confd 0.75s ease-out infinite',
+
+                // Loading Spinner Grow
+                blink: 'blink 1s linear infinite, custom_bounce 0.8s linear infinite',
+                custom_bounce: 'custom_bounce 1s infinite',
             },
             keyframes: {
                 wobble: {
@@ -513,6 +519,20 @@ export default {
                       transform: 'translate(-10px, -46px) scale(0.5) rotate(230deg)',
                     },
                 },
+                //---------------------
+                // Loading Blink Keyframes
+                // --------------------
+                blink: { '50%': { opacity: '0' } },
+                custom_bounce: {
+                  '0%, 100%': {
+                      transform: 'none',
+                      animationTimingFunction: 'cubic-bezier(0.8,0,1,1)',
+                  },
+                  '50%': {
+                      transform: 'translateY(-75%)',
+                      animationTimingFunction: 'cubic-bezier(0,0,0.2,1)',
+                  },
+              },
             },
             aspectRatio: {
                 '16/9': '16 / 9',
@@ -523,6 +543,20 @@ export default {
     plugins: [
         require('flowbite/plugin'),
         require('flowbite-typography'),
+        plugin(function({ matchUtilities, theme }) {
+          matchUtilities(
+            {
+              "animation-delay": (value) => {
+                return {
+                  "animation-delay": value,
+                };
+              },
+            },
+            {
+              values: theme("transitionDelay"),
+            }
+          );
+        }),
     ],
     safelist: [
         // ------------------

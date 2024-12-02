@@ -15,8 +15,9 @@ class PostController extends Controller
         ]);
     }
 
-    public function show(string $slug): View
+    public function show(Post $post): View
     {
+        $post->load(['author', 'category']);
         /**
          * Using Eloquent, the 'find' method will find a record based on ID by default.
          * The solution is to use route model binding.
@@ -24,7 +25,11 @@ class PostController extends Controller
          */
         return view('post', [
             'title' => 'Single Post',
-            'post' => Post::where('slug', $slug)->with(['author', 'category'])->first(),
+            'post' => $post,
+            'related' => Post::whereHas('category', function ($query) use ($post) {
+                $query->where('id', $post->category_id);
+            })->where('id', '!=', $post->id)
+            ->latest()->limit(4)->get(),
         ]);
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
+use App\Models\Category;
 use App\Models\User;
-use App\Models\Comment;
 use Illuminate\Auth\Access\Response;
 
-class CommentPolicy
+class CategoryPolicy
 {
     /**
      * Perform pre-authorization checks.
@@ -14,7 +14,6 @@ class CommentPolicy
      */
     public function before(User $user, string $ability): bool|null
     {
-        // Check if the user is logged in
         if ($user->can('admin')) {
 
             return true; // Bypass all permissions below
@@ -28,15 +27,15 @@ class CommentPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return false;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Comment $comment): bool
+    public function view(User $user, Category $category): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -44,37 +43,29 @@ class CommentPolicy
      */
     public function create(User $user): bool
     {
-        return true;
-    }
-
-    /**
-     * Determine whether the user can create models.
-     */
-    public function dropdown(User $user, Comment $comment): bool
-    {
-        return $user->id === $comment->user_id;
+        return false;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Comment $comment): bool
+    public function update(User $user, Category $category): bool
     {
-        return  $user->id === $comment->user_id;
+        return false;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Comment $comment): bool
+    public function delete(User $user, Category $category): bool
     {
-        return  $user->id === $comment->user_id;
+        return false;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Comment $comment): bool
+    public function restore(User $user, Category $category): bool
     {
         return false;
     }
@@ -82,8 +73,8 @@ class CommentPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Comment $comment): bool
+    public function forceDelete(User $user, Category $category): bool
     {
-        return $user->id === $comment->user_id;
+        return false;
     }
 }

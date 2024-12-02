@@ -24,12 +24,9 @@ class AdminCategoryController extends Controller
      */
     public function index(): View
     {
-        if(!auth()->user()->is_admin)
-        {
-            if(($post->author->id !== auth()->user()->id))
-            {
-                abort(403);
-            }
+        // Check if the user can access this resource
+        if (auth()->user()->cannot('viewAny', Category::class)) {
+            abort(403);
         }
 
         // Store the available category colors (whether already used or not)
@@ -78,7 +75,10 @@ class AdminCategoryController extends Controller
      */
     public function create(): void
     {
-        //
+        // Check if the user can access this resource
+        if (auth()->user()->cannot('create', Category::class)) {
+            abort(403);
+        }
     }
 
     /**
@@ -86,8 +86,8 @@ class AdminCategoryController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        if(!auth()->user()->is_admin)
-        {
+        // Check if the user can perform this action through policy
+        if (auth()->user()->cannot('create', Category::class)) {
             abort(403);
         }
 
@@ -127,6 +127,11 @@ class AdminCategoryController extends Controller
      */
     public function show(Category $category): RedirectResponse
     {
+        // Check if the user can access this resource
+        if (auth()->user()->cannot('view', $category)) {
+            abort(403);
+        }
+        
         return to_route('blog.posts', ['category' => $category->slug]);
     }
 
@@ -143,8 +148,8 @@ class AdminCategoryController extends Controller
      */
     public function update(Request $request, Category $category, CheckSlug $checkSlug): RedirectResponse
     {
-        if(!auth()->user()->is_admin)
-        {
+        // Check if the user can perform this action through policy
+        if (auth()->user()->cannot('update', $category)) {
             abort(403);
         }
 
@@ -232,8 +237,8 @@ class AdminCategoryController extends Controller
      */
     public function destroy(Category $category): RedirectResponse
     {
-        if(!auth()->user()->is_admin)
-        {
+        // Check if the user can perform this action through policy
+        if (auth()->user()->cannot('delete', $category)) {
             abort(403);
         }
 

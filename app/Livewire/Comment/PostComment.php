@@ -47,6 +47,14 @@ class PostComment extends Component
     {
         $this->dispatch('reload-comments');
     }
+
+    /**
+     *  Returns the name of the Livewire pagination view to be used
+     */
+    public function paginationView()
+    {
+        return 'vendor.livewire.custom';
+    }
     
     #[On('render-comments')]
     public function render(): View

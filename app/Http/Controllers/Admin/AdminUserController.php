@@ -23,8 +23,8 @@ class AdminUserController extends Controller
      */
     public function index(): View
     {
-        if(!auth()->user()->is_admin)
-        {
+        // Check if the user can access this resource
+        if (auth()->user()->cannot('viewAny', User::class)) {
             abort(403);
         }
 
@@ -65,8 +65,8 @@ class AdminUserController extends Controller
      */
     public function create(): View
     {
-        if(!auth()->user()->is_admin)
-        {
+        // Check if the user can access this resource
+        if (auth()->user()->cannot('create', User::class)) {
             abort(403);
         }
 
@@ -82,8 +82,8 @@ class AdminUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        if(!auth()->user()->is_admin)
-        {
+        // Check if the user can perform this action through policy
+        if (auth()->user()->cannot('create', User::class)) {
             abort(403);
         }
 
@@ -125,6 +125,11 @@ class AdminUserController extends Controller
      */
     public function show(User $user): RedirectResponse
     {
+        // Check if the user can access this resource
+        if (auth()->user()->cannot('view', $user)) {
+            abort(403);
+        }
+        
         return to_route('user.account', ['user' => $user->username]);
     }
 
@@ -133,8 +138,8 @@ class AdminUserController extends Controller
      */
     public function edit(User $user): View
     {
-        if(!auth()->user()->is_admin)
-        {
+        // Check if the user can perform this action through policy
+        if (auth()->user()->cannot('update', $user)) {
             abort(403);
         }
 
@@ -151,8 +156,8 @@ class AdminUserController extends Controller
      */
     public function update(Request $request, User $user): RedirectResponse
     {
-        if(!auth()->user()->is_admin)
-        {
+        // Check if the user can perform this action through policy
+        if (auth()->user()->cannot('update', $user)) {
             abort(403);
         }
 
@@ -220,8 +225,8 @@ class AdminUserController extends Controller
      */
     public function destroy(User $user): RedirectResponse
     {
-        if(!auth()->user()->is_admin)
-        {
+        // Check if the user can perform this action through policy
+        if (auth()->user()->cannot('delete', $user)) {
             abort(403);
         }
 
@@ -241,8 +246,8 @@ class AdminUserController extends Controller
      */
     public function restore(User $user): RedirectResponse
     {
-        if(!auth()->user()->is_admin)
-        {
+        // Check if the user can perform this action through policy
+        if (auth()->user()->cannot('restore', $user)) {
             abort(403);
         }
 
@@ -257,8 +262,8 @@ class AdminUserController extends Controller
      */
     public function erase(User $user): RedirectResponse
     {
-        if(!auth()->user()->is_admin)
-        {
+        // Check if the user can perform this action through policy
+        if (auth()->user()->cannot('forceDelete', $user)) {
             abort(403);
         }
 

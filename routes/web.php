@@ -39,7 +39,7 @@ Route::get('/contact', function () {
 // Route to display a single post
 Route::get('/posts', [PostController::class, 'index'])->name('blog.posts');
 // Route to display list of posts
-Route::get('/posts/{slug}', [PostController::class, 'show']);
+Route::get('/posts/{post}', [PostController::class, 'show']);
 
 // Guest Middleware Group
 Route::middleware('guest')->group(function () {

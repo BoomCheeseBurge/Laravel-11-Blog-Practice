@@ -1,6 +1,6 @@
 <label
-:class="darkMode ? 'bg-primary-600 border-primary-500' : 'bg-stroke border-slate-300'"
-class="h-7.5 w-14 relative block m-0 rounded-full shadow-inner border">
+:class="darkMode ? 'bg-primary-700 border-primary-600 shadow-inner' : 'bg-stroke border-slate-300'"
+class="h-7.5 w-14 relative block m-0 rounded-full border shadow-inner">
     <input
     type="checkbox"
     :value="darkMode"

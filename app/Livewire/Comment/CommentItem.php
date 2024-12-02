@@ -9,6 +9,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Reactive;
 use Livewire\Attributes\Validate;
 use Illuminate\Database\Eloquent\Collection;
 
