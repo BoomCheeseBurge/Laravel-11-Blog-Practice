@@ -30,7 +30,7 @@ class DashboardPostController extends Controller
             abort(403);
         }
 
-        $userPosts = Auth::user()->posts(); // Base Eloquent query
+        $userPosts = Auth::user()->posts()->with('category'); // Base Eloquent query
 
         // Check for a search keyword input
         if(request()->has('search'))
@@ -167,7 +167,7 @@ class DashboardPostController extends Controller
         if ($request->hasFile('featured_image'))
         {
             // Check if the current post has an existing featured image
-            if(Storage::disk('posts')->exists($post->featured_image))
+            if($post->featured_image)
             {
                 // Delete the old featured image file
                 Storage::disk('posts')->delete($post->featured_image);
@@ -215,13 +215,17 @@ class DashboardPostController extends Controller
         }
 
         // Check if the current post has an existing featured image
-        if(Storage::disk('posts')->exists($post->featured_image))
-        {
-            // Delete the featured image file
-            Storage::disk('posts')->delete($post->featured_image);
-        }
+        // if($post->featured_image)
+        // {
+        //     // Delete the featured image file
+        //     Storage::disk('posts')->delete($post->featured_image);
+        // }
 
-        $post->forceDelete();
+        // Delete the likes on the post
+        // $post->likes()->detach();
+
+        // Soft delete the post from user deletion
+        $post->delete();
 
         return to_route('posts.index')->with('success', 'Post successfully deleted!');
     }

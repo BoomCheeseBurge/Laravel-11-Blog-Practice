@@ -1,6 +1,6 @@
-@props(['modalID', 'height', 'width'])
+@props(['modalID', 'height', 'width', 'position'])
 
-<div id="{{ $modalID }}" tabindex="-1" class="h-[calc(100%-1rem)] w-full max-h-full overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 hidden p-4 md:inset-0">
+<div id="{{ $modalID }}" data-modal-placement="top-right" tabindex="-1" class="h-[calc(100%-1rem)] w-full max-h-full overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 hidden p-4 md:inset-0">
     <div class="w-full {{ $height }} {{ $width }} relative">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">

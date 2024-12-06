@@ -150,43 +150,81 @@
                             x-transition:leave="transition ease-in duration-75"
                             x-transition:leave-start="transform opacity-100 scale-100"
                             x-transition:leave-end="transform opacity-0 scale-95"
-                            class="bg-boxdark-2 ring-black/5 w-fit absolute right-0 left-0 z-10 flex flex-col items-center mt-2 rounded-md ring-1 shadow-lg dark:bg-white focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                            class="bg-boxdark-2 ring-black/5 z-99 w-fit absolute right-0 left-0 flex flex-col items-center mt-2 rounded-md ring-1 shadow-lg dark:bg-white focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                                 <div class="w-full flex flex-col items-center px-3 py-2 space-y-4 md:space-y-2" role="none">
                                     <!-- Active: "bg-gray-100 text-gray-900 outline-none", Not Active: "text-gray-700" -->
 
                                     @if ($this->archive)
                                     {{-- Bulk Restoration START --}}
-                                    <button x-cloak type="button" x-on:click="$dispatch('show-modal', { name: 'restoreSelectedModal' })"
-                                        class="w-full px-4 py-3 text-base font-medium text-white bg-emerald-600 rounded-lg dark:bg-emerald-600 dark:focus:ring-emerald-900 dark:hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300 hover:bg-emerald-700 lg:text-sm lg:font-semibold">
+                                    <button data-modal-target="restoreSelectedModal" data-modal-toggle="restoreSelectedModal" class="w-full px-4 py-3 text-base font-medium text-white bg-emerald-600 rounded-lg dark:bg-emerald-600 dark:focus:ring-emerald-900 dark:hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300 hover:bg-emerald-700 lg:text-sm lg:font-semibold" type="button">
                                         Bulk Restore
                                     </button>
-                                    <x-modals.modal name="restoreSelectedModal" height="max-h-40" width="max-w-xs">
-                                        @slot('body')
-                                        Restore these posts to become active?
-                                        @endslot
-                                        @slot('footer')
-                                        <button wire:click="restoreSelected" x-on:click="show = false" type="button" class="px-5 py-2.5 me-2 text-sm font-medium text-white bg-green-700 rounded-lg dark:bg-green-600 dark:focus:ring-green-900 dark:hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 hover:bg-green-800">Confirm</button>
-                                        <button x-on:click="show = false" type="button" class="px-5 py-2.5 text-sm font-medium text-white bg-slate-800 rounded-lg border border-slate-600 dark:text-slate-900 dark:bg-white dark:border-slate-300 dark:focus:outline-none dark:focus:ring-slate-100 dark:hover:bg-slate-100 dark:hover:border-slate-600 focus:ring-4 focus:ring-slate-700 hover:bg-slate-700">Cancel</button>
-                                        @endslot
-                                    </x-modals.modal>
+
+                                    <div id="restoreSelectedModal" data-modal-placement="top-right" tabindex="-1" class="h-[calc(100%-1rem)] w-full max-h-full overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 hidden p-4 md:inset-0">
+                                        <div class="left-[40%] top-[20%] w-full max-w-xs max-h-40 relative">
+                                            <!-- Modal content -->
+                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                <!-- Modal header -->
+                                                <div class="flex justify-between items-center p-4 rounded-t border-b dark:border-gray-600 md:p-5">
+                                                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">
+                                                    </h3>
+                                                    <button type="button" class="ms-auto w-8 h-8 inline-flex justify-center items-center text-sm text-gray-400 bg-transparent rounded-lg dark:hover:text-white dark:hover:bg-gray-600 hover:text-gray-900 hover:bg-gray-200" data-modal-hide="restoreSelectedModal">
+                                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                        </svg>
+                                                        <span class="sr-only">Close modal</span>
+                                                    </button>
+                                                </div>
+                                                <!-- Modal body -->
+                                                <div class="p-4 space-y-4 text-center md:p-5">
+                                                    Restore these posts to become active?
+                                                </div>
+                                                <!-- Modal footer -->
+                                                <div class="flex justify-center items-center p-4 rounded-b border-t border-gray-200 dark:border-gray-600 md:p-5">
+                                                    <button wire:click="restoreSelected" data-modal-hide="restoreSelectedModal" type="button" class="px-5 py-2.5 me-2 text-sm font-medium text-white bg-green-700 rounded-lg dark:bg-green-600 dark:focus:ring-green-900 dark:hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 hover:bg-green-800">Confirm</button>
+                                                    <button data-modal-hide="restoreSelectedModal" type="button" class="px-5 py-2.5 text-sm font-medium text-white bg-slate-800 rounded-lg border border-slate-600 dark:text-slate-900 dark:bg-white dark:border-slate-300 dark:focus:outline-none dark:focus:ring-slate-100 dark:hover:bg-slate-100 dark:hover:border-slate-600 focus:ring-4 focus:ring-slate-700 hover:bg-slate-700">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     {{-- Bulk Restoration END --}}
 
-                                    {{-- Bulk Remove START --}}
-                                    <button x-cloak type="button" x-on:click="$dispatch('show-modal', { name: 'editSelectedModal' })"
-                                            class="w-full px-4 py-3 text-base font-medium text-white bg-amber-600 rounded-lg dark:bg-amber-600 dark:focus:ring-amber-900 dark:hover:bg-amber-700 focus:outline-none focus:ring-4 focus:ring-amber-300 hover:bg-amber-700 lg:text-sm lg:font-semibold">
-                                            Bulk Remove
+                                    {{-- Bulk Erase START --}}
+                                    <button data-modal-target="deleteSelectedModal" data-modal-toggle="deleteSelectedModal" class="w-full px-4 py-3 text-base font-medium text-white bg-amber-600 rounded-lg dark:bg-amber-600 dark:focus:ring-amber-900 dark:hover:bg-amber-700 focus:outline-none focus:ring-4 focus:ring-amber-300 hover:bg-amber-700 lg:text-sm lg:font-semibold" type="button">
+                                        Bulk Remove
                                     </button>
-                                    <x-modals.modal name="deleteSelectedModal" height="max-h-40" width="max-w-xs">
-                                        @slot('body')
-                                        Permanently remove these posts?
-                                        @endslot
-                                        @slot('footer')
-                                        <button wire:click="deleteSelected" x-on:click="show = false" type="button" class="px-5 py-2.5 me-2 text-sm font-medium text-white bg-red-700 rounded-lg dark:bg-red-600 dark:focus:ring-red-900 dark:hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 hover:bg-red-800">Confirm</button>
-                                        <button x-on:click="show = false" type="button" class="px-5 py-2.5 text-sm font-medium text-white bg-slate-800 rounded-lg border border-slate-600 dark:text-slate-900 dark:bg-white dark:border-slate-300 dark:focus:outline-none dark:focus:ring-slate-100 dark:hover:bg-slate-100 dark:hover:border-slate-600 focus:ring-4 focus:ring-slate-700 hover:bg-slate-700">Cancel</button>
-                                        @endslot
-                                    </x-modals.modal>
-                                    {{-- Bulk Remove END --}}
+
+                                    <div id="deleteSelectedModal" data-modal-placement="top-right" tabindex="-1" class="h-[calc(100%-1rem)] w-full max-h-full overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 hidden p-4 md:inset-0">
+                                        <div class="left-[40%] top-[20%] w-full max-w-xs max-h-40 relative">
+                                            <!-- Modal content -->
+                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                <!-- Modal header -->
+                                                <div class="flex justify-between items-center p-4 rounded-t border-b dark:border-gray-600 md:p-5">
+                                                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">
+                                                    </h3>
+                                                    <button type="button" class="ms-auto w-8 h-8 inline-flex justify-center items-center text-sm text-gray-400 bg-transparent rounded-lg dark:hover:text-white dark:hover:bg-gray-600 hover:text-gray-900 hover:bg-gray-200" data-modal-hide="deleteSelectedModal">
+                                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                        </svg>
+                                                        <span class="sr-only">Close modal</span>
+                                                    </button>
+                                                </div>
+                                                <!-- Modal body -->
+                                                <div class="p-4 space-y-4 text-center md:p-5">
+                                                    Permanently remove these posts?
+                                                </div>
+                                                <!-- Modal footer -->
+                                                <div class="flex justify-center items-center p-4 rounded-b border-t border-gray-200 dark:border-gray-600 md:p-5">
+                                                    <button wire:click="deleteSelected" data-modal-hide="deleteSelectedModal" type="button" class="px-5 py-2.5 me-2 text-sm font-medium text-white bg-red-700 rounded-lg dark:bg-red-600 dark:focus:ring-red-900 dark:hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 hover:bg-red-800">Confirm</button>
+                                                    <button data-modal-hide="deleteSelectedModal" type="button" class="px-5 py-2.5 text-sm font-medium text-white bg-slate-800 rounded-lg border border-slate-600 dark:text-slate-900 dark:bg-white dark:border-slate-300 dark:focus:outline-none dark:focus:ring-slate-100 dark:hover:bg-slate-100 dark:hover:border-slate-600 focus:ring-4 focus:ring-slate-700 hover:bg-slate-700">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- Bulk Erase END --}}
+
                                     @else
+
                                     {{-- Bulk Deletion START --}}
                                     <button x-cloak type="button" x-on:click="$dispatch('show-modal', { name: 'removeSelectedModal' })"
                                         class="w-full px-4 py-3 text-base font-medium text-white bg-red-600 rounded-lg dark:bg-red-600 dark:focus:ring-red-900 dark:hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 hover:bg-red-700 lg:text-sm lg:font-semibold">
@@ -197,8 +235,8 @@
                                         Are you sure?
                                         @endslot
                                         @slot('footer')
-                                        <button wire:click="removeSelected" x-on:click="show = false" type="button" class="px-5 py-2.5 me-2 text-sm font-medium text-white bg-red-700 rounded-lg dark:bg-red-600 dark:focus:ring-red-900 dark:hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 hover:bg-red-800">Confirm</button>
-                                        <button x-on:click="show = false" type="button" class="px-5 py-2.5 text-sm font-medium text-white bg-slate-800 rounded-lg border border-slate-600 dark:text-slate-900 dark:bg-white dark:border-slate-300 dark:focus:outline-none dark:focus:ring-slate-100 dark:hover:bg-slate-100 dark:hover:border-slate-600 focus:ring-4 focus:ring-slate-700 hover:bg-slate-700">Cancel</button>
+                                        <button wire:click="removeSelected" x-on:click="$dispatch('hide-modal')" type="button" class="px-5 py-2.5 me-2 text-sm font-medium text-white bg-red-700 rounded-lg dark:bg-red-600 dark:focus:ring-red-900 dark:hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 hover:bg-red-600">Confirm</button>
+                                        <button x-on:click="$dispatch('hide-modal')" type="button" class="px-5 py-2.5 text-sm font-medium text-white bg-slate-800 rounded-lg border border-slate-600 dark:text-slate-900 dark:bg-white dark:border-slate-300 dark:focus:outline-none dark:focus:ring-slate-100 dark:hover:bg-slate-200 dark:hover:border-slate-600 focus:ring-4 focus:ring-slate-700 hover:bg-slate-700">Cancel</button>
                                         @endslot
                                     </x-modals.modal>
                                     {{-- Bulk Deletion END --}}
@@ -220,8 +258,8 @@
                                         @endslot
                                         @slot('footer')
                                         <div class="space-x-3">
-                                            <button wire:click="editSelected" x-on:click="show = false" type="button" class="px-5 py-2.5 me-2 text-sm font-medium text-white bg-sky-800 rounded-lg dark:bg-sky-600 dark:focus:ring-sky-900 dark:hover:bg-sky-700 focus:outline-none focus:ring-4 focus:ring-sky-300 hover:bg-sky-700">Update</button>
-                                            <button x-on:click="show = false" type="button" class="px-5 py-2.5 text-sm font-medium text-white bg-red-800 rounded-lg border border-rose-600 dark:text-slate-900 dark:bg-red-500 dark:border-red-400 dark:focus:outline-none dark:focus:ring-red-500 dark:hover:bg-red-400 dark:hover:border-rose-600 focus:ring-4 focus:ring-red-700 hover:bg-red-700">Cancel</button>
+                                            <button wire:click="editSelected" x-on:click="$dispatch('hide-modal')" type="button" class="px-5 py-2.5 me-2 text-sm font-medium text-white bg-sky-700 rounded-lg dark:bg-sky-600 dark:focus:ring-sky-800 dark:hover:bg-sky-700 focus:outline-none focus:ring-4 focus:ring-sky-300 hover:bg-sky-600">Update</button>
+                                            <button x-on:click="$dispatch('hide-modal')" type="button" class="px-5 py-2.5 text-sm font-medium text-white bg-red-800 rounded-lg border border-rose-600 dark:bg-red-500 dark:border-red-400 dark:focus:outline-none dark:focus:ring-red-500 dark:hover:bg-red-700 dark:hover:border-rose-600 focus:ring-4 focus:ring-red-700 hover:bg-red-600">Cancel</button>
                                         </div>
                                         @endslot
                                     </x-modals.modal>
@@ -335,11 +373,11 @@
                     [&::-webkit-scrollbar-thumb]:bg-primary-600
                     dark:[&::-webkit-scrollbar-track]:bg-neutral-700
                     dark:[&::-webkit-scrollbar-thumb]:bg-slate-300">
-                    <div wire:loading.delay class="m-auto z-99 w-full h-full absolute right-0 left-0 flex justify-center items-center bg-gray-50 border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                        <div class="[&>.loading-dot]:animate-blink motion-reduce:[&>.loading-dot]:animate-blink text-6xl text-primary-500 [&>.loading-dot]:w-8 [&>.loading-dot]:h-8 [&>.loading-dot]:inline-block space-x-6 [&>.loading-dot]:bg-current [&>.loading-dot]:rounded-full [&>.loading-dot:nth-child(2)]:animation-delay-300 [&>.loading-dot:nth-child(3)]:animation-delay-500" role="status">Loading <div class="loading-dot animate-bounce"></div><div class="loading-dot"></div><div class="loading-dot"></div>
+                    <div wire:loading.delay wire:target.except="getAllRecords, getCurrentPageRecords, getPostSlug, getTrashedPost" class="z-99 w-full h-full absolute right-0 left-0 flex justify-center items-center bg-gray-50 border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                        <div class="[&>.loading-dot]:animate-blink motion-reduce:[&>.loading-dot]:animate-blink text-6xl text-primary-500 [&>.loading-dot]:w-8 [&>.loading-dot]:h-8 [&>.loading-dot]:inline-block space-x-6 [&>.loading-dot]:bg-current [&>.loading-dot]:rounded-full [&>.loading-dot:nth-child(2)]:animation-delay-300 [&>.loading-dot:nth-child(3)]:animation-delay-500 absolute top-0 mt-20 ml-[35%]" role="status">Loading <div class="loading-dot animate-bounce"></div><div class="loading-dot"></div><div class="loading-dot"></div>
                         </div>
                     </div>
-                    <table wire:loading.class="invinsible" class="min-w-full">
+                    <table wire:loading.class="invinsible" wire:target.except="getAllRecords, getCurrentPageRecords, getPostSlug, getTrashedPost" class="min-w-full">
                         {{-- Table Header START --}}
                         <x-tables.livewire-header id actions :headers="$columns" :sortDirection="$sortDirection" :sortHeader="$sortHeader" :currentPage="$records->currentPage()"></x-tables.livewire-header>
                         {{-- Table Header END --}}
@@ -543,6 +581,7 @@
         </x-slot:footer>
     </x-modals.livewire-modal>
     {{-- Restore Modal END --}}
+
     
     @push('scripts')
     <script src="{{ asset('JS/admin-posts.js') }}"></script>

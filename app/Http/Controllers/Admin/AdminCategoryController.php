@@ -243,7 +243,7 @@ class AdminCategoryController extends Controller
         }
 
         // Find if there is existing post(s) associated with the category
-        $match = Post::where('category_id', $category->id)->first();
+        $match = Post::whereFirst('category_id', $category->id);
 
         // Check if there was a match found from the query above
         if(isset($match))

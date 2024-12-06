@@ -25,9 +25,7 @@ class LikeButton extends Component
      */
     public function toggleLike()
     {    
-        $this->model->likes()->where('user_id', auth()->id())->exists() ?
-            $this->model->likes()->detach(auth()->id()):
-            $this->model->likes()->attach(auth()->id());
+        $this->model->likes()->toggle(auth()->id());
     }
 
     public function render()

@@ -12,29 +12,20 @@ use App\Http\Controllers\User\DashboardPostController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 
 // Route to homepage
-Route::get('/', function () {
-
-    return view('home', [
-        'title' => 'Home',
-        'categories' => Category::select(['name', 'slug', 'image'])->get(),
-    ]);
-})->name('home');
+Route::view('/', 'home', [
+    'title' => 'Home',
+    'categories' => Category::select(['name', 'slug', 'image'])->get(),
+])->name('home');
 
 // Route to about page
-Route::get('/about', function () {
-
-    return view('about', [
-        'title' => 'About',
-    ]);
-});
+Route::view('/about', 'about', [
+    'title' => 'About',
+]);
 
 // Route to contact page
-Route::get('/contact', function () {
-
-    return view('contact', [
-        'title' => 'Contact',
-    ]);
-});
+Route::view('/contact', 'contact', [
+    'title' => 'Contact',
+]);
 
 // Route to display a single post
 Route::get('/posts', [PostController::class, 'index'])->name('blog.posts');

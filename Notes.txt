@@ -1,36 +1,34 @@
 
-Added morph-map for the Category model in the enforceMorphMap() in the AppServiceProvider file.
+Fixed the archived section of admin posts due to the bulk modals not being opened.
+
+Changed from livewire modal to hardcoded flowbite modal without using the flowbite Blade component modal.
 
 ________________________________________________________________
 
-Added policies for user, post, category, and comment.
+Added conditions to check for existing comments related to the posts for single and bulk deletions.
 
-Assigned those policies to the corresponding controllers or Livewire components that can use those policies.
+If there are existing comments to those posts, then do not force delete those posts.
 
-________________________________________________________________
+Not sure whether cascade delete or even deleting the post along with the comments is a good approach (check the delete folder in the relationship folder for further info).
 
-Configured Eloquent Strictness in the AppServiceProvider file to prevent unintentional model attribute assignment or misassignment.
-
-________________________________________________________________
-
-Exported the pagination views to resources/views/vendor directory to be able to customize them.
-
-Designated a different file as the default pagination view, invoked the paginator's defaultView method within the boot method of the App\Providers\AppServiceProvider class.
-
-Published the Livewire's pagination views so that they can be modified to fit the application's style.
-
-Used custom pagination for both the default Laravel and Livewire's pagination views.
+Also, the posts and comments have likes which have to be deleted as well. 
 
 ________________________________________________________________
 
-Changed the navbar logo.
-
-Changed the ring-offset color of the user button on the nav-bar.
-
-Customized the scrollbar for tables in the dashboard page (not yet available in Firefox).
+Added Livewire loading target exceptions to not show the loading state for certain Livewire actions.
 
 ________________________________________________________________
 
-Added related posts to the single post view.
+Alternative to the toggle() method for the like button would be using attach and detach:
 
-Changed the default profile picture in the default navbar to the logged-in user's initials.
+        $this->model->likes()->where('user_id', auth()->id())->exists() ?
+            $this->model->likes()->detach(auth()->id()):
+            $this->model->likes()->attach(auth()->id());
+            
+________________________________________________________________
+
+User post deletion will be soft deleted.
+
+________________________________________________________________
+
+Replaced the get routes of some routes with View routes to make the route more concise.

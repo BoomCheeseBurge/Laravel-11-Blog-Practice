@@ -63,7 +63,7 @@ class Comment extends Model
      */
     public function isLiked(): bool
     {
-        $like = $this->likes()->where('user_id', auth()->id())->first();
+        $like = $this->likes()->whereFirst('user_id', auth()->id());
 
         return !is_null($like) ? true : false;
     }

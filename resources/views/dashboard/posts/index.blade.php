@@ -23,6 +23,11 @@
     <x-messages.dismissal-success :message="session('success')" class="mb-4"></x-messages.dismissal-success>
     @endif
 
+    {{-- ------------------------------------ Failed Message ------------------------------------ --}}
+    @if (session()->has('fail'))
+    <x-messages.dismissal-error :message="session('fail')" class="mb-4"></x-messages.dismissal-error>
+    @endif
+
     <!-- ====== Table Section Start -->
     <div x-data="{
             dropdownOpen: false,
@@ -210,7 +215,7 @@
                                         </div>
                                     </a>
                                     {{-- ================================================= DELETE BUTTON ================================================= --}}
-                                    <button data-modal-target="deleteModal" data-modal-toggle="deleteModal" data-tooltip-target="delete-tooltip-{{ $loop->iteration }}" type="button" class="pb-4.5 relative flex flex-col items-center text-rose-500 group dark:text-rose-300 focus:outline-none focus:ring-0" onclick="insertIdentifier('{{ $post->slug }}', 'posts', 'destroy')">
+                                    <button data-modal-target="destroyModal" data-modal-toggle="destroyModal" data-tooltip-target="delete-tooltip-{{ $loop->iteration }}" type="button" class="pb-4.5 relative flex flex-col items-center text-rose-500 group dark:text-rose-300 focus:outline-none focus:ring-0" onclick="insertIdentifier('{{ $post->slug }}', 'posts', 'destroy')">
                                         <svg class="w-5 h-5 transition-transform group-hover:rotate-45 group-hover:translate-x-1" width="24" height="24" viewBox="0.016 0 26.039 10.05" version="1.1" xmlns="http://www.w3.org/2000/svg">
                                             <title>trash</title><desc>Created with Sketch Beta.</desc><g id="trash-lid" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="Icon-Set" transform="translate(-259.000000, -203.000000)" fill="currentColor"><path d="M 282 211 L 262 211 C 261.448 211 261 210.553 261 210 C 261 209.448 261.448 209 262 209 L 282 209 C 282.552 209 283 209.448 283 210 C 283 210.553 282.552 211 282 211 Z M 281 213 L 263 213 L 281 213 Z M 269 206 C 269 205.447 269.448 205 270 205 L 274 205 C 274.552 205 275 205.447 275 206 L 275 207 L 269 207 L 269 206 Z M 283 207 L 277 207 L 277 205 C 277 203.896 276.104 203 275 203 L 269 203 C 267.896 203 267 203.896 267 205 L 267 207 L 261 207 C 259.896 207 259 207.896 259 209 L 259 211 C 259 212.104 259.896 213 261 213 L 283 213 C 284.104 213 285 212.104 285 211 L 285 209 C 285 207.896 284.104 207 283 207 Z" id="trash-1"></path></g></g>
                                         </svg>
@@ -250,13 +255,13 @@
     <!-- -------------------------------------------------------------------------------------------------- -->
 
     {{-- Delete Modal START --}}
-    <div id="deleteModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="h-[calc(100%-1rem)] w-full max-h-full overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 hidden justify-center items-center md:inset-0">
+    <div id="destroyModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="h-[calc(100%-1rem)] w-full max-h-full overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 hidden justify-center items-center md:inset-0">
         <div class="w-full max-w-sm max-h-full relative p-4">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                 <!-- Modal header -->
                 <div class="flex justify-between items-center p-2 rounded-t border-b dark:border-gray-600 md:p-3">
-                    <button type="button" class="ms-auto w-8 h-8 inline-flex justify-center items-center text-sm text-gray-400 bg-transparent rounded-lg dark:hover:text-white dark:hover:bg-gray-600 hover:text-gray-900 hover:bg-gray-200" data-modal-hide="deleteModal">
+                    <button type="button" class="ms-auto w-8 h-8 inline-flex justify-center items-center text-sm text-gray-400 bg-transparent rounded-lg dark:hover:text-white dark:hover:bg-gray-600 hover:text-gray-900 hover:bg-gray-200" data-modal-hide="destroyModal">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
@@ -274,11 +279,11 @@
                     <form id="deletionModalForm" action="#" method="POST">
                         @method('DELETE')
                         @csrf
-                        <button data-modal-hide="deleteModal" type="submit" class="px-5 py-2.5 text-sm font-semibold text-center text-white bg-blue-700 rounded-lg border border-blue-200 dark:bg-blue-800 dark:border-blue-600 dark:focus:ring-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 hover:bg-blue-800">
+                        <button data-modal-hide="destroyModal" type="submit" class="px-5 py-2.5 text-sm font-semibold text-center text-white bg-blue-700 rounded-lg border border-blue-200 dark:bg-blue-800 dark:border-blue-600 dark:focus:ring-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 hover:bg-blue-800">
                             Confirm
                         </button>
                     </form>
-                    <button data-modal-hide="deleteModal" type="button" class="px-5 py-2.5 ms-3 text-sm font-semibold text-slate-200 bg-rose-700 rounded-lg border border-rose-200 dark:text-slate-300 dark:bg-rose-800 dark:border-rose-600 dark:focus:ring-rose-700 dark:hover:text-white dark:hover:bg-rose-600 focus:z-10 focus:outline-none focus:ring-4 focus:ring-rose-100 hover:text-slate-100 hover:bg-rose-800">
+                    <button data-modal-hide="destroyModal" type="button" class="px-5 py-2.5 ms-3 text-sm font-semibold text-slate-200 bg-rose-700 rounded-lg border border-rose-200 dark:text-slate-300 dark:bg-rose-800 dark:border-rose-600 dark:focus:ring-rose-700 dark:hover:text-white dark:hover:bg-rose-600 focus:z-10 focus:outline-none focus:ring-4 focus:ring-rose-100 hover:text-slate-100 hover:bg-rose-800">
                         Cancel
                     </button>
                 </div>

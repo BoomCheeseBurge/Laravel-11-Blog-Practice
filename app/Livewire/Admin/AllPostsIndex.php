@@ -10,6 +10,8 @@ use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Computed;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -208,7 +210,38 @@ class AllPostsIndex extends Component
      */
     public function deleteSelected(): void
     {
-        Post::whereIn('id', $this->selectedRecords)->forceDelete(); // Delete the selected posts
+        // Count the number of related models with existing comments
+        $count = Post::onlyTrashed()->whereHas('comments', fn($query) => $query->whereIn('comments.post_id', $this->selectedRecords))->count();
+
+        // Check whether there are existing comments with the related posts
+        if($count > 0)
+        {
+            $this->alert('error', 'These posts are associated with existing comments!', [
+                'position' => 'center',
+                'timer' => null,
+                'showCloseButton' => true,
+            ]);
+
+            return;
+        }
+
+        // Get the every posts' featured image
+        $postImages = Post::onlyTrashed()->whereIn('id', $this->selectedRecords)->pluck('featured_image')->toArray();
+
+        // Delete the featured image files from the posts if exist
+        foreach ($postImages as $value) {
+            
+            if(!is_null($value))
+            {
+                Storage::disks('posts')->delete($value);
+            }
+        }
+
+        // Delete the likes on the selected posts
+        Post::onlyTrashed()->whereIn('id', $this->selectedRecords)->likes()->detach();
+
+        // Delete the selected posts
+        Post::onlyTrashed()->whereIn('id', $this->selectedRecords)->forceDelete();
 
         /**
          * Reset all variables
@@ -311,6 +344,21 @@ class AllPostsIndex extends Component
      */
     public function deleteSinglePost(): void
     {
+        // Check if the post has any related comments
+        if(!is_null($this->selectedPost->comments()->withTrashed()->first()))
+        {
+            session()->flash('fail', 'This post has comments!');
+
+            return;
+        }
+
+        // Check if the current post has an existing featured image
+        if($this->selectedPost->featured_image)
+        {
+            // Delete the featured image file
+            Storage::disk('posts')->delete($this->selectedPost->featured_image);
+        }
+
         $this->selectedPost->forceDelete();
 
         session()->flash('success', 'Post permanently deleted!');

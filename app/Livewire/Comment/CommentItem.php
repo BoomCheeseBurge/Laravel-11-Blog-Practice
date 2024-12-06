@@ -9,7 +9,6 @@ use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\Reactive;
 use Livewire\Attributes\Validate;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -93,6 +92,9 @@ class CommentItem extends Component
                 $this->comment->save();
             }
         } else {
+            // Delete the likes on the comment
+            $this->comment->likes()->detach();
+
             $this->comment->forceDelete(); // Permanently delete the comment
         }
 

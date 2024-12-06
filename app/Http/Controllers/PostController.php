@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\View\View;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class PostController extends Controller
 {
@@ -18,6 +19,7 @@ class PostController extends Controller
     public function show(Post $post): View
     {
         $post->load(['author', 'category']);
+        
         /**
          * Using Eloquent, the 'find' method will find a record based on ID by default.
          * The solution is to use route model binding.
@@ -26,10 +28,11 @@ class PostController extends Controller
         return view('post', [
             'title' => 'Single Post',
             'post' => $post,
-            'related' => Post::whereHas('category', function ($query) use ($post) {
-                $query->where('id', $post->category_id);
-            })->where('id', '!=', $post->id)
-            ->latest()->limit(4)->get(),
+            'related' => Post::with('category')->whereHas('category', function ($query) use ($post) {
+                            $query->where('id', $post->category_id);
+                        })
+                        ->where('id', '!=', $post->id)
+                        ->latest()->limit(4)->get(),
         ]);
     }
 }
