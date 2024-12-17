@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-
 use App\Models\User;
+
 use App\Rules\Search;
-use App\Rules\Fullname;
-use App\Rules\MaxCharacter;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use Illuminate\View\View;
+use App\Traits\File\HasImage;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rules\Password;
-use Illuminate\View\View;
+use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 
 class AdminUserController extends Controller
 {
+    use HasImage;
+    
     /**
      * Display a listing of the resource.
      */
@@ -80,38 +80,21 @@ class AdminUserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreUserRequest $request): RedirectResponse
     {
-        // Check if the user can perform this action through policy
-        if (auth()->user()->cannot('create', User::class)) {
-            abort(403);
-        }
-
-        $validatedData = $request->validate([
-            'fullname' => ['required', 'max:255', new Fullname],
-            'username' => 'required | min:3 | max:255 | unique:users',
-            'email' => 'required | email:dns | unique:users',
-            'password' => ['required', 'confirmed:confirmPassword', 'max:255', Password::defaults()],
-            'profile_pic' => 'nullable | image | mimes:png,jpeg,jpg | max:1024',
-            'profile_cover' => 'nullable | image | mimes:png,jpeg,jpg | max:2048',
-            'about' => ['nullable', 'ascii', new MaxCharacter(200)],
-            'is_admin' => 'required',
-        ]);
+        // Retrieve the validated input data from the form request
+        $validatedData = $request->validated();
 
         // Check if there is an uploaded profile picture
         if ($request->hasFile('profile_pic'))
         {
-            $profile_pic = $request->file('profile_pic');
-
-            $validatedData['profile_pic'] = Storage::disk('profile')->putFileAs('/', $profile_pic, str()->uuid() . '.' . $profile_pic->extension() );
+            $validatedData['profile_pic'] = $this->uploadImage($request->file('profile_pic'), 'profile', str()->uuid());
         }
 
         // Check if there is an uploaded cover photo
         if ($request->hasFile('profile_cover'))
         {
-            $profile_cover = $request->file('profile_cover');
-
-            $validatedData['profile_cover'] = Storage::disk('cover')->putFileAs('/', $profile_cover, str()->uuid() . '.' . $profile_cover->extension() );
+            $validatedData['profile_cover'] = $this->uploadImage($request->file('profile_cover'), 'cover', str()->uuid());
         }
 
         // Create the post with the validated data above
@@ -154,37 +137,21 @@ class AdminUserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user): RedirectResponse
+    public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
-        // Check if the user can perform this action through policy
-        if (auth()->user()->cannot('update', $user)) {
-            abort(403);
-        }
-
-        $validatedData = $request->validate([
-            'fullname' => ['nullable', 'max:255', new Fullname],
-            'username' => ['nullable', 'min:3', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'email' => ['nullable', 'email:dns', Rule::unique('users')->ignore($user->id)],
-            'password' => ['nullable', 'confirmed:confirmPassword', 'max:255', Password::defaults()],
-            'profile_pic' => 'nullable | image | mimes:png,jpeg,jpg | max:1024',
-            'profile_cover' => 'nullable | image | mimes:png,jpeg,jpg | max:2048',
-            'about' => ['nullable', 'ascii', new MaxCharacter(200)],
-            'is_admin' => 'nullable',
-        ]);
+        // Retrieve the validated input data from the form request
+        $validatedData = $request->validated();
 
         if ($request->hasFile('profile_pic')) // Check if there is an uploaded profile cover
         {
             // Check if the current post has an existing featured image
             if(!is_null($user->profile_pic) && Storage::disk('profile')->exists($user->profile_pic))
             {
-                dd(Storage::disk('profile')->exists($user->profile_pic));
                 // Delete the old featured image file
                 Storage::disk('profile')->delete($user->profile_pic);
             }
 
-            $profile_pic = $request->file('profile_pic');
-
-            $validatedData['profile_pic'] = Storage::disk('profile')->putFileAs('/', $profile_pic, str()->uuid() . '.' . $profile_pic->extension() );
+            $validatedData['profile_pic'] = $this->uploadImage($request->file('profile_pic'), 'profile', str()->uuid());
         }
 
         if ($request->hasFile('profile_cover')) // Check if there is an uploaded profile cover
@@ -196,9 +163,7 @@ class AdminUserController extends Controller
                 Storage::disk('cover')->delete($user->profile_cover);
             }
 
-            $profile_cover = $request->file('profile_cover');
-
-            $validatedData['profile_cover'] = Storage::disk('cover')->putFileAs('/', $profile_cover, str()->uuid() . '.' . $profile_cover->extension() );
+            $validatedData['profile_cover'] = $this->uploadImage($request->file('profile_cover'), 'cover', str()->uuid());
         }
 
         $user->fullname = $validatedData['fullname'] ?? $user->fullname;

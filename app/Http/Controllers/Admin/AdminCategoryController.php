@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-
-use Closure;
 use App\Models\Post;
 use App\Rules\Search;
-use App\Rules\Fullname;
 use App\Models\Category;
 use Illuminate\View\View;
 use App\Actions\CheckSlug;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\Category\StoreCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
+use App\Traits\File\HasImage;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class AdminCategoryController extends Controller
 {
+    use HasImage;
+
     /**
      * Display a listing of the resource.
      */
@@ -84,37 +84,14 @@ class AdminCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreCategoryRequest $request): RedirectResponse
     {
-        // Check if the user can perform this action through policy
-        if (auth()->user()->cannot('create', Category::class)) {
-            abort(403);
-        }
-
-        // Store the available category colors (whether already used or not)
-        $colors = [
-            "slate", "gray", "zinc", "neutral", "stone",
-            "red", "orange", "amber", "yellow", "lime",
-            "green", "emerald", "teal", "cyan", "sky",
-            "blue", "indigo", "violet", "purple", "fuchsia",
-            "pink", "rose"
-        ];
-
-        $validatedData = $request->validate([
-            'name' => ['required', 'unique:categories', 'max:50', new Fullname],
-            'color' => [ 'required', Rule::unique('categories', 'color'), Rule::in($colors)],
-            'image' => 'required | image | file | max:1024',
-        ]);
-
-        $validatedData['slug'] = SlugService::createSlug(Category::class, 'slug', $validatedData['name']);
+        // Retrieve the validated input data from the form request
+        $validatedData = $request->validated();
 
         if ($request->hasFile('image'))
         {
-            $file = $request->file('image'); // Get the uploaded image file
-
-            Storage::disk('categories')->putFileAs('/', $file, $validatedData['slug'] . '.' . $file->extension() ); // Store the image file
-
-            $validatedData['image'] = $validatedData['slug'] . '.' . $file->extension(); // Store the category filename
+            $validatedData['image'] = $this->uploadImage($request->file('image'), 'categories', $validatedData['slug']);
         }
 
         Category::create($validatedData);
@@ -146,34 +123,10 @@ class AdminCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category, CheckSlug $checkSlug): RedirectResponse
+    public function update(UpdateCategoryRequest $request, Category $category, CheckSlug $checkSlug): RedirectResponse
     {
-        // Check if the user can perform this action through policy
-        if (auth()->user()->cannot('update', $category)) {
-            abort(403);
-        }
-
-        $validatedData = $request->validate([
-            'catName' => [ Rule::unique('categories', 'name')->ignore($category->id), 'max:50', new Fullname],
-            'catColor' => [ Rule::unique('categories', 'color')->ignore($category->id), function (string $attribute, mixed $value, Closure $fail) {
-
-                                // Store the available category colors (whether already used or not)
-                                $colors = [
-                                    "slate", "gray", "zinc", "neutral", "stone",
-                                    "red", "orange", "amber", "yellow", "lime",
-                                    "green", "emerald", "teal", "cyan", "sky",
-                                    "blue", "indigo", "violet", "purple", "fuchsia",
-                                    "pink", "rose"
-                                ];
-
-                                if (!in_array($value, $colors)) {
-
-                                    $fail("The value of {$attribute} is invalid.");
-                                }
-                            },
-                        ],
-            'image' => 'image | file | max:1024',
-        ]);
+        // Retrieve the validated input data from the form request
+        $validatedData = $request->validated();
 
         $category->name = $validatedData['catName'];
         $category->color = $validatedData['catColor'];
@@ -192,11 +145,7 @@ class AdminCategoryController extends Controller
                     Storage::disk('categories')->delete($category->image);
                 }
 
-                $file = $request->file('image'); // Get the uploaded image file
-
-                Storage::disk('categories')->putFileAs('/', $file, $validatedData['slug'] . '.' . $file->extension() ); // Store the image file
-
-                $category->image = $validatedData['slug'] . '.' . $file->extension(); // Store the category filename
+                $category->image = $this->uploadImage($request->file('image'), 'categories', $validatedData['slug']);
 
             } else {
 
@@ -215,11 +164,7 @@ class AdminCategoryController extends Controller
                 Storage::disk('categories')->delete($category->image);
             }
 
-            $file = $request->file('image'); // Get the uploaded image file
-            
-            Storage::disk('categories')->putFileAs('/', $file, $category->slug . '.' . $file->extension() ); // Store the image file
-
-            $category->image = $category->slug . '.' . $file->extension(); // Store the category filename
+            $category->image = $this->uploadImage($request->file('image'), 'categories', $validatedData['slug']);
         }
 
         $category->save();

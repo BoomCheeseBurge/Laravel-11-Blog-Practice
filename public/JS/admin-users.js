@@ -28,18 +28,18 @@ function match() {
     };
 
 // ================================ Check for Mismatch Password ================================
-const form = document.getElementById('registrationForm');
+// const form = document.getElementById('registrationForm');
 
-form.addEventListener('submit', (event) => {
+// form.addEventListener('submit', (event) => {
 
-  const password = document.getElementById('password').value;
-  const confirmPassword = document.getElementById('confirmPassword').value;
+//   const password = document.getElementById('password').value;
+//   const confirmPassword = document.getElementById('confirmPassword').value;
 
-  if (password !== confirmPassword) {
-    event.preventDefault();
-    alert('Passwords do not match. Please try again.');
-  }
-});
+//   if (password !== confirmPassword) {
+//     event.preventDefault();
+//     alert('Passwords do not match. Please try again.');
+//   }
+// });
 
 // ================================ Reset the file input values ================================
 document.addEventListener("DOMContentLoaded", (event) => {

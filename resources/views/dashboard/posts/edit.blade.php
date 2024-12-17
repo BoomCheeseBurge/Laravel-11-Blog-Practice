@@ -81,6 +81,9 @@
             <div x-data="{ fileExist: '{{ $post->featured_image ? Storage::disk('posts')->url($post->featured_image) : '' }}' }" class="mx-auto max-w-3xl px-5 pb-10">
                 {{-- Featured Image Input START --}}
                 <h3 class="mb-2 font-mono text-2xl font-bold text-gray-900 dark:text-slate-100">Featured Image</h3>
+                @error('featured_image')
+                <x-messages.error :message="$message"></x-messages.error>
+                @enderror
                 <div x-data="imageData(fileExist)" class="mb-15 items-center p-6 text-center text-gray-900 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:text-gray-400 dark:bg-gray-800 dark:border-gray-400">
                     <div x-show="previewUrl == ''">
                         <label for="featured_image" class="cursor-pointer">

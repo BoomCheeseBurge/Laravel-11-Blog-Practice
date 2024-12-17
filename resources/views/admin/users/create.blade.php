@@ -72,7 +72,7 @@
                     @enderror
                 </div>
                 {{-- ============================================================ Password Input ============================================================ --}}
-                <div>
+                <div class="relative">
                     <label for="password" class="text-graydark block mb-2 text-base font-medium dark:text-white md:text-md">Password</label>
                     <input type="password" id="password" name="password" class="bg-gray text-graydark w-full block p-2.5 rounded-lg dark:placeholder-gray-3 dark:text-white dark:bg-slate-700
                     @error('password')
@@ -93,7 +93,7 @@
                     @enderror
                 </div>
                 {{-- ============================================================ Confirm Password Input ============================================================ --}}
-                <div>
+                <div class="relative">
                     <label for="confirmPassword" class="text-graydark block mb-2 text-base font-medium dark:text-white md:text-md">Confirm Password</label>
                     <input type="password" id="confirmPassword" name="confirmPassword" class="bg-gray text-graydark w-full block p-2.5 rounded-lg dark:placeholder-gray-3 dark:text-white dark:bg-slate-700
                     @error('confirmPassword')
@@ -126,7 +126,7 @@
 
             <section class="grid gap-y-8 my-10 md:grid-cols-2 md:gap-x-16">
                 {{-- ============================================================ Username Input ============================================================ --}}
-                <div>
+                <div class="relative">
                     <label for="username" class="text-graydark block mb-2 text-base font-medium dark:text-white md:text-md">Username</label>
                     <input type="text" name="username" id="username" class="bg-gray text-graydark w-full block p-2.5 rounded-lg dark:placeholder-gray-3 dark:text-white dark:bg-slate-700
                     @error('username')

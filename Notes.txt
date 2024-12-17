@@ -1,34 +1,22 @@
 
-Fixed the archived section of admin posts due to the bulk modals not being opened.
-
-Changed from livewire modal to hardcoded flowbite modal without using the flowbite Blade component modal.
+Added form request classes for storing and updating posts, categories, and users.
 
 ________________________________________________________________
 
-Added conditions to check for existing comments related to the posts for single and bulk deletions.
+Created a modular form request rules for posts and users.
 
-If there are existing comments to those posts, then do not force delete those posts.
+There is an abstract form request class for each model that has a trait containing the base rules for the inherited form request classes.
 
-Not sure whether cascade delete or even deleting the post along with the comments is a good approach (check the delete folder in the relationship folder for further info).
-
-Also, the posts and comments have likes which have to be deleted as well. 
+The inherited form request classes can then inherit that abstract class and extend the rules in its own rules() method.
 
 ________________________________________________________________
 
-Added Livewire loading target exceptions to not show the loading state for certain Livewire actions.
+Created a trait for uploading image files.
 
 ________________________________________________________________
 
-Alternative to the toggle() method for the like button would be using attach and detach:
+Apparently, the default User model brought by a fresh Laravel installation has type casting set unto email_verified_at and password.
 
-        $this->model->likes()->where('user_id', auth()->id())->exists() ?
-            $this->model->likes()->detach(auth()->id()):
-            $this->model->likes()->attach(auth()->id());
-            
-________________________________________________________________
+In other words, every time the password has been validated, it will be automatically hashed afterwards before being saved into the database.
 
-User post deletion will be soft deleted.
-
-________________________________________________________________
-
-Replaced the get routes of some routes with View routes to make the route more concise.
+Hence, there is "technically" no need to hash the password in the controller.

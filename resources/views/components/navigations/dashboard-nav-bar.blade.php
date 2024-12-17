@@ -70,11 +70,11 @@ class="flex-grow shadow-2 flex justify-between items-center px-4 py-4 2xl:px-11 
                 </span>
             </span>
 
-            <span class="w-10 h-10 rounded-full md:w-12 md:h-12">
+            <span>
                 @if (auth()->user()->profile_pic)
-                <img src="{{ Storage::disk('profile')->url(auth()->user()->profile_pic) }}" alt="{{ auth()->user()->username }} Profile Picture">
+                <img class="w-10 h-10 rounded-full md:w-12 md:h-12" src="{{ Storage::disk('profile')->url(auth()->user()->profile_pic) }}" alt="{{ auth()->user()->username }} Profile Picture">
                 @else
-                <img src="{{ asset('IMG/default/default_user.png') }}" alt="Default Profile Image" />
+                <img class="w-10 h-10 rounded-full md:w-12 md:h-12" src="{{ asset('IMG/default/default_user.png') }}" alt="Default Profile Image" />
                 @endif
             </span>
 

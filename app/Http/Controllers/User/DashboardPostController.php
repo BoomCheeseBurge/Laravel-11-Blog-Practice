@@ -2,24 +2,26 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
-
 use App\Models\Post;
-use App\Rules\Title;
+
 use App\Rules\Search;
 use App\Models\Category;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use Illuminate\View\View;
+use App\Traits\File\HasImage;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
+use App\Http\Requests\Post\StorePostRequest;
+use App\Http\Requests\Post\UpdatePostRequest;
 use Cviebrock\EloquentSluggable\Services\SlugService;
-use Illuminate\Http\JsonResponse;
-use Illuminate\View\View;
 
 class DashboardPostController extends Controller
 {
+    use HasImage;
+    
     /**
      * Display a listing of the resource.
      */
@@ -65,8 +67,10 @@ class DashboardPostController extends Controller
      */
     public function create(): View
     {
-        // Check if the user can perform this action through policy 
-        auth()->user()->can('create', Post::class);
+        // Check if the user can perform this action through policy
+        if (auth()->user()->cannot('create', Post::class)) {
+            abort(403);
+        }
                 
         return view('dashboard.posts.create', [
             'title' => 'Dashboard',
@@ -79,26 +83,15 @@ class DashboardPostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StorePostRequest $request): RedirectResponse
     {        
-        $validatedData = $request->validate([
-            'title' => ['required', 'max:100', new Title],
-            'slug' => 'required | unique:posts',
-            'category_id' => 'required',
-            'body' => 'required',
-            'featured_image' => 'image | file | max:1024',
-        ]);
+        // Retrieve the validated input data from the form request
+        $validatedData = $request->validated();
 
         // Check if there is an uploaded featured image for the post
         if ($request->hasFile('featured_image'))
         {
-            $featured_image = $request->file('featured_image'); // Get the uploaded featured image
-
-            $uuid = str()->uuid(); // Generate UUID
-
-            Storage::disk('posts')->putFileAs('/', $featured_image, $uuid . '.' . $featured_image->extension() ); // Store the uploaded featured image
-            
-            $validatedData['featured_image'] = $uuid . '.' . $featured_image->extension(); // Store the featured image filename
+            $validatedData['featured_image'] = $this->uploadImage($request->file('featured_image'), 'posts', str()->uuid());
         }
 
         // Assign the authorized user ID who wrote the post
@@ -149,21 +142,12 @@ class DashboardPostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post): RedirectResponse
+    public function update(UpdatePostRequest $request, Post $post): RedirectResponse
     {
-        // Check if the user can perform this action through policy 
-        if (auth()->user()->cannot('update', $post)) {
-            abort(403);
-        }
+        // Retrieve the validated input data from the form request
+        $validatedData = $request->validated();
 
-       $validatedData = $request->validate([
-            'title' => ['required', 'max:255', new Title],
-            'slug' => ['required', Rule::unique('posts')->ignore($post->id)],
-            'category_id' => 'required',
-            'body' => 'required',
-            'featured_image' => 'image',
-        ]);
-
+        // Check if there is an uploaded featured image for the post
         if ($request->hasFile('featured_image'))
         {
             // Check if the current post has an existing featured image
@@ -173,13 +157,7 @@ class DashboardPostController extends Controller
                 Storage::disk('posts')->delete($post->featured_image);
             }
 
-            $featured_image = $request->file('featured_image');
-
-            $uuid = str()->uuid(); // Generate UUID
-
-            Storage::disk('posts')->putFileAs('/', $featured_image, $uuid . '.' . $featured_image->extension() ); // Store the uploaded featured image
-            
-            $validatedData['featured_image'] = $uuid . '.' . $featured_image->extension(); // Store the featured image filename
+            $validatedData['featured_image'] = $this->uploadImage($request->file('featured_image'), 'posts', str()->uuid());
         }
 
         $post->title = $validatedData['title'];
@@ -215,14 +193,14 @@ class DashboardPostController extends Controller
         }
 
         // Check if the current post has an existing featured image
-        // if($post->featured_image)
-        // {
-        //     // Delete the featured image file
-        //     Storage::disk('posts')->delete($post->featured_image);
-        // }
+        if($post->featured_image)
+        {
+            // Delete the featured image file
+            Storage::disk('posts')->delete($post->featured_image);
+        }
 
         // Delete the likes on the post
-        // $post->likes()->detach();
+        $post->likes()->detach();
 
         // Soft delete the post from user deletion
         $post->delete();
