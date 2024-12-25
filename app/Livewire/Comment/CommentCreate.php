@@ -14,14 +14,14 @@ class CommentCreate extends Component
     #[Locked]
     public Post $post;
     
-    #[Validate('required|min:3|max:200')]
+    #[Validate('required|min:3|max:100')]
     public string $comment;
 
     /**
      * Data passed into components is received through the mount() lifecycle hook as method parameters
      */
     public function mount(Post $post): void
-    {
+    {        
         $this->post = $post; // Assign the post model instance
     }
 

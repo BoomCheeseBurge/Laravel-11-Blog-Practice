@@ -91,7 +91,7 @@ class AdminCategoryController extends Controller
 
         if ($request->hasFile('image'))
         {
-            $validatedData['image'] = $this->uploadImage($request->file('image'), 'categories', $validatedData['slug']);
+            $validatedData['image'] = $this->uploadImage($request->file('image'), 'categories');
         }
 
         Category::create($validatedData);
@@ -188,10 +188,10 @@ class AdminCategoryController extends Controller
         }
 
         // Find if there is existing post(s) associated with the category
-        $match = Post::whereFirst('category_id', $category->id);
+        $match = Post::firstWhere('category_id', $category->id);
 
         // Check if there was a match found from the query above
-        if(isset($match))
+        if(!is_null($match))
         {
             // Return with the corresponding message
             return back()->with('fail', 'Category cannot be deleted due to existing post associations');

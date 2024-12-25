@@ -15,7 +15,7 @@
                         @isset($comment->user->profile_pic)
                             <img
                                 class="object-cover"
-                                src="{{ Storage::disks('profile')->url($comment->user->profile_pic) }}"
+                                src="{{ Storage::disk('profile')->url($comment->user->profile_pic) }}"
                                 alt="Default Profile Picture">
                         @else
                             <img
@@ -80,6 +80,7 @@
         </p>
         {{-- Comment Content END --}}
         
+        @can ('dropdown', $comment)
         {{-- Comment Edit START --}}
         <div x-cloak x-show="edit == 'edit-'+{{ $comment->id }}" class="flex flex-col mt-4">
             <textarea id="editInput-{{ $comment->id }}" wire:model="commentContent" rows="3" class="max-w-3xl mb-5 rounded-md dark:placeholder-white dark:text-white dark:bg-slate-500"></textarea>
@@ -89,11 +90,13 @@
             </div>
         </div>
         {{-- Comment Edit END --}}
+        @endcan
 
         {{-- Comment Actions START --}}
         <div class="flex justify-between mt-8">
             <div class="inline-flex justify-between items-center mr-3 md:mr-0">
                 <div class="flex justify-start items-center md:gap-5">
+                    @auth
                     {{-- Reply Action START --}}
                     <button id="replyButton-{{ $comment->id }}" x-cloak x-on:click="reply = 'reply-'+{{ $comment->id }}; onFocus('replyInput-{{ $comment->id }}')" type="button"
                         class="@if($comment->trashed()) pointer-events-none @endif flex items-center text-sm font-medium text-slate-500 dark:text-slate-400 hover:underline"
@@ -107,10 +110,10 @@
                     {{-- Reply Action END --}}
                     
                     {{-- Like Action START --}}
-                    @auth                            
+                    
                     <livewire:like-button :key="'likeComment-'.$count" :likeID="$count" :set_icon="false" :model="$comment"/>
-                    @endauth
                     {{-- Like Action END --}}
+                    @endauth
                 </div>
             </div>
             <div class="flex items-center space-x-2">
@@ -128,6 +131,7 @@
         </div>
         {{-- Comment Actions END --}}
 
+        @auth            
         {{-- Comment Reply START --}}
         <div x-cloak x-show="reply == 'reply-'+{{ $comment->id }}" class="flex flex-col mt-4">
             <textarea id="replyInput-{{ $comment->id }}" rows="3" wire:model="commentReply" class="max-w-3xl mb-5 rounded-md dark:placeholder-white dark:text-white dark:bg-slate-500" placeholder="Leave a reply..."></textarea>
@@ -137,6 +141,7 @@
             </div>
         </div>
         {{-- Comment Reply END --}}
+        @endauth
     </section>
 
     <!-- -------------------------------------------------------------------------------------------------------------------- -->

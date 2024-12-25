@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Storage;
 
 trait HasImage
 {
-    public function uploadImage(UploadedFile $file, string $name, string $fileName): string
+    public function uploadImage(UploadedFile $file, string $name): string
     {
         // Store the the uploaded featured image and its filename
-        return Storage::disk($name)->putFileAs('/', $file, $fileName . '.' . $file->extension() );
+        return Storage::disk($name)->putFileAs('/', $file, $file->hashName());
     }
 }
 

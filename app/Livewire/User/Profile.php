@@ -28,6 +28,11 @@ class Profile extends Component
      */
     public function mount(User $user): void
     {
+        if($user->username != auth()->user()->username)
+        {
+            abort(403);
+        }
+
         $this->form->setUser($user);
 
         // Set the phone number to be displayed

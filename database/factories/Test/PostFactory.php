@@ -23,11 +23,9 @@ class PostFactory extends Factory
         return [
             'slug' => Str::slug($title),
             'title' => $title,
-            'author_id' => User::factory(), // This will create a relation to exactly a single user for every generated post
-            'category_id' => Category::factory(), // This will create a relation to exactly a single category for every generated post
+            'author_id' => (string)rand(),
+            'category_id' => (string)rand(), // This will create a relation to exactly a single category for every generated post
             'body' => fake()->text(),
-            'created_at' => now(),
-            'updated_at' => now(),
         ];
     }
 }

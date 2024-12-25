@@ -60,7 +60,7 @@ class UpdateCategoryRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'slug' => SlugService::createSlug(Category::class, 'slug', $this->name),
+            'slug' => SlugService::createSlug(Category::class, 'slug', $this->catName),
         ]);
     }
 }

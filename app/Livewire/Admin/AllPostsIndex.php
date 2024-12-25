@@ -10,16 +10,16 @@ use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Computed;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
+use App\Traits\Livewire\WithAuthorization;
 use Illuminate\Database\Eloquent\Collection;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class AllPostsIndex extends Component
 {
-    use WithPagination, LivewireAlert;
+    use WithPagination, LivewireAlert, WithAuthorization;
 
     /**
      * Table Tools
@@ -91,7 +91,7 @@ class AllPostsIndex extends Component
     {
         if(!empty($this->search)) // Validate search keyword if exist
         {
-            if ((!preg_match_all('/^[\p{L}\p{M}\p{P}\d]+(?:\s[\p{L}\p{M}\p{P}\d]+)*$/', $this->search)) && (strlen($this->search) <= 100)) {
+            if ((!preg_match_all('/^[\p{L}\p{M}\p{P}\d]+(?:\s[\p{L}\p{M}\p{P}\d]+)*$/', $this->search)) || (strlen($this->search) > 100)) {
                 $this->search = '';
             }
         }
@@ -134,6 +134,8 @@ class AllPostsIndex extends Component
             : $this->sortDirection = 'asc'; // Default sort direction
 
         $this->sortHeader = $columnName;
+
+        return;
     }
 
     /**
@@ -157,6 +159,8 @@ class AllPostsIndex extends Component
             'timer' => null,
             'showCloseButton' => true,
         ]);
+
+        return;
     }
 
     /**
@@ -203,6 +207,8 @@ class AllPostsIndex extends Component
                         'timer' => null,
                         'showCloseButton' => true,
                     ]);
+
+        return;
     }
 
     /**
@@ -238,7 +244,10 @@ class AllPostsIndex extends Component
         }
 
         // Delete the likes on the selected posts
-        Post::onlyTrashed()->whereIn('id', $this->selectedRecords)->likes()->detach();
+        Post::onlyTrashed()->whereIn('id', $this->selectedRecords)->get()
+                            ->each(function ($post) {
+                                $post->likes()->detach(); // Detach likes from each post
+                            });
 
         // Delete the selected posts
         Post::onlyTrashed()->whereIn('id', $this->selectedRecords)->forceDelete();
@@ -257,6 +266,8 @@ class AllPostsIndex extends Component
             'timer' => null,
             'showCloseButton' => true,
         ]);
+
+        return;
     }
 
     /**
@@ -280,6 +291,8 @@ class AllPostsIndex extends Component
             'timer' => null,
             'showCloseButton' => true,
         ]);
+
+        return;
     }
 
     /**
@@ -325,6 +338,8 @@ class AllPostsIndex extends Component
         $this->selectedPost->delete();
 
         session()->flash('success', 'Post successfully removed! Check archived posts.');
+
+        return;
     }
 
     /**
@@ -337,6 +352,8 @@ class AllPostsIndex extends Component
         $this->archive = false;
 
         session()->flash('success', 'Post successfully restored!');
+
+        return;
     }
 
     /**
@@ -362,6 +379,8 @@ class AllPostsIndex extends Component
         $this->selectedPost->forceDelete();
 
         session()->flash('success', 'Post permanently deleted!');
+
+        return;
     }
 
     /**

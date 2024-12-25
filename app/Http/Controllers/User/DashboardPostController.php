@@ -91,9 +91,9 @@ class DashboardPostController extends Controller
         // Check if there is an uploaded featured image for the post
         if ($request->hasFile('featured_image'))
         {
-            $validatedData['featured_image'] = $this->uploadImage($request->file('featured_image'), 'posts', str()->uuid());
+            $validatedData['featured_image'] = $this->uploadImage($request->file('featured_image'), 'posts');
         }
-
+        
         // Assign the authorized user ID who wrote the post
         $validatedData['author_id'] = auth()->user()->id;
 
@@ -157,7 +157,7 @@ class DashboardPostController extends Controller
                 Storage::disk('posts')->delete($post->featured_image);
             }
 
-            $validatedData['featured_image'] = $this->uploadImage($request->file('featured_image'), 'posts', str()->uuid());
+            $validatedData['featured_image'] = $this->uploadImage($request->file('featured_image'), 'posts');
         }
 
         $post->title = $validatedData['title'];
@@ -203,7 +203,7 @@ class DashboardPostController extends Controller
         $post->likes()->detach();
 
         // Soft delete the post from user deletion
-        $post->delete();
+        $post->forceDelete();
 
         return to_route('posts.index')->with('success', 'Post successfully deleted!');
     }

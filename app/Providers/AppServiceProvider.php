@@ -57,6 +57,6 @@ class AppServiceProvider extends ServiceProvider
          * Throw an exception when attempting to fill an unfillable attribute
          * In other words, help prevent unexpected errors during local development when attempting to set an attribute that has not been added to the model's fillable array
          */
-        Model::preventSilentlyDiscardingAttributes(! $this->app->isProduction());
+        // Model::preventSilentlyDiscardingAttributes(! $this->app->isProduction());
     }
 }

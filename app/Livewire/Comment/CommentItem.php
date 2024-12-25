@@ -21,10 +21,10 @@ class CommentItem extends Component
     #[Locked]
     public Post $post;
 
-    #[Validate('required|min:3|max:200')]
+    #[Validate('required|min:3|max:100')]
     public string $commentContent;
 
-    #[Validate('required|min:3|max:200')]
+    #[Validate('required|min:3|max:100')]
     public string $commentReply;
 
     protected $listeners = [

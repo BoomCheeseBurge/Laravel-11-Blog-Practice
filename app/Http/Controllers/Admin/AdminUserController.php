@@ -88,13 +88,13 @@ class AdminUserController extends Controller
         // Check if there is an uploaded profile picture
         if ($request->hasFile('profile_pic'))
         {
-            $validatedData['profile_pic'] = $this->uploadImage($request->file('profile_pic'), 'profile', str()->uuid());
+            $validatedData['profile_pic'] = $this->uploadImage($request->file('profile_pic'), 'profile');
         }
 
         // Check if there is an uploaded cover photo
         if ($request->hasFile('profile_cover'))
         {
-            $validatedData['profile_cover'] = $this->uploadImage($request->file('profile_cover'), 'cover', str()->uuid());
+            $validatedData['profile_cover'] = $this->uploadImage($request->file('profile_cover'), 'cover');
         }
 
         // Create the post with the validated data above
@@ -169,7 +169,7 @@ class AdminUserController extends Controller
         $user->fullname = $validatedData['fullname'] ?? $user->fullname;
         $user->username = $validatedData['username'] ?? $user->username;
         $user->email = $validatedData['email'] ?? $user->email;
-        $user->password = $validatedData['password'] ? Hash::make($validatedData['password']) : $user->password;
+        $user->password = isset($validatedData['password']) ? Hash::make($validatedData['password']) : $user->password;
         $user->profile_pic = $validatedData['profile_pic'] ?? $user->profile_pic;
         $user->profile_cover = $validatedData['profile_cover'] ?? $user->profile_cover;
         $user->about = $validatedData['about'] ?? $user->about;
@@ -195,7 +195,8 @@ class AdminUserController extends Controller
             abort(403);
         }
 
-        if($user->is_admin === 1 && User::where('is_admin', 1)->count() === 1) // Check if there is only one admin user left
+        // Check if the to be delete user is admin and also check if there is only one admin user left
+        if($user->is_admin === 1 && User::where('is_admin', 1)->count() === 1)
         {
             return to_route('users.index')->with('fail', 'There must be at least one admin user!');
         }
@@ -233,14 +234,14 @@ class AdminUserController extends Controller
         }
 
         // Check if the user has a profile picture
-        if(Storage::disk('profile')->exists($user->profile_pic))
+        if($user->profile_pic && Storage::disk('profile')->exists($user->profile_pic))
         {
             // Delete the profile picture file
             Storage::disk('profile')->delete($user->profile_pic);
         }
 
         // Check if the user has a profile cover
-        if(Storage::disk('cover')->exists($user->profile_cover))
+        if($user->profile_cover && Storage::disk('cover')->exists($user->profile_cover))
         {
             // Delete the profile cover file
             Storage::disk('cover')->delete($user->profile_cover);

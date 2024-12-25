@@ -1,22 +1,38 @@
 
-Added form request classes for storing and updating posts, categories, and users.
+Created a separate .env file for testing where the content is copied over from the .env file used by this project.
+
+Copied and pasted the database.sqlite file for testing purposes.
+
+Updated the database.php config file to add another DB connection to the fake database.sqlite file for testing purposes.
 
 ________________________________________________________________
 
-Created a modular form request rules for posts and users.
-
-There is an abstract form request class for each model that has a trait containing the base rules for the inherited form request classes.
-
-The inherited form request classes can then inherit that abstract class and extend the rules in its own rules() method.
+Added an attribute for the 'Post' model to reformat the timestamp since the default timestamp stored in the database has extra values that do NOT match the timestamp stored in the variable of the created record.
 
 ________________________________________________________________
 
-Created a trait for uploading image files.
+Added a Gate authorization for checking admin access to the admin posts page that is placed in the mount() method.
 
 ________________________________________________________________
 
-Apparently, the default User model brought by a fresh Laravel installation has type casting set unto email_verified_at and password.
+Added a factory for Comment model.
 
-In other words, every time the password has been validated, it will be automatically hashed afterwards before being saved into the database.
+________________________________________________________________
 
-Hence, there is "technically" no need to hash the password in the controller.
+Fixed the user update controller method to check if the password validated data exist and not null.
+
+________________________________________________________________
+
+Since the profile Livewire component uses a Livewire form, the properties of the profile is defined there, not in the profile component itself.
+
+Hence, the current code in the test for the profile outputs the following error:
+
+     Unable to set component data. Public property [$about] not found on component: [user.profile]
+
+________________________________________________________________
+
+Placed authorization and authentication Blade directives to prevent non-authenticated users from seeing the comment edit form and comment reply form through page inspection.
+
+________________________________________________________________
+
+Finished creating tests (at least sufficient scenarios) for Authentication, Homepage, Blog Post, Dashboard Post, Admin Post, Admin Category, Admin User, Profile, and Comment.
