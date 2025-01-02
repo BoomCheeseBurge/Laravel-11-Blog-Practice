@@ -3,7 +3,7 @@
         <div class="h-16 flex justify-between items-center">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
-                    <img class="w-14 h-10" src="{{ asset('IMG/logo/book-logo-2.jpg') }}" alt="Logo">
+                    <img class="w-14 h-10 rounded-lg" src="{{ asset('IMG/logo/book-logo-2.jpg') }}" alt="Logo">
                 </div>
                 <div class="hidden md:block">
                     <div class="flex items-baseline ml-10 space-x-4">
@@ -59,7 +59,7 @@
                         x-transition:leave-end="opacity-0 scale-95"
                         class="ring-opacity-5 w-48 absolute right-0 z-10 py-1 mt-2 text-gray-700 bg-white rounded-md ring-1 ring-black shadow-lg origin-top-right dark:text-white dark:bg-gray-800 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                             <!-- Active: "bg-gray-100", Not Active: "" -->
-                            <a href="/dashboard" class="flex items-center gap-2 px-4 py-3 text-sm border-b border-slate-300 dark:hover:text-boxdark-2 hover:bg-slate-100" role="menuitem" tabindex="-1" id="user-menu-item-0">
+                            <a href="{{ route('dashboard.kanban') }}" class="flex items-center gap-2 px-4 py-3 text-sm border-b border-slate-300 dark:hover:text-boxdark-2 hover:bg-slate-100" role="menuitem" tabindex="-1" id="user-menu-item-0">
                                 <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.143 4H4.857A.857.857 0 0 0 4 4.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 10 9.143V4.857A.857.857 0 0 0 9.143 4Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 20 9.143V4.857A.857.857 0 0 0 19.143 4Zm-10 10H4.857a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286A.857.857 0 0 0 9.143 14Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286a.857.857 0 0 0-.857-.857Z"/>
                                 </svg>
@@ -71,7 +71,7 @@
                                 </svg>
                                 Profile
                             </a>
-                            <a href="#" class="flex items-center gap-2 px-4 py-3 text-sm border-b border-slate-300 dark:hover:text-boxdark-2 hover:bg-slate-100" role="menuitem" tabindex="-1" id="user-menu-item-2">
+                            <a href="{{ route('user.setting', ['user' => auth()->user()->username]) }}" class="flex items-center gap-2 px-4 py-3 text-sm border-b border-slate-300 dark:hover:text-boxdark-2 hover:bg-slate-100" role="menuitem" tabindex="-1" id="user-menu-item-2">
                                 <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13v-2a1 1 0 0 0-1-1h-.757l-.707-1.707.535-.536a1 1 0 0 0 0-1.414l-1.414-1.414a1 1 0 0 0-1.414 0l-.536.535L14 4.757V4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v.757l-1.707.707-.536-.535a1 1 0 0 0-1.414 0L4.929 6.343a1 1 0 0 0 0 1.414l.536.536L4.757 10H4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h.757l.707 1.707-.535.536a1 1 0 0 0 0 1.414l1.414 1.414a1 1 0 0 0 1.414 0l.536-.535 1.707.707V20a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.757l1.707-.708.536.536a1 1 0 0 0 1.414 0l1.414-1.414a1 1 0 0 0 0-1.414l-.535-.536.707-1.707H20a1 1 0 0 0 1-1Z"/>
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
@@ -100,10 +100,6 @@
                 </div>
             </div>
             <div class="-mr-2 flex items-center gap-12 md:hidden">
-                <!-- Dark Mode Toggler -->
-                <x-ui.toggle-dark-mode></x-ui.toggle-dark-mode>
-                <!-- Dark Mode Toggler -->
-
                 <!-- Mobile menu button -->
                 <button type="button" x-on:click="isOpen = !isOpen"
                 class="relative inline-flex justify-center items-center p-2 text-gray-200 bg-indigo-800 rounded-md dark:text-boxdark-2 dark:bg-slate-200 dark:focus:ring-offset-slate-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-800" aria-controls="mobile-menu" aria-expanded="false">
@@ -160,8 +156,9 @@
                 <!-- Dark Mode Toggler -->
             </div>
             <div class="px-2 mt-3 space-y-3">
+                <a href="{{ route('dashboard.kanban') }}" class="text-primary-600 block px-3 py-2 text-base font-medium rounded-md dark:text-slate-200 dark:hover:bg-gray-600 hover:text-primary-800 hover:bg-slate-300">Dashboard</a>
                 <a href="{{ route('user.profile', ['user' => auth()->user()->username]) }}" class="text-primary-600 block px-3 py-2 text-base font-medium rounded-md dark:text-slate-200 dark:hover:bg-gray-600 hover:text-primary-800 hover:bg-slate-300">Your Profile</a>
-                <a href="#" class="text-primary-600 block px-3 py-2 text-base font-medium rounded-md dark:text-slate-200 dark:hover:bg-gray-600 hover:text-primary-800 hover:bg-slate-300">Settings</a>
+                <a href="{{ route('user.setting', ['user' => auth()->user()->username]) }}" class="text-primary-600 block px-3 py-2 text-base font-medium rounded-md dark:text-slate-200 dark:hover:bg-gray-600 hover:text-primary-800 hover:bg-slate-300">Settings</a>
                 <form action="{{ route('login.out') }}" method="POST">
                     @csrf
                     <button type="submit" class="w-full block px-3 py-2 text-base font-medium text-slate-600 rounded-md group dark:text-slate-300 dark:hover:text-slate-100 dark:hover:bg-slate-600 hover:text-boxdark-2 hover:bg-gray-300" role="menuitem" tabindex="-1" id="user-menu-item-3">

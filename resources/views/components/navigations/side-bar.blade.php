@@ -1,6 +1,6 @@
 <aside
   :class="sidebarToggle ? 'translate-x-0' : '-translate-x-full'"
-  class="w-72.5 z-9999 h-screen overflow-y-hidden absolute top-0 left-0 flex flex-col bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0"
+  class="z-9999 w-full h-screen overflow-y-hidden absolute top-0 left-0 flex flex-col bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 sm:w-72.5"
   @click.outside="sidebarToggle = false"
 >
   <!-- SIDEBAR HEADER -->
@@ -221,7 +221,7 @@
             <li>
                 <a
                 class="text-bodydark1 relative flex items-center gap-2.5 px-4 py-2 font-medium rounded-sm duration-300 ease-in-out group dark:hover:bg-meta-4 hover:bg-graydark"
-                href="settings.html"
+                href="{{ route('user.setting', ['user' => auth()->user()->username]) }}"
                 @click="selected = (selected === 'Settings' ? '':'Settings')"
                 :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Settings') && (page === 'settings') }"
                 :class="page === 'settings' && 'bg-graydark'"

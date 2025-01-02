@@ -1,7 +1,7 @@
-<thead class="bg-slate-700 dark:bg-indigo-100">
+<thead class="bg-slate-700 dark:bg-indigo-100 max-md:hidden">
     <tr>
         {{-- Bulk Action & Indeterminate Checkbox START --}}
-        <th x-show="toggleColumn('Bulk')" class="px-6 py-5 text-sm tracking-wider leading-4 text-left text-white border-b-2 border-slate-600 group dark:text-primary-600 dark:border-gray-300 md:text-base">
+        <th id="checkbox" x-show="toggleColumn('Bulk')" class="px-6 py-5 text-sm tracking-wider leading-4 text-left text-white border-b-2 border-slate-600 group dark:text-primary-600 dark:border-gray-300 md:text-base">
             <div x-show="bulk" class="flex items-center pt-2">
                 <input type="checkbox" wire:key="{{ $currentPage }}" x-model="selectCurrentPage">
             </div>
@@ -14,7 +14,7 @@
 
         {{-- Header ID/No. START --}}
         @if ($attributes->has('id'))
-        <th x-show="toggleColumn('Number')" class="border-x-[2px] border-x-primary-600/40 px-6 py-5 text-sm tracking-wider leading-4 text-left text-white border-b-2 border-b-slate-600 group dark:text-primary-600 dark:border-b-gray-300 md:text-base">
+        <th id="no" x-show="toggleColumn('Number')" class="border-x-[2px] border-x-primary-600/40 px-6 py-5 text-sm tracking-wider leading-4 text-left text-white border-b-2 border-b-slate-600 group dark:text-primary-600 dark:border-b-gray-300 md:text-base">
             <div class="flex items-center pt-2">
                 <div>
                     No
@@ -39,7 +39,7 @@
         @foreach (array_filter($headers, function (string $value) {
                     return ($value != 'Bulk') && ($value != 'Number') && ($value != 'Action');
                 }) as $header)
-            <th x-show="toggleColumn('{{ $header }}')" class="border-x-[2px] border-x-primary-600/40 px-6 py-3 text-sm tracking-wider leading-4 text-left text-white border-b-2 border-b-slate-600 dark:text-primary-600 dark:border-b-gray-300 md:text-base">
+            <th id="{{ $header }}" x-show="toggleColumn('{{ $header }}')" class="border-x-[2px] border-x-primary-600/40 px-6 py-3 text-sm tracking-wider leading-4 text-left text-white border-b-2 border-b-slate-600 dark:text-primary-600 dark:border-b-gray-300 md:text-base">
                 <div class="flex justify-between items-center gap-8 pt-2">
                     <div>
                         {{ $header }}
@@ -59,7 +59,7 @@
 
         {{-- Header Actions START --}}
         @if ($attributes->has('actions'))
-        <th x-show="toggleColumn('Action')" class="text-white border-b-2 border-slate-600 dark:border-gray-300"></th>
+        <th id="action" x-show="toggleColumn('Action')" class="text-white border-b-2 border-slate-600 dark:border-gray-300"></th>
         @endif
         {{-- Header Actions END --}}
     </tr>

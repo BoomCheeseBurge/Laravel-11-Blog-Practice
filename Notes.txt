@@ -1,38 +1,97 @@
 
-Created a separate .env file for testing where the content is copied over from the .env file used by this project.
+Created Blade components for the Contact form.
 
-Copied and pasted the database.sqlite file for testing purposes.
-
-Updated the database.php config file to add another DB connection to the fake database.sqlite file for testing purposes.
+Created Blade components for the search bar and show per page option in the dashboard page.
 
 ________________________________________________________________
 
-Added an attribute for the 'Post' model to reformat the timestamp since the default timestamp stored in the database has extra values that do NOT match the timestamp stored in the variable of the created record.
+The mail driver is from 'MailTrap', provides a simple and easy to use mail driver for development purposes.
+
+The database is used to store queues.
 
 ________________________________________________________________
 
-Added a Gate authorization for checking admin access to the admin posts page that is placed in the mount() method.
+Added a controller and corresponding routes for testing email.
 
 ________________________________________________________________
 
-Added a factory for Comment model.
+Added email verification for newly registered users.
+
+Created 'verify-email.blade.php' file in the auth folder of the views directory.
+
+Created the 'AuthController' file to handle the email verification routes.
 
 ________________________________________________________________
 
-Fixed the user update controller method to check if the password validated data exist and not null.
+Published the email notification template.
 
 ________________________________________________________________
 
-Since the profile Livewire component uses a Livewire form, the properties of the profile is defined there, not in the profile component itself.
-
-Hence, the current code in the test for the profile outputs the following error:
-
-     Unable to set component data. Public property [$about] not found on component: [user.profile]
+Created 'WelcomeEmail' mailable class along with its 'welcome-email.blade.php' file in the mail folder of the views directory.
 
 ________________________________________________________________
 
-Placed authorization and authentication Blade directives to prevent non-authenticated users from seeing the comment edit form and comment reply form through page inspection.
+Dispatch the email verification in the 'store' method of the 'RegisterController' file.
+
+Dispatch the welcome email notification when the verification email is clicked.
 
 ________________________________________________________________
 
-Finished creating tests (at least sufficient scenarios) for Authentication, Homepage, Blog Post, Dashboard Post, Admin Post, Admin Category, Admin User, Profile, and Comment.
+Added a JS script called 'register.js', for disabling and showing a loading indicator when registering a user in the register page.
+
+________________________________________________________________
+
+Added configuration for email notification in the 'AppServiceProvider' file to be able to modify the URL since the URL was forced to the base http:://localhost instead of the named URL used by HERD.
+
+Tried searching for how to use a custom URL but did not find much information on it.
+
+Most user answers suggest brute force method to change the URL.
+
+________________________________________________________________
+
+Created 'SettingsController' for user settings where they can change their email or resend email verification information and change their password.
+
+________________________________________________________________
+
+Problem:
+
+Email verification notification (in AuthController and RegisterController) is sent without queue for now since the email verification sent from queue always results in invalid signature when verification link is accessed.
+
+
+Solution:
+
+- Enable trustProxies to be able to receive all requests in the 'app.php' file of the bootstrap directory.
+
+- Comment out the synchronous email verification notification send code and uncomment the queue-able email verification notification.
+
+    - Close all services (webserver and database) and 'npm run dev'.
+
+- Change APP_URL value to the url currently being used.
+
+________________________________________________________________
+
+Added a reset password functionality provided by Laravel.
+
+The controller methods used by the routes are stored in the 'AuthController' file.
+
+________________________________________________________________
+
+Created a notification class to make password reset link sent with queue along with the overridden method in the 'User' model file.
+
+________________________________________________________________
+
+Added a clear button for search input for the tables in the dashboard and admin pages.
+
+The clear button is located in the Blade component for search input.
+
+________________________________________________________________
+
+Removed extra dark toggle mode button on the base navbar on mobile view.
+
+Fixed the responsiveness of the toolbar table in the dashboard pages (except the Livewire in the admin posts page since that one is already responsive).
+
+________________________________________________________________
+
+Created a mobile-friendly view of the tables for dashboard posts, admin posts, admin categories, and admin users.
+
+Added JS script to the default table JS file for mobile table view.

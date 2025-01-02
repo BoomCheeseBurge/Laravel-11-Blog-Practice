@@ -18,7 +18,12 @@
             <x-messages.dismissal-error :message="session('failed')" class="mb-4"></x-messages.dismissal-error>
             @endif
 
-            <div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 dark:border dark:border-gray-700 md:mt-0 sm:max-w-md xl:p-0">
+            {{-- ------------------------------------ Status Message ------------------------------------ --}}
+            @if (session()->has('status'))
+                <x-messages.dismissal-success :message="session('status')" wire:ignore wire:key="1" class="mb-4"></x-messages.dismissal-success>
+            @endif
+
+           <div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 dark:border dark:border-gray-700 md:mt-0 sm:max-w-md xl:p-0">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 class="text-xl font-bold tracking-tight leading-tight text-center text-gray-900 dark:text-white md:text-2xl">
                         Sign in to your account
@@ -34,7 +39,7 @@
                             <input type="password" name="password" id="password" placeholder="••••••••" class="w-full block p-2.5 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 dark:placeholder-gray-400 dark:text-white dark:bg-gray-700 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500 focus:ring-primary-600 focus:border-primary-600" required>
                         </div>
                         <div class="flex justify-between items-center">
-                            <a href="#" class="text-primary-600 text-sm font-medium dark:text-primary-500 hover:underline">Forgot password?</a>
+                            <a href="{{ route('password.request') }}" class="text-primary-600 text-sm font-medium dark:text-primary-500 hover:underline">Forgot password?</a>
                         </div>
                         <button type="submit" class="bg-primary-600 w-full px-5 py-2.5 text-sm font-medium text-center text-white rounded-lg dark:bg-primary-600 dark:focus:ring-primary-800 dark:hover:bg-primary-700 focus:ring-primary-300 focus:outline-none focus:ring-4 hover:bg-primary-700">Sign in</button>
                         <p class="text-sm font-light text-gray-500 dark:text-gray-300">

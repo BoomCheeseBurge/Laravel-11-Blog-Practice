@@ -28,7 +28,7 @@ class AdminUserController extends Controller
             abort(403);
         }
 
-        $adminPosts = User::latest(); // Base Eloquent query
+        $adminPosts = User::select('id', 'fullname', 'username', 'email', 'is_admin', 'created_at')->latest(); // Base Eloquent query
 
         // Check for a search keyword input
         if(request()->has('search'))
@@ -54,7 +54,7 @@ class AdminUserController extends Controller
                         ->when($archive, fn($query) => $query->onlyTrashed()) // Switch to archived posts
                         ->paginate(5),
             'headers' => ['No', 'Fullname', 'Username', 'Email', 'Role', 'Date Created', 'Action'],
-            'columns' => ['name', 'fullname', 'username', 'email', 'is_admin', 'created_at'],
+            'columns' => ['fullname', 'username', 'email', 'is_admin', 'created_at'],
             'perPage' => $perPage,
             'archive' => $archive,
         ]);

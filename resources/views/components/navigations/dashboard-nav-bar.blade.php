@@ -100,7 +100,7 @@ class="flex-grow shadow-2 flex justify-between items-center px-4 py-4 2xl:px-11 
             <!-- Dropdown Start -->
             <div x-transition.delay.50ms
             x-show="dropdownOpen"
-            class="border-stroke shadow-default w-62.5 absolute right-0 flex flex-col mt-4 bg-white rounded-md border dark:border-strokedark dark:bg-boxdark">
+            class="-right-4 border-stroke shadow-default w-screen absolute flex flex-col mt-4 bg-white rounded-md border dark:border-strokedark dark:bg-boxdark sm:w-62.5 sm:right-0">
                 <div class="border-stroke p-5 border-b dark:border-strokedark sm:hidden">
                     <span class="block text-sm font-medium text-black dark:text-white md:text-base"
                     >Welcome back, {{ auth()->user()->username }}!</span
@@ -118,7 +118,7 @@ class="flex-grow shadow-2 flex justify-between items-center px-4 py-4 2xl:px-11 
                     <li class="pt-2 sm:pt-0">
                         <a
                             href="{{ route('user.profile', ['user' => auth()->user()->username]) }}"
-                            class="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary-500 lg:text-base">
+                            class="flex justify-center items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary-500 lg:text-base sm:justify-start">
                             <svg
                             class="fill-current"
                             width="22"
@@ -140,8 +140,8 @@ class="flex-grow shadow-2 flex justify-between items-center px-4 py-4 2xl:px-11 
                     </li>
                     <li>
                         <a
-                            href="settings.html"
-                            class="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary-500 lg:text-base">
+                            href="{{ route('user.setting', ['user' => auth()->user()->username]) }}"
+                            class="flex justify-center items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary-500 lg:text-base sm:justify-start">
                             <svg
                             class="fill-current"
                             width="22"
@@ -164,7 +164,7 @@ class="flex-grow shadow-2 flex justify-between items-center px-4 py-4 2xl:px-11 
                 </ul>
                 <form action="{{ route('login.out') }}" method="POST">
                 @csrf
-                    <button type="submit" class="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary-500 lg:text-base" role="menuitem" tabindex="-1" id="user-menu-item-3">
+                    <button type="submit" class="w-full flex justify-center items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary-500 lg:text-base sm:justify-start" role="menuitem" tabindex="-1" id="user-menu-item-3">
                         Sign out
                         <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2"/>

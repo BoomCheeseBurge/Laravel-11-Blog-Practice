@@ -210,3 +210,79 @@ function insertIdentifier(identifier, type, action)
 
     });
 }
+
+// ---------------
+
+// ================================ Clear Search Input ================================
+const input = document.querySelector(".clear-input");
+const clearButton = document.querySelector(".clear-input-button");
+
+const handleInputChange = (e) => {
+    if (e.target.value && !input.classList.contains("clear-input--touched")) {
+        input.classList.add("clear-input--touched");
+    } else if (!e.target.value && input.classList.contains("clear-input--touched")) {
+        input.classList.remove("clear-input--touched");
+    }
+}
+
+const handleButtonClick = (e) => {
+    input.value = '';
+    input.focus();
+    input.classList.remove("clear-input--touched");
+}
+
+clearButton.addEventListener("click", handleButtonClick);
+input.addEventListener("input", handleInputChange);
+
+// ---------------
+
+// ================================ Mobile View Table Row Dropdown ================================
+function showDescription(el)
+{
+    if(el.nextElementSibling.tagName === 'DIV')
+    {
+        // Get the div element
+        let rowHolder = el.nextElementSibling;
+
+        // Show/hide the element
+        rowHolder.classList.toggle("hidden");
+
+        // Turn the icon 180 degrees
+        el.parentNode.classList.toggle("max-md:[&>td:nth-child(2)]:after:-rotate-180");
+    } else
+    {
+        // create a new div element
+        let rowHolder = document.createElement("div");
+
+        // first child of the parent node
+        let sibling = el.parentNode.children[2];
+
+        // collecting siblings
+        while (sibling)
+        {
+            // Check that the next sibling is a node element and also not the clicked element
+            if (sibling.nodeType === 1 && sibling !== el)
+            {
+                // Get the first child element within the sibling
+                const childElement = sibling.firstElementChild;
+
+                // console.log(childElement);
+
+                // Check to prevent errors and ensure that only elements with children are appended
+                if (childElement)
+                {
+                    // Append sibling to the target div
+                    rowHolder.appendChild(childElement.cloneNode(true)); 
+                }
+            }
+            
+            sibling = sibling.nextElementSibling;
+
+        }
+
+        rowHolder.classList.add("md:hidden", "w-full", "border-2", "border-primary-600", "rounded-md", "p-4", "mb-3", "flex", "flex-col", "items-center", "space-y-8", "dark:border-primary-300");
+
+        // Add the newly created element after the clicked element 
+        el.parentNode.insertBefore(rowHolder, el.parentNode.children[2]);
+    }
+}

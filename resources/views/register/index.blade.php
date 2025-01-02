@@ -1,18 +1,18 @@
 <x-layouts.base-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    <section class="bg-gray-50 dark:bg-gray-900">
+    <section class="bg-gray-50 dark:bg-gray-800">
         <div class="mx-auto flex flex-col justify-center items-center px-6 py-8">
             <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                 <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo">
                 Flowbite
             </a>
-            <div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 dark:border dark:border-gray-700 md:mt-0 sm:max-w-md xl:p-0">
+            <div class="w-full bg-white rounded-lg shadow dark:bg-gray-900 dark:border dark:border-gray-700 md:mt-0 sm:max-w-md xl:p-0">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 class="text-xl font-bold tracking-tight leading-tight text-center text-gray-900 dark:text-white md:text-2xl">
                         Sign up a new account!
                     </h1>
-                    <form class="space-y-6" action="{{ route('register.store') }}" method="POST">
+                    <form class="space-y-6" action="{{ route('register.store') }}" method="POST" x-data="formSubmit" @submit.prevent="submit">
                         @csrf
                         {{-- ------------------------------------------------- USERNAME INPUT ------------------------------------------------- --}}
                         <div class="relative">
@@ -103,7 +103,7 @@
                         </div>
 
                         {{-- ------------------------------------------------- SUBMIT BUTTON ------------------------------------------------- --}}
-                        <button type="submit" class="bg-primary-600 w-full px-5 py-2.5 text-sm font-medium text-center text-white rounded-lg dark:bg-primary-600 dark:focus:ring-primary-800 dark:hover:bg-primary-700 focus:ring-primary-300 focus:outline-none focus:ring-4 hover:bg-primary-700">Register</button>
+                        <button x-ref="btn" id="btn" type="submit" class="bg-primary-600 btn w-full relative px-5 py-2.5 text-sm font-medium text-center text-white rounded-lg dark:bg-primary-600 dark:focus:ring-primary-800 dark:hover:bg-primary-700 focus:ring-primary-300 focus:outline-none focus:ring-4 hover:bg-primary-700">Register</button>
 
                         {{-- ------------------------------------------------- LOGIN OPTION ------------------------------------------------- --}}
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
@@ -115,4 +115,5 @@
         </div>
     </section>
 
+    <script src="{{ asset('JS/register.js') }}"></script>
 </x-layouts.base-layout>

@@ -538,6 +538,9 @@ export default {
                 '16/9': '16 / 9',
                 '4/3': '4 / 3',
             },
+            content: {
+              'downwardArrowIcon': 'url("/public/storage/IMG/core/arrow-down-svgrepo-com.svg")',
+            },
         },
     },
     plugins: [

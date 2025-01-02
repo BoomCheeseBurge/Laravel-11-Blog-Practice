@@ -104,7 +104,8 @@
         <div class="mx-auto max-w-screen-md sm:text-center">
             <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Sign up for our newsletter</h2>
             <p class="mx-auto max-w-2xl mb-8 text-gray-500 dark:text-gray-400 sm:text-xl">Stay up to date with the latest blog posts! Feel free to sign up with your email.</p>
-            <form action="#">
+            <form action="#" method="POST">
+                @csrf
                 <div class="mx-auto max-w-screen-sm items-center mb-3 space-y-4 sm:flex sm:space-y-0">
                     <div class="w-full relative">
                         <label for="email" class="hidden mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email address</label>

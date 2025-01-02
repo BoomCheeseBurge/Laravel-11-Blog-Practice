@@ -9,6 +9,9 @@ use Illuminate\View\View;
 
 class LoginController extends Controller
 {
+    /**
+     * View login page.
+     */
     public function index(): View
     {
         return view('login.index', [

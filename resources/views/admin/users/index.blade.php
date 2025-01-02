@@ -54,124 +54,112 @@
         }"
         class="flex flex-col gap-10">
         <div class="-my-2 py-2 pr-10 lg:-mx-8 lg:px-8 sm:-mx-6 sm:px-6">
-            <div class="w-full inline-block px-12 py-6 align-middle bg-white rounded-tl-lg rounded-tr-lg shadow-md dark:bg-slate-600">
-                <div class="flex justify-between">
-                    <div class="w-full flex items-center gap-5">
-                        {{-- Table Search START --}}
-                        <div class="w-7/12 h-12 inline-flex px-2 bg-transparent rounded border lg:px-6">
-                            <div class="w-full h-full relative flex flex-wrap items-stretch mb-6">
-                                <div class="flex">
-                                    <span class="whitespace-no-wrap flex items-center py-2 text-sm leading-normal text-gray-700 bg-transparent rounded rounded-r-none border border-r-0 border-none dark:text-teal-400 lg:px-3">
-                                        <svg width="18" height="18" class="w-4 lg:w-auto" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M8.11086 15.2217C12.0381 15.2217 15.2217 12.0381 15.2217 8.11086C15.2217 4.18364 12.0381 1 8.11086 1C4.18364 1 1 4.18364 1 8.11086C1 12.0381 4.18364 15.2217 8.11086 15.2217Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M16.9993 16.9993L13.1328 13.1328" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                    </span>
-                                </div>
-                                <form action="#" method="get" class="flex-grow flex-shrink w-px relative flex-auto px-3">
-                                    <input name="search" type="search" class="w-full h-full text-xs font-thin tracking-wide leading-normal text-gray-500 rounded rounded-l-none border border-l-0 border-none dark:placeholder-white dark:text-teal-400 dark:bg-slate-600 dark:focus:ring-teal-400 focus:outline-none lg:text-base" placeholder="Search by fullname/username/email">
-                                </form>
-                            </div>
-                        </div>
-                        {{-- Table Search END --}}
 
-                        {{-- Table Show Per Page START --}}
-                        <div class="w-full flex flex-col justify-center space-y-3 text-slate-900 dark:text-white md:max-w-29 md:max-h-10 md:flex-row md:space-x-2 md:space-y-0">
-                            <span class="text-sm">Per Page:</span>
-                            <form id="itemsPerPage" class="w-full">
-                                <select id="pagination" name="perPage" class="border-t-0 border-r-0 border-b-2 border-l-0 border-b-slate-700 dark:bg-slate-700 focus:ring-0">
-                                    <option value="10" @if ($perPage == 10)
-                                        selected
-                                    @endif >10</option>
-                                    <option value="15" @if ($perPage == 15)
-                                        selected
-                                    @endif >15</option>
-                                    <option value="20" @if ($perPage == 20)
-                                        selected
-                                    @endif >20</option>
-                                </select>
+        {{-- Table Toolbar START --}}
+            <div class="bg-white/40 w-full flex flex-col justify-between px-6 py-6 space-y-8 align-middle rounded-tl-lg rounded-tr-lg shadow-md dark:bg-slate-600 md:flex-row md:px-12 md:space-y-0">
+                <div class="w-full flex flex-col items-center gap-5 md:flex-row">
+                    {{-- Table Search START --}}
+                    <div class="w-full h-12 inline-flex px-2 bg-transparent rounded border lg:px-6 md:w-7/12">
+                        <div class="w-full h-full relative flex flex-wrap items-stretch mb-6">
+                            <div class="flex">
+                                <span class="whitespace-no-wrap flex items-center py-2 text-sm leading-normal text-gray-700 bg-transparent rounded rounded-r-none border border-r-0 border-none dark:text-teal-400 lg:px-3">
+                                    <svg width="18" height="18" class="w-4 lg:w-auto" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M8.11086 15.2217C12.0381 15.2217 15.2217 12.0381 15.2217 8.11086C15.2217 4.18364 12.0381 1 8.11086 1C4.18364 1 1 4.18364 1 8.11086C1 12.0381 4.18364 15.2217 8.11086 15.2217Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M16.9993 16.9993L13.1328 13.1328" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </span>
+                            </div>
+                            <form action="" method="get" class="flex-grow flex-shrink w-px relative flex-auto px-3">
+                                <x-input.search placeholder="Search by fullname/username/email"></x-input.search>
                             </form>
                         </div>
-                        {{-- Table Show Per Page END --}}
                     </div>
+                    {{-- Table Search END --}}
 
-                    <div class="flex justify-center items-center space-x-10">
-                        {{-- Show/Hide Table Columns START --}}
-                        <div class="relative">
-                            <div>
-                                <button data-tooltip-target="display-tooltip" data-tooltip-placement="top" x-on:click="dropdownOpen = !dropdownOpen" type="button" class="bg-primary-600 ring-primary-400 w-full inline-flex justify-center items-center gap-x-1.5 px-3 py-2 text-sm font-semibold text-white rounded-lg ring-1 ring-inset shadow-sm dark:text-gray-500 dark:bg-white dark:ring-gray-300 dark:hover:text-blue-500 dark:hover:bg-gray-50 focus:shadow-outline focus:outline-none hover:bg-primary-500 md:px-4" id="display-button" aria-expanded="true" aria-haspopup="true">
-                                    <svg class="w-6 h-6 hidden md:block" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                        <path fill-rule="evenodd" d="M15 4H9v16h6V4Zm2 16h3a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3v16ZM4 4h3v16H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" clip-rule="evenodd"/>
-                                    </svg>
-                                    <span class="md:hidden">Display Columns</span>
-                                    <svg x-bind:class="dropdownOpen && 'rotate-180'" class="w-5 h-5 transition ease-in" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                                        <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                                <div id="display-tooltip" role="tooltip" class="tooltip absolute invisible z-10 hidden px-3 py-2 font-sans text-sm tracking-wider text-center text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 dark:text-slate-900 dark:bg-slate-100 md:inline-block">
-                                    Display Column
-                                    <div class="tooltip-arrow" data-popper-arrow></div>
-                                </div>
-                            </div>
+                    {{-- Table Show Per Page START --}}
+                    <x-dropdown.perpage :perPage="$perPage"></x-dropdown.perpage>
+                    {{-- Table Show Per Page END --}}
+                </div>
 
-                            <!--
-                            Dropdown menu, show/hide based on menu state.
-
-                            Entering: "transition ease-out duration-100"
-                                From: "transform opacity-0 scale-95"
-                                To: "transform opacity-100 scale-100"
-                            Leaving: "transition ease-in duration-75"
-                                From: "transform opacity-100 scale-100"
-                                To: "transform opacity-0 scale-95"
-                            -->
-                            <div x-cloak x-show="dropdownOpen" x-on:click.outside="dropdownOpen = false"
-                            x-transition:enter="transition ease-out duration-100"
-                            x-transition:enter-start="transform opacity-0 scale-95"
-                            x-transition:enter-end="transform opacity-100 scale-100"
-                            x-transition:leave="transition ease-in duration-75"
-                            x-transition:leave-start="transform opacity-100 scale-100"
-                            x-transition:leave-end="transform opacity-0 scale-95"
-                            class="bg-boxdark-2 ring-black/5 w-40 absolute right-0 z-10 mt-1 font-medium rounded-md ring-1 shadow-lg origin-top-right dark:font-semibold dark:bg-white focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                            <div class="py-1" role="none">
-                                <!-- Active: "bg-gray-100 text-gray-900 outline-none", Not Active: "text-gray-700" -->
-                                <template x-for="column in columns">
-                                    <label class="text-truncate flex justify-start items-center px-4 py-2 text-sm dark:hover:bg-gray-100 hover:bg-slate-700 hover:cursor-pointer" role="menuitem" tabindex="-1">
-                                        <div class="mr-3 text-teal-500">
-                                            <input type="checkbox" class="form-checkbox focus:shadow-outline focus:outline-none" x-model="displayedColumns" :value="column">
-                                        </div>
-                                        <div class="text-white select-none dark:text-gray-700" x-text="column"></div>
-                                    </label>
-                                </template>
-                            </div>
-                            </div>
-                        </div>
-                        {{-- Show/Hide Table Columns END --}}
-
-                        {{-- Table Create Button START --}}
-                        <a href="{{ route('users.create') }}" data-tooltip-target="create-tooltip" class="px-2.5 py-1.5 text-sm font-medium text-white bg-blue-700 rounded-lg cursor-pointer dark:bg-blue-600 dark:focus:ring-blue-800 dark:hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 hover:bg-blue-800">
-                            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
-                            </svg>
-                            <div id="create-tooltip" role="tooltip" class="tooltip absolute invisible z-10 inline-block px-3 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 dark:bg-primary-700">
-                                Create User
+                <div class="flex flex-col justify-center items-center md:flex-row md:space-x-10">
+                    {{-- Show/Hide Table Columns START --}}
+                    <div class="relative max-md:hidden">
+                        <div>
+                            <button data-tooltip-target="display-tooltip" data-tooltip-placement="top" x-on:click="dropdownOpen = !dropdownOpen" type="button" class="bg-primary-600 ring-primary-400 w-full inline-flex justify-center items-center gap-x-1.5 px-3 py-2 text-sm font-semibold text-white rounded-lg ring-1 ring-inset shadow-sm dark:text-gray-500 dark:bg-white dark:ring-gray-300 dark:hover:text-blue-500 dark:hover:bg-gray-50 focus:shadow-outline focus:outline-none hover:bg-primary-500 md:px-4" id="display-button" aria-expanded="true" aria-haspopup="true">
+                                <svg class="w-6 h-6 hidden md:block" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd" d="M15 4H9v16h6V4Zm2 16h3a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3v16ZM4 4h3v16H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="md:hidden">Display Columns</span>
+                                <svg x-bind:class="dropdownOpen && 'rotate-180'" class="w-5 h-5 transition ease-in" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                            <div id="display-tooltip" role="tooltip" class="tooltip absolute invisible z-10 hidden px-3 py-2 font-sans text-sm tracking-wider text-center text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 dark:text-slate-900 dark:bg-slate-100 md:inline-block">
+                                Display Column
                                 <div class="tooltip-arrow" data-popper-arrow></div>
                             </div>
-                        </a>
-                        {{-- Table Create Button END --}}
+                        </div>
+
+                        <!--
+                        Dropdown menu, show/hide based on menu state.
+
+                        Entering: "transition ease-out duration-100"
+                            From: "transform opacity-0 scale-95"
+                            To: "transform opacity-100 scale-100"
+                        Leaving: "transition ease-in duration-75"
+                            From: "transform opacity-100 scale-100"
+                            To: "transform opacity-0 scale-95"
+                        -->
+                        <div x-cloak x-show="dropdownOpen" x-on:click.outside="dropdownOpen = false"
+                        x-transition:enter="transition ease-out duration-100"
+                        x-transition:enter-start="transform opacity-0 scale-95"
+                        x-transition:enter-end="transform opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-75"
+                        x-transition:leave-start="transform opacity-100 scale-100"
+                        x-transition:leave-end="transform opacity-0 scale-95"
+                        class="bg-boxdark-2 ring-black/5 w-40 absolute right-0 z-10 mt-1 font-medium rounded-md ring-1 shadow-lg origin-top-right dark:font-semibold dark:bg-white focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                        <div class="py-1" role="none">
+                            <!-- Active: "bg-gray-100 text-gray-900 outline-none", Not Active: "text-gray-700" -->
+                            <template x-for="column in columns">
+                                <label class="text-truncate flex justify-start items-center px-4 py-2 text-sm dark:hover:bg-gray-100 hover:bg-slate-700 hover:cursor-pointer" role="menuitem" tabindex="-1">
+                                    <div class="mr-3 text-teal-500">
+                                        <input type="checkbox" class="form-checkbox focus:shadow-outline focus:outline-none" x-model="displayedColumns" :value="column">
+                                    </div>
+                                    <div class="text-white select-none dark:text-gray-700" x-text="column"></div>
+                                </label>
+                            </template>
+                        </div>
+                        </div>
                     </div>
+                    {{-- Show/Hide Table Columns END --}}
+
+                    {{-- Table Create Button START --}}
+                    <a href="{{ route('users.create') }}" data-tooltip-target="create-tooltip" class="px-2.5 py-1.5 text-sm font-medium text-white bg-blue-700 rounded-lg cursor-pointer dark:bg-blue-600 dark:focus:ring-blue-800 dark:hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 hover:bg-blue-800">
+                        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
+                        </svg>
+                        <div id="create-tooltip" role="tooltip" class="tooltip absolute invisible z-10 inline-block px-3 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 dark:bg-primary-700">
+                            Create User
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                    </a>
+                    {{-- Table Create Button END --}}
                 </div>
             </div>
-            <div class="min-w-full px-8 pt-5 pb-10 align-middle bg-white rounded-br-lg rounded-bl-lg dark:bg-slate-800">
+            {{-- Table Toolbar END --}}
+
+            <div class="min-w-full px-8 pt-5 pb-10 align-middle bg-slate-100 rounded-br-lg rounded-bl-lg dark:bg-slate-800">
+
                 {{-- Table Data START --}}
                 <!-- This div is for the horizontal scrollbar on the table -->
-                <div class="overflow-y-hidden overflow-x-scroll"> 
+                <div class="overflow-y-hidden overflow-x-scroll max-md:[&_td:not(:nth-child(2))]:hidden"> 
                     <x-tables.table id actions :headers="$headers">
                         @forelse ($users as $user)
-                        <tr>
+                        <tr class="max-md:[&>td:nth-child(2)]:after:content-downwardArrowIcon max-md:[&>td:nth-child(2)]:after:float-right max-md:[&>td:nth-child(2)]:after:border-2 max-md:[&>td:nth-child(2)]:after:border-primary-500 max-md:[&>td:nth-child(2)]:after:rounded-full max-md:[&>td:nth-child(2)]:after:bg-blue-600 max-md:[&>td:nth-child(2)]:after:w-7 max-md:[&>td:nth-child(2)]:after:h-7 max-md:[&>td:nth-child(2)]:after:cursor-pointer max-md:[&>td:nth-child(2)]:after:text-center max-md:[&>td:nth-child(2)]:after:text-white max-md:[&>td:nth-child(2)]:after:pt-0.5 md:[&>td:nth-child(2)]:pointer-events-none max-md:flex max-md:flex-col max-md:[&>td:nth-child(2)]:after:transition-transform max-md:[&>td:nth-child(2)]:border-t-[1px] max-md:[&>td:nth-child(2)]:border-primary-300 max-md:[&>td:nth-child(2)]:dark:border-slate-500 [&>td:not(last-child)]:p-4 md:[&>td]:border-b-2 md:[&>td]:border-gray-300 md:[&>td]:dark:border-gray-500 max-md:[&>td:nth-child(-n+2)]:dark:bg-slate-600 max-md:[&>td:nth-child(-n+2)]:bg-slate-200 max-md:[&>td:nth-child(-n+2)]:rounded-md max-md:mb-8">
                             {{-- Number Column START --}}
-                            <td x-show="toggleColumn('No')" class="p-7 border-b border-gray-300 dark:border-gray-500">
+                            <td x-show="toggleColumn('No')" class="max-md:hidden">
                                 <div class="flex items-center">
-                                    <div class="text-sm leading-5 text-gray-800 dark:text-white">{{ $users->firstItem() + $loop->index }}</div>
+                                    <div class="mx-auto text-sm leading-5 text-gray-800 dark:text-white">{{ $users->firstItem() + $loop->index }}</div>
                                 </div>
                             </td>
                             {{-- Number Column END --}}
@@ -180,26 +168,30 @@
                             {{-- Data Columns START --}}
                             @foreach (array_filter($columns, function (string $value) {
                                         return ($value != 'No') && ($value != 'Action');
-                                    }) as $name)
-                            @if ($name === 'created_at')
-                            <td x-show="toggleColumn('Date Created')" class="p-7 border-b border-gray-300 dark:border-gray-500">
-                                <span class="text-sm leading-5 text-blue-900 dark:text-white">{{ $user->created_at->format('F j, Y') }}</span>
-                            </td>
-                            @elseif ($name === 'is_admin')
-                            <td x-show="toggleColumn('Role')" class="p-7 border-b border-gray-300 dark:border-gray-500">
-                                <div class="mx-auto w-fit px-2.5 py-1 text-xs tracking-wide font-medium text-white {{ $user->is_admin === 1 ? 'bg-teal-500' : 'bg-primary-600' }} whitespace-nowrap rounded-full">{{ $user->is_admin === 1 ? 'Admin' : 'User' }}</div>
-                            </td>
-                            @else
-                            <td x-show="toggleColumn('{{ $name }}')" class="p-7 border-b border-gray-300 dark:border-gray-500">
-                                <div class="text-sm leading-5 text-blue-900 dark:text-white">{{ $user[$name] }}</div>
-                            </td>
-                            @endif
+                                    }) as $column)
+                                @if ($column === 'fullname')
+                                <td headers="Fullname" x-show="toggleColumn('{{ $column }}')" class="max-md:before:text-primary-600 max-md:before:content-[attr(headers)':_'] tracking-wider max-md:before:font-semibold max-md:before:dark:text-primary-400" onclick="showDescription(this)">
+                                    <span class="text-sm leading-5 text-blue-900 dark:text-white">{{ $user[$column] }}</span>
+                                </td>
+                                @elseif ($column === 'created_at')
+                                <td x-show="toggleColumn('Date Created')">
+                                    <span headers="Date Created" class="text-sm leading-5 text-blue-900 dark:text-white max-md:before:content-[attr(headers)':_'] max-md:before:font-semibold max-md:before:text-primary-300">{{ $user->created_at->format('F j, Y') }}</span>
+                                </td>
+                                @elseif ($column === 'is_admin')
+                                <td headers="Role" x-show="toggleColumn('Role')" class="max-md:before:content-[attr(headers)':_']">
+                                    <div class="mx-auto w-fit px-2.5 py-1 text-xs tracking-wide font-medium text-white {{ $user->is_admin === 1 ? 'bg-teal-500' : 'bg-primary-600' }} whitespace-nowrap rounded-full">{{ $user->is_admin === 1 ? 'Admin' : 'User' }}</div>
+                                </td>
+                                @else
+                                <td x-show="toggleColumn('{{ $column }}')">
+                                    <div headers="{{ ucfirst($column) }}" class="max-md:before:content-[attr(headers)':_'] text-sm leading-5 text-blue-900 dark:text-white max-md:before:font-semibold max-md:before:text-primary-300">{{ $user[$column] }}</div>
+                                </td>
+                                @endif
                             @endforeach
                             {{-- Data Columns END --}}
 
                             {{-- Action Column START --}}
-                            <td x-show="toggleColumn('Action')" class="text-sm border-b border-gray-300 dark:border-gray-500">
-                                <div class="flex items-center px-8 space-x-6">
+                            <td x-show="toggleColumn('Action')">
+                                <div class="flex justify-between items-center px-8 space-x-5 max-md:w-full">
 
                                     @if ($user->trashed())
                                     {{-- Restore Button START --}}
@@ -238,10 +230,10 @@
                                     @else
                                     {{-- ================================================= SHOW BUTTON ================================================= --}}
                                     <a data-tooltip-target="view-tooltip-{{ $loop->iteration }}" href="{{ route('users.show', ['user' => $user->username]) }}" class="group">
-                                        <svg class="text-primary-500 z-[-1] w-6 h-6 absolute invisible opacity-0 transition-opacity duration-300 ease-in-out dark:text-white group-hover:static group-hover:visible group-hover:opacity-100 md:w-8 md:h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                        <svg class="text-primary-500 w-8 h-8 transition-opacity duration-300 ease-in-out dark:text-white group-hover:static group-hover:visible group-hover:opacity-100 md:z-[-1] md:w-8 md:h-8 md:absolute md:invisible md:opacity-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                             <path fill-rule="evenodd" d="M4.998 7.78C6.729 6.345 9.198 5 12 5c2.802 0 5.27 1.345 7.002 2.78a12.713 12.713 0 0 1 2.096 2.183c.253.344.465.682.618.997.14.286.284.658.284 1.04s-.145.754-.284 1.04a6.6 6.6 0 0 1-.618.997 12.712 12.712 0 0 1-2.096 2.183C17.271 17.655 14.802 19 12 19c-2.802 0-5.27-1.345-7.002-2.78a12.712 12.712 0 0 1-2.096-2.183 6.6 6.6 0 0 1-.618-.997C2.144 12.754 2 12.382 2 12s.145-.754.284-1.04c.153-.315.365-.653.618-.997A12.714 12.714 0 0 1 4.998 7.78ZM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd"/>
                                         </svg>
-                                        <svg class="text-primary-700 w-6 h-6 static visible block opacity-100 transition-opacity duration-300 ease-in-out dark:text-white group-hover:invinsible group-hover:z-[-1] group-hover:absolute group-hover:opacity-0 md:w-8 md:h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                        <svg class="text-primary-700 w-6 h-6 static hidden transition-opacity duration-300 ease-in-out dark:text-white group-hover:invinsible group-hover:z-[-1] group-hover:absolute group-hover:opacity-0 md:w-8 md:h-8 md:visible md:block md:opacity-100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                             <path stroke="#e1e2e3" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
                                             <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                                         </svg>
@@ -355,6 +347,5 @@
 
     @push('scripts')
     <script src="{{ asset('JS/default-table.js') }}"></script>
-    <script src="{{ asset('JS/dashboard-table.js') }}"></script>
     @endpush
 </x-layouts.dashboard-layout>

@@ -273,7 +273,7 @@
 
 
                         {{-- Table Search START --}}
-                        <div class="w-full h-12 px-2 bg-transparent rounded border lg:px-6 md:w-10/12">
+                        <div class="w-full h-12 px-2 bg-transparent rounded border lg:px-6 md:w-6/12">
                             <div class="w-full h-full relative flex flex-wrap items-stretch">
                                 <div class="flex">
                                     <span class="whitespace-no-wrap flex items-center py-2 text-sm leading-normal text-gray-700 bg-transparent rounded rounded-r-none border border-r-0 border-none dark:text-emerald-300 lg:px-3">
@@ -304,7 +304,7 @@
                 {{-- -------------------------------------------- Right Section Menubar START --}}
                 <div class="flex items-center md:space-y-0">
                     {{-- Show/Hide Table Columns START --}}
-                    <div class="relative">
+                    <div class="relative max-md:hidden">
                         <div>
                             <button data-tooltip-target="display-tooltip" data-tooltip-placement="top" x-on:click="dropdownOpen = !dropdownOpen" type="button" class="bg-primary-600 ring-primary-400 w-full inline-flex justify-center items-center gap-x-1.5 px-3 py-2 text-sm font-semibold text-white rounded-lg ring-1 ring-inset shadow-sm dark:text-gray-500 dark:bg-white dark:ring-gray-300 dark:hover:text-blue-500 dark:hover:bg-gray-50 focus:shadow-outline focus:outline-none hover:bg-primary-500 md:px-4" id="display-button" aria-expanded="true" aria-haspopup="true">
                                 <svg class="w-6 h-6 hidden md:block" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -377,7 +377,7 @@
                         <div class="[&>.loading-dot]:animate-blink motion-reduce:[&>.loading-dot]:animate-blink text-6xl text-primary-500 [&>.loading-dot]:w-8 [&>.loading-dot]:h-8 [&>.loading-dot]:inline-block space-x-6 [&>.loading-dot]:bg-current [&>.loading-dot]:rounded-full [&>.loading-dot:nth-child(2)]:animation-delay-300 [&>.loading-dot:nth-child(3)]:animation-delay-500 absolute top-0 mt-20 ml-[35%]" role="status">Loading <div class="loading-dot animate-bounce"></div><div class="loading-dot"></div><div class="loading-dot"></div>
                         </div>
                     </div>
-                    <table wire:loading.class="invinsible" wire:target.except="getAllRecords, getCurrentPageRecords, getPostSlug, getTrashedPost" class="min-w-full">
+                    <table wire:loading.class="invinsible" wire:target.except="getAllRecords, getCurrentPageRecords, getPostSlug, getTrashedPost" class="min-w-full max-md:[&_td:not(:nth-child(-n+2))]:block max-md:[&_td:nth-child(-n+2)]:hidden max-md:[&_td:not(:nth-child(-n+2))]:w-full [&_td:not(:last-child)]:border-b-[1px] [&_td:not(:last-child)]:border-slate-500 md:[&_td]:border-b-2 md:[&_td]:border-gray-500 [&_td]:px-2 [&_td]:py-5 md:[&_td]:px-6 md:[&_td]:py-8 max-md:[&_td_span]:before:font-bold">
                         {{-- Table Header START --}}
                         <x-tables.livewire-header id actions :headers="$columns" :sortDirection="$sortDirection" :sortHeader="$sortHeader" :currentPage="$records->currentPage()"></x-tables.livewire-header>
                         {{-- Table Header END --}}
@@ -386,15 +386,16 @@
                         <tbody class="bg-white dark:bg-slate-800">
                             @if ($records->isNotEmpty())
                                 @foreach ($records as $record)
-                                <tr x-data wire:key="{{ $record->id }}">
+                                <tr x-data wire:key="{{ $record->id }}"
+                                class="max-md:border-primary-300 max-md:flex max-md:flex-col max-md:mb-10 max-md:rounded-md max-md:border-2 max-md:dark:border-primary-600">
                                     {{-- Checkbox Column START --}}
-                                    <td x-show="toggleColumn('Bulk')" class="px-6 py-8 border-b border-gray-500">
+                                    <td x-show="toggleColumn('Bulk')">
                                         <input type="checkbox" x-model="selectedRecords" x-on:click="checkSelected" class="selectRow" value="{{ $record->id }}">
                                     </td>
                                     {{-- Checkbox Column END --}}
 
                                     {{-- Number Column START --}}
-                                    <td x-show="toggleColumn('Number')" class="px-6 py-8 border-b border-gray-500">
+                                    <td x-show="toggleColumn('Number')" class=">
                                         <div class="flex justify-center">
                                             <div class="text-sm leading-5 text-gray-800 dark:text-white">{{ $records->firstItem() + $loop->index }}</div>
                                         </div>
@@ -405,23 +406,23 @@
                                     @foreach (array_filter($columns, function (string $value) {
                                                 return ($value != 'Bulk') && ($value != 'Number') && ($value != 'Action');
                                             }) as $column)
-                                    <td x-show="toggleColumn('{{ $column }}')" class="m-auto px-6 py-8 text-center border-b border-gray-500">
+                                    <td x-show="toggleColumn('{{ $column }}')" class="m-auto text-center">
                                         @if ($column === 'Category')
-                                        <span class="px-2.5 py-1 text-xs font-medium text-blue-800 whitespace-nowrap bg-{{ $record->category_color }}-100 rounded-full">{{ $record->category_name }}</span>
+                                        <span headers="Category" class="px-2.5 py-1 text-xs font-medium text-blue-800 whitespace-nowrap bg-{{ $record->category_color }}-100 rounded-full">{{ $record->category_name }}</span>
                                         @elseif ($column === 'Date Created')
-                                        <span class="text-sm leading-5 text-blue-900 whitespace-nowrap dark:text-white">{{ $record->created_at->format('F j, Y') }}</span>
+                                        <span headers="Date Created" class="text-sm leading-5 text-blue-900 whitespace-nowrap dark:text-white max-md:before:content-[attr(headers)':_']">{{ $record->created_at->format('F j, Y') }}</span>
                                         @elseif ($column === 'Author')
-                                        <span class="text-sm leading-5 text-blue-900 whitespace-nowrap dark:text-white">{{ $record->username }}</span>
+                                        <span headers="Author" class="max-md:before:content-[attr(headers)':_'] text-sm leading-5 text-blue-900 whitespace-nowrap dark:text-white">{{ $record->username }}</span>
                                         @else
-                                        <div class="px-3 text-sm leading-5 text-blue-900 dark:text-white">{{ $record[strtolower($column)] }}</div>
+                                        <span headers="{{ ucfirst($column) }}" class="max-md:before:content-[attr(headers)':_'] px-3 text-sm leading-5 text-blue-900 dark:text-white">{{ $record[strtolower($column)] }}</span>
                                         @endif
                                     </td>
                                     @endforeach
                                     {{-- Data Columns END --}}
 
                                     {{-- Action Column START --}}
-                                    <td x-show="toggleColumn('Action')" class="px-6 py-8 text-sm border-b border-gray-500">
-                                        <div class="flex items-center px-8 space-x-6">
+                                    <td x-show="toggleColumn('Action')">
+                                        <div class="flex justify-between items-center px-8 space-x-6 md:justify-center">
                                             @if ($record->trashed())
                                             {{-- Restore Button START --}}
                                             <button data-tooltip-target="restore-tooltip-{{ $loop->iteration }}" wire:click="getTrashedPost('{{ $record->slug }}')" x-on:click="$dispatch('open-modal', { name : 'restoreModal' })" class="relative text-green-500 group dark:text-green-400">
@@ -459,10 +460,10 @@
                                             @else
                                             {{-- View Button START --}}
                                             <a wire:ignore data-tooltip-target="view-tooltip-{{ $loop->iteration }}" href="{{ route('posts.show', ['post' => $record->slug]) }}" class="relative group">
-                                                <svg class="text-primary-500 w-6 h-6 invisible opacity-0 transition-opacity duration-300 ease-in-out dark:text-white group-hover:visible group-hover:opacity-100 md:w-8 md:h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                                <svg class="text-primary-500 w-8 h-8 transition-opacity duration-300 ease-in-out dark:text-white group-hover:static group-hover:visible group-hover:opacity-100 md:z-[-1] md:w-8 md:h-8 md:absolute md:invisible md:opacity-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                                     <path fill-rule="evenodd" d="M4.998 7.78C6.729 6.345 9.198 5 12 5c2.802 0 5.27 1.345 7.002 2.78a12.713 12.713 0 0 1 2.096 2.183c.253.344.465.682.618.997.14.286.284.658.284 1.04s-.145.754-.284 1.04a6.6 6.6 0 0 1-.618.997 12.712 12.712 0 0 1-2.096 2.183C17.271 17.655 14.802 19 12 19c-2.802 0-5.27-1.345-7.002-2.78a12.712 12.712 0 0 1-2.096-2.183 6.6 6.6 0 0 1-.618-.997C2.144 12.754 2 12.382 2 12s.145-.754.284-1.04c.153-.315.365-.653.618-.997A12.714 12.714 0 0 1 4.998 7.78ZM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd"/>
                                                 </svg>
-                                                <svg class="text-primary-700 w-6 h-6 absolute bottom-0 visible opacity-100 transition-opacity duration-300 ease-in-out dark:text-white group-hover:invinsible group-hover:opacity-0 md:w-8 md:h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                                <svg class="text-primary-700 w-6 h-6 static hidden transition-opacity duration-300 ease-in-out dark:text-white group-hover:invinsible group-hover:z-[-1] group-hover:absolute group-hover:opacity-0 md:w-8 md:h-8 md:visible md:block md:opacity-100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                                     <path stroke="#e1e2e3" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
                                                     <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                                                 </svg>

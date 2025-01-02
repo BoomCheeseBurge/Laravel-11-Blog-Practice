@@ -17,6 +17,9 @@
         {{-- Custom CSS Style --}}
         <link rel="stylesheet" href="{{ asset('CSS/style.css') }}">
 
+        {{-- Livewire Style --}}
+        @livewireStyles
+
         <title>{{ $title }}</title>
     </head>
 

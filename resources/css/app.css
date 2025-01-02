@@ -233,6 +233,14 @@
 		  	opacity:0;
 		}
 	}
+
+	/* Clear Search Input */
+	.clear-input--touched:focus + .clear-input-button,
+	.clear-input--touched:hover + .clear-input-button,
+	.clear-input--touched + .clear-input-button:hover {
+		display: inline-flex;
+	}
+
 	/* ... */
 }
 

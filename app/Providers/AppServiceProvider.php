@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
@@ -58,5 +60,16 @@ class AppServiceProvider extends ServiceProvider
          * In other words, help prevent unexpected errors during local development when attempting to set an attribute that has not been added to the model's fillable array
          */
         // Model::preventSilentlyDiscardingAttributes(! $this->app->isProduction());
+
+        VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
+
+            // Remove "localhost" and replace with the new base URL
+            // $new_url = str_replace("localhost", "laravel-11-practice.test", $url);
+
+            return (new MailMessage)
+                ->subject('Verify Email Address')
+                ->line('Please click the button below to verify your email address.')
+                ->action('Verify Email Address', $url);
+        });
     }
 }
