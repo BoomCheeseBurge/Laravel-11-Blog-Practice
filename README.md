@@ -28,36 +28,37 @@ Laravel Valet was used to give a custom local host name. There is a Windows unof
 
 The project consist of the following sections.
 
-* Homepage\
+* __Homepage__\
   |\
-  |-------> Home (hero section; slider for exploring existing post categories)\
+  |-------> __Home__ (hero section; slider for exploring existing post categories)\
   |\
-  |-------> About (for display)\
+  |-------> __About__ (for display)\
   |\
-  |-------> Blog (lists all existing posts with search input and pagination)\
+  |-------> __Blog__ (lists all existing posts with search input and pagination)\
   |\
-  |-------> Contact (form is there for display)
+  |-------> __Contact__ (form is there for display)
   
-* Dashboard\
+* __Dashboard__\
   |\
-  |-------> Dashboard\
+  |-------> __Dashboard__\
   |           &emsp;&emsp;&emsp;&emsp;&emsp; |\
-  |           &emsp;&emsp;&emsp;&emsp;&emsp; |-------> Kanban (the kanban has not been implemented but for a landing page after a user has logged in)\
+  |           &emsp;&emsp;&emsp;&emsp;&emsp; |-------> __Kanban__ (the kanban has not been implemented but for a landing page after a user has logged in)\
   |           &emsp;&emsp;&emsp;&emsp;&emsp; |\
-  |           &emsp;&emsp;&emsp;&emsp;&emsp; |-------> Posts (user-managed posts)\
+  |           &emsp;&emsp;&emsp;&emsp;&emsp; |-------> __Posts__ (user-managed posts)\
   |\
-  |-------> Admin\
+  |-------> __Admin__\
              &emsp;&emsp;&emsp;&emsp;&emsp; |\
-             &emsp;&emsp;&emsp;&emsp;&emsp; |-------> All Posts (manage all user-created posts)\
+             &emsp;&emsp;&emsp;&emsp;&emsp; |-------> __All Posts__ (manage all user-created posts)\
              &emsp;&emsp;&emsp;&emsp;&emsp; |\
-             &emsp;&emsp;&emsp;&emsp;&emsp; |-------> Categories (manage post categories)\
+             &emsp;&emsp;&emsp;&emsp;&emsp; |-------> __Categories__ (manage post categories)\
              &emsp;&emsp;&emsp;&emsp;&emsp; |\
-             &emsp;&emsp;&emsp;&emsp;&emsp; |-------> Users (manage the application's users)\
-* User Profile and Settings
+             &emsp;&emsp;&emsp;&emsp;&emsp; |-------> __Users__ (manage the application's users)\
+  
+* __User Profile and Settings__\
   |\
-  |-------> Profile (manage the authenticated user's profile)\
+  |-------> __Profile__ (manage the authenticated user's profile)\
   |\
-  |-------> Setting (manage the authenticated user's settings)\
+  |-------> __Setting__ (manage the authenticated user's settings)\
 
 ## Roles
 
