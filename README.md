@@ -30,7 +30,7 @@ The project consist of the following sections.
 
 * Homepage\
   |\
-  |-------> Home (hero section; slider for exploring existing post categories; search posts)\
+  |-------> Home (hero section; slider for exploring existing post categories)\
   |\
   |-------> About (for display)\
   |\
