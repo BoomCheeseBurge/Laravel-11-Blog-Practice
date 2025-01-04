@@ -1,67 +1,124 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<h1 style="dislay=flex;">Laravel 11 Blog Practice 
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<span>
+    
+![Project Logo](https://img.icons8.com/?size=35&id=umvn6ZS3pZAj&format=png&color=000000)
 
-## About Laravel
+</span>
+</h1>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## This project was built on Laravel ( 11.29.0 ) with TailwindCSS and AlpineJS.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The purpose of this project was to get familiar with Laravel 11 and explore its basic and advanced features. As with the common examples, a blog project, while simple, enables to cover a comprehensive understanding of the framework, encompassing both fundamental and complex features.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The project was developed using Laravel Herd (non-premium features) with SQLite file-based database, PHP 8.3, and Nginx webserver.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Running the Application
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+The following command is used to run the project in development.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```
+npm run dev
+```
 
-## Laravel Sponsors
+Laravel Valet was used to give a custom local host name. There is a Windows unofficial import of it, installable with Composer.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Web-Application Sections
 
-### Premium Partners
+The project consist of the following sections.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+* Homepage\
+  |\
+  |-------> Home (hero section; slider for exploring existing post categories; search posts)\
+  |\
+  |-------> About (for display)\
+  |\
+  |-------> Blog (lists all existing posts with search input and pagination)\
+  |\
+  |-------> Contact (form is there for display)
+  
+* Dashboard\
+  |\
+  |-------> Dashboard\
+  |           &emsp;&emsp;&emsp;&emsp;&emsp; |\
+  |           &emsp;&emsp;&emsp;&emsp;&emsp; |-------> Kanban (the kanban has not been implemented but for a landing page after a user has logged in)\
+  |           &emsp;&emsp;&emsp;&emsp;&emsp; |\
+  |           &emsp;&emsp;&emsp;&emsp;&emsp; |-------> Posts (user-managed posts)\
+  |\
+  |-------> Admin\
+             &emsp;&emsp;&emsp;&emsp;&emsp; |\
+             &emsp;&emsp;&emsp;&emsp;&emsp; |-------> All Posts (manage all user-created posts)\
+             &emsp;&emsp;&emsp;&emsp;&emsp; |\
+             &emsp;&emsp;&emsp;&emsp;&emsp; |-------> Categories (manage post categories)\
+             &emsp;&emsp;&emsp;&emsp;&emsp; |\
+             &emsp;&emsp;&emsp;&emsp;&emsp; |-------> Users (manage the application's users)\
+* User Profile and Settings
+  |\
+  |-------> Profile (manage the authenticated user's profile)\
+  |\
+  |-------> Setting (manage the authenticated user's settings)\
 
-## Contributing
+## Roles
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+* Regular User
+* Admin User
 
-## Code of Conduct
+## Tables
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+All tables have common functionalities that would be seen in a typical table as follows.
 
-## Security Vulnerabilities
+* search table input.
+* show/hide columns.
+* show rows per page.
+* resizable columns.
+* pagination.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Comment Section
+
+The implemented comment section is not optimized which could have been done either by using the __nested-set/adjancency-list models__, or using the __Spatie library__. The comment section can also have child comments or replies. These replies are not limited (probably should have limited it to one reply for every comment).
+
+## Like System
+
+A like system is implemented for both the post and comment. There is a pivot table made for storing the likes of both a post and comment. Laravel provides an efficient method of storing these likes using Eloquent's polymorphic relationship.
+
+## Livewire
+
+Livewire was utilized ONLY in the admin's __all posts page__ and __profile edit__ to experiment and understand its features. Livewire itself is a full-stack framework for Laravel that brings the simplicity and reactivity (real-time updates) of frontend frameworks like React to the backend, enabling you to build dynamic and interactive user interfaces with plain PHP. Unfortunately, there remains an unresolved issue (due to the limitation of the author of this project) where event listeners are not consistently reattached to their respective elements after an action is performed.
+
+## Testing
+
+Feature tests were performed using __PHPUnit__. Simple yet sufficient tests are made from authentication, authorization, accessible page, see a particular text, ensure persisted or deleted database records, and stored uploaded files. These tests were already tested to run as individual classes and as a whole.
+
+The point of testing in general is to be confident that the project functions properly. Consequently, testing is very helpful in ensuring that the codebase works as expected, and in identifying and fixing any code functionality that was overlooked during development.
+
+## Future Improvements
+
+- [ ] :x: Re-attach the event listeners in the admin's all posts page after re-rendering the Livewire page.
+- [ ] :x: Re-factor the comment section to either use nested set model/adjacency list model, or implement Spatie's comment section library (and probably limit the number of comment reply to one).
+
+## Third-Party Libraries
+
+These libraries were installed (with composer and NPM) to provide additional functionalities either to simplify creating web components or expand existing features. The following lists out the third-party libraries used in this project.
+
+__NPM__
+
+* TailwindCSS ( 3.4.17 )
+* Flowbite ( 2.5.2 )
+* Flowbite Typography ( 1.0.4 )
+* AlpineJS ( 3.14.3 )
+* AlpineJS Persist ( 3.14.3 )
+* SweetAlert ( 11.6.13 )
+* Swiper ( 11.1.14 )
+
+__Composer__
+
+* Eloquent Sluggable ( 11.0 )
+* Livewire ( 3.5 )
+* Livewire Alert ( 3.0 )
+* Laravel Phone ( 5.3 )
+* Ziggy ( 2.3 )
 
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# laravel-11-practice
