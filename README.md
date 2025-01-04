@@ -109,7 +109,7 @@ __NPM__
 * Flowbite Typography ( 1.0.4 )
 * AlpineJS ( 3.14.3 )
 * AlpineJS Persist ( 3.14.3 )
-* SweetAlert ( 11.6.13 )
+* SweetAlert2 ( 11.6.13 )
 * Swiper ( 11.1.14 )
 
 __Composer__
