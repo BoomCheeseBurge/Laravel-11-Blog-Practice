@@ -74,6 +74,7 @@ All tables have common functionalities that would be seen in a typical table as 
 * show rows per page.
 * resizable columns.
 * pagination.
+* mobile responsive tables.
 
 ## Comment Section
 
