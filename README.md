@@ -22,8 +22,6 @@ This was personally developed in Laravel Herd which is easy to setup a Laravel p
 
 ### Start the Development Server
 
-The following command is used to run the project in development.
-
 ```
 npm run dev
 ```
