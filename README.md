@@ -16,6 +16,12 @@ The project was developed using Laravel Herd (non-premium features) with SQLite 
 
 ## Running the Application
 
+### Boot up your local web server stack
+
+This was personally developed in Laravel Herd which is easy to setup a Laravel project.
+
+### Start the Development Server
+
 The following command is used to run the project in development.
 
 ```
