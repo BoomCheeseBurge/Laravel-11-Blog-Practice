@@ -20,6 +20,10 @@ The project was developed using Laravel Herd (non-premium features) with SQLite 
 
 This was personally developed in Laravel Herd which is easy to setup a Laravel project.
 
+- Install and move the project to Laravel Herd project folder.
+
+- Ensure that the PHP version matches the one used in this project.
+
 ### Start the Development Server
 
 ```
