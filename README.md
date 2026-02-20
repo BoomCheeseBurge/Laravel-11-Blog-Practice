@@ -24,6 +24,14 @@ This was personally developed in Laravel Herd which is easy to setup a Laravel p
 
 - Ensure that the PHP version matches the one used in this project.
 
+### Install Dependencies
+
+Use the following command to install the necessary dependencies (or packages) of the project:
+
+```
+npm install
+```
+
 ### Start the Development Server
 
 ```
